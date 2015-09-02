@@ -23,10 +23,12 @@ public class DemoTelemetry extends DemoBotHardware {
         telemetry.addData
                 ( "02"
                         , "Right Drive: "
-                                + a_right_drive_power ()
+                                + a_right_drive_power()
                                 + ", "
-                                + a_right_encoder_count ()
+                                + a_right_encoder_count()
                 );
+
+        telemetry.addData("isPressed", String.valueOf(touchSensor.isPressed()));
     } // PushBotTelemetry::loop
 
 } // PushBotTelemetry

@@ -3,6 +3,9 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.TouchSensor;
+import com.qualcomm.robotcore.util.Range;
 
 /**
  * Created by Matthew on 8/25/2015.
@@ -10,6 +13,8 @@ import com.qualcomm.robotcore.hardware.DcMotorController;
 public class DemoBotHardware extends OpMode{
     private DcMotorController motor_controller;
     private DcMotorController motor_controller2;
+    Servo servoArm;
+    TouchSensor touchSensor;
 
     //--------------------------------------------------------------------------
     //
@@ -31,7 +36,7 @@ public class DemoBotHardware extends OpMode{
     // These class members manage the aspects of the right drive motor.
     //--------
     private DcMotor motor_right_drive;
-    final int channel_right_drive = 2;
+    final int channel_right_drive = 1;
 
     public DemoBotHardware()
 
@@ -67,6 +72,12 @@ public class DemoBotHardware extends OpMode{
         motor_right_drive = hardwareMap.dcMotor.get ("right_drive");
 
         motor_right_drive.setDirection (DcMotor.Direction.REVERSE);
+
+        double armPosition = 0.5;
+        servoArm = hardwareMap.servo.get("servoArm");
+        servoArm.setPosition(armPosition);
+
+        touchSensor = hardwareMap.touchSensor.get("sensor_touch");
     } // PushBotHardware::init
 
     @Override public void start ()
@@ -157,7 +168,7 @@ public class DemoBotHardware extends OpMode{
                 );
 
         motor_controller2.setMotorChannelMode
-                ( channel_right_drive
+                (channel_right_drive
                         , DcMotorController.RunMode.RESET_ENCODERS
                 );
 
@@ -244,7 +255,6 @@ public class DemoBotHardware extends OpMode{
         return l_status;
 
     } // PushBotManual::have_drive_encoders_reset
-
     //--------------------------------------------------------------------------
 }
 

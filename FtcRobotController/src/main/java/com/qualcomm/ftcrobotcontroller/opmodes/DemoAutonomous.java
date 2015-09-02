@@ -59,16 +59,29 @@ public class DemoAutonomous extends DemoTelemetry {
             // Turn left until the encoders exceed the specified values.
             //
             case 3:
-                run_using_encoders ();
-                set_drive_power (-1.0f, 1.0f);
-                if (have_drive_encoders_reached (2880, 2880))
-                {
-                    reset_drive_encoders ();
-                    set_drive_power (0.0f, 0.0f);
+                run_using_encoders();
+                set_drive_power(1.0f,1.0f);
+                if(touchSensor.isPressed()) {
+                    set_drive_power(0.0f,0.0f);
+                    reset_drive_encoders();
                     v_state++;
                 }
                 break;
 
+            case 4:
+                if (have_drive_encoders_reset ())
+                {
+                    v_state++;
+                }
+                else
+                {
+                    times[0]++;
+                }
+                break;
+
+            case 5:
+                servoArm.setPosition(1.0);
+                break;
             default:
                 //
                 // The autonomous actions have been accomplished (i.e. the state has
@@ -78,9 +91,10 @@ public class DemoAutonomous extends DemoTelemetry {
             }
 
         update_telemetry (); // Update common telemetry
-        telemetry.addData ("11", "State: " + v_state);
+        telemetry.addData("11", "State: " + v_state);
         telemetry.addData ("12", "Times: " + times[0]);
         telemetry.addData ("13", "Times: " + times[1]);
         telemetry.addData ("14", "Times: " + times[2]);
+        telemetry.addData("isPressed", String.valueOf(touchSensor.isPressed()));
     }
 }
