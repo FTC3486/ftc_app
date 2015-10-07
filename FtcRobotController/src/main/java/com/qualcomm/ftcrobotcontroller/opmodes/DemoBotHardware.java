@@ -24,7 +24,7 @@ public class DemoBotHardware extends OpMode{
     //--------
     // These class members manage the aspects of the left drive motor.
     //--------
-    private DcMotor motor_left_drive;
+    public DcMotor motor_left_drive;
     final int channel_left_drive = 1;
 
     //--------------------------------------------------------------------------
@@ -35,7 +35,7 @@ public class DemoBotHardware extends OpMode{
     //--------
     // These class members manage the aspects of the right drive motor.
     //--------
-    private DcMotor motor_right_drive;
+    public DcMotor motor_right_drive;
     final int channel_right_drive = 1;
 
     public DemoBotHardware()
@@ -107,6 +107,23 @@ public class DemoBotHardware extends OpMode{
         return motor_right_drive.getPower ();
 
     } // PushBotManual::a_right_drive_power
+
+    void hand_position (double p_position) {
+        //
+        // Ensure the specifiec value is legal.
+        //
+        double l_position = Range.clip
+                (p_position
+                        , Servo.MIN_POSITION
+                        , Servo.MAX_POSITION
+                );
+
+        //
+        // Set the value.  The right hand value must be opposite of the left
+        // value.
+        //
+        servoArm.setPosition(l_position);
+    }
 
     void set_drive_power (double p_left_power, double p_right_power)
     {
