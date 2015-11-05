@@ -63,7 +63,7 @@ public class Drive
         this.minSpeed = minSpeed;
     }
 
-    public void tank_drive(DcMotor leftDrive, DcMotor rightDrive)
+    public void tank_drive(DcMotor leftfront, DcMotor leftback, DcMotor rightfront, DcMotor rightback)
     {
         opMode.telemetry.addData("maxMotorSpeed", "max speed: " + String.format("%.2f", maxSpeed));
 
@@ -87,7 +87,10 @@ public class Drive
 
         opMode.telemetry.addData("left fnl pwr", "final left pwr: " + String.format("%.2f", left));
 
-        rightDrive.setPower(right);
-        leftDrive.setPower(left);
+        rightfront.setPower(right);
+        rightback.setPower(right);
+        leftfront.setPower(left);
+        leftback.setPower(left);
+
     }
 }
