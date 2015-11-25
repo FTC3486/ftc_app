@@ -27,36 +27,90 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.IrSeekerSensor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 /**
- * A simple example of a linear op mode that will approach an IR beacon
+ * Created by Matthew on 11/25/2015.
  */
-public class LinearIrExample extends LinearOpMode {
-
+public class LinearAutoMode extends LinearOpMode {
     final static double MOTOR_POWER = 0.15; // Higher values will cause the robot to move faster
-    final static double HOLD_IR_SIGNAL_STRENGTH = 0.20; // Higher values will cause the robot to follow closer
 
-    DcMotor motorRight;
-    DcMotor motorLeft;
+    //DriveTrain
+    DcMotor leftfront,leftback,rightfront,rightback;
 
-    IrSeekerSensor irSeeker;
+    //Grappling Hook
+    DcMotor tapeMotor;
+    Servo tapeTilt;
+    double initialTilt = 0.2;
+    DcMotor winchMotor;
+
+    //Scoop
+    Servo lr;//left-right, up-down
+    double centerPosition = 0.2; // left 8, center 47, right 85
+    double leftPosition = 0.0;
+    double rightPosition = 0.4;
+
+    Servo ud;
+    double upPosition = 0.6; //down 128, up 64
+    double downPosition = 0.8;
+
+    //Zoop-Zoop
+    Servo zleft, zright;
+    double zleftUp = 0.3; //0
+    double zrightUp = 0.6; //255
+    double zleftdown = .85; //140 down, 0 up
+    double zrightdown = .01;//80 down, 255 up
+
+    //BlockGate
+    Servo blockGate;
+    double bgopen = 0.6;
+    double bgclose = 0;
+
+    //Sweeper;
+    // DcMotor Sweeper;
 
     @Override
     public void runOpMode() throws InterruptedException {
-
         // set up the hardware devices we are going to use
-        irSeeker = hardwareMap.irSeekerSensor.get("ir_seeker");
-        motorLeft = hardwareMap.dcMotor.get("motor_1");
-        motorRight = hardwareMap.dcMotor.get("motor_2");
+        //Drivetrain
+        leftfront = hardwareMap.dcMotor.get("leftfront");
+        leftback = hardwareMap.dcMotor.get("leftback");
+        rightfront = hardwareMap.dcMotor.get("rightfront");
+        rightback = hardwareMap.dcMotor.get("rightback");
 
-        motorLeft.setDirection(DcMotor.Direction.REVERSE);
+        //Scoop
+        lr = hardwareMap.servo.get("lr");
+        lr.setPosition(centerPosition);
+
+        ud = hardwareMap.servo.get("ud");
+        ud.setPosition(downPosition);
+
+        //Zoop-Zoop
+        zleft = hardwareMap.servo.get("zleft");
+        zleft.setPosition(zleftUp);
+
+        zright = hardwareMap.servo.get("zright");
+        zright.setPosition(zrightUp);
+
+        //Block Gate
+        blockGate = hardwareMap.servo.get("bG");
+        blockGate.setPosition(bgclose);
+
+        // Sweeper
+        // Sweeper = hardwareMap.dcMotor.get("sw");
+
+        //Grappling Hook
+        tapeMotor = hardwareMap.dcMotor.get("tapeM");
+        tapeTilt = hardwareMap.servo.get("tapeT");
+        tapeTilt.setPosition(initialTilt);
+        winchMotor = hardwareMap.dcMotor.get("wM");
 
         // wait for the start button to be pressed
         waitForStart();
 
+        //Put Code Here:
         // wait for the IR Seeker to detect a signal
-        while (!irSeeker.signalDetected()) {
+        /*while (!irSeeker.signalDetected()) {
             sleep(1000);
         }
 
@@ -86,6 +140,6 @@ public class LinearIrExample extends LinearOpMode {
 
         // stop the motors
         motorRight.setPower(0);
-        motorLeft.setPower(0);
+        motorLeft.setPower(0);*/
     }
 }

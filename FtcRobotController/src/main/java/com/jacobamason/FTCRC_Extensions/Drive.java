@@ -87,9 +87,9 @@ public class Drive
 
         opMode.telemetry.addData("left fnl pwr", "final left pwr: " + String.format("%.2f", left));
 
-        rightfront.setPower(right);
+        rightfront.setPower(-right);
         rightback.setPower(right);
-        leftfront.setPower(left);
+        leftfront.setPower(-left);
         leftback.setPower(left);
 
     }

@@ -1,5 +1,4 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
-
 import com.jacobamason.FTCRC_Extensions.Drive;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -19,32 +18,39 @@ public class TankDriveOpMode extends OpMode{
     Drive driver;
     DcMotor leftfront,leftback,rightfront,rightback;
 
-    //Claw
-    Servo arm;
-    double armPosition = 0.5;
-    DcMotor claw;
+    //Grappling Hook
+    DcMotor tapeMotor;
+    Servo tapeTilt;
+    double initialTilt = 0.3;
+    DcMotor winchMotor;
 
-    //Scoop
+   //Scoop
     Servo lr;//left-right, up-down
-    double centerPosition;
-    double leftPosition;
-    double rightPosition;
-
+    double centerPosition = 0.2; // left 8, center 47, right 85
+    double leftPosition = 0.0;
+    double rightPosition = 0.4;
     Servo ud;
-    double upPosition;
-    double downPosition;
+    double upPosition = 0.6; //down 128, up 64
+    double downPosition = 0.8;
 
     //Zoop-Zoop
     Servo zleft, zright;
-    double zUp;
-    double zleftdown;
-    double zrightdown;
+    double zleftInit = 0.3; //0
+    double zleftUp = .65;
+    double zrightInit = 0.6; //255
+    double zrightUp = .2;
+    double zleftdown = .85; //140 down, 0 up
+    double zrightdown = .01;//80 down, 255 up
 
+    //BlockGate
+    Servo blockGate;
+    double bgopen = 0.6;
+    double bgclose = 0;
 
-    //TouchSensor touchSensor;
-    //OpticalDistanceSensor opDistSensor;
-    //ColorSensor colorSensor;
-    //GyroSensor gyroSensor;
+    //Sweeper;
+    DcMotor Sweeper;
+
+    double b_state = 0;
 
     @Override
     public void init() {
@@ -55,11 +61,6 @@ public class TankDriveOpMode extends OpMode{
         rightback = hardwareMap.dcMotor.get("rightback");
         driver = new Drive(this, 0.15f);
 
-        //Claw
-        arm = hardwareMap.servo.get("arm");
-        arm.setPosition(armPosition);
-        claw = hardwareMap.dcMotor.get("claw");
-
         //Scoop
         lr = hardwareMap.servo.get("lr");
         lr.setPosition(centerPosition);
@@ -69,15 +70,23 @@ public class TankDriveOpMode extends OpMode{
 
         //Zoop-Zoop
         zleft = hardwareMap.servo.get("zleft");
-        zleft.setPosition(zUp);
+        zleft.setPosition(zleftInit);
 
         zright = hardwareMap.servo.get("zright");
-        zright.setPosition(zUp);
+        zright.setPosition(zrightInit);
 
-        //touchSensor = hardwareMap.touchSensor.get("touchSensor");
-        //opDistSensor = hardwareMap.opticalDistanceSensor.get("opDistSensor");
-        //gyroSensor = hardwareMap.gyroSensor.get("gyroSensor");
-        //gyroSensor.calibrate();
+        //Block Gate
+        blockGate = hardwareMap.servo.get("bG");
+        blockGate.setPosition(bgclose);
+
+       // Sweeper
+        Sweeper = hardwareMap.dcMotor.get("sw");
+
+        //Grappling Hook
+        tapeMotor = hardwareMap.dcMotor.get("tapeM");
+        tapeTilt = hardwareMap.servo.get("tapeT");
+        tapeTilt.setPosition(initialTilt);
+        winchMotor = hardwareMap.dcMotor.get("wM");
 
     }
 
@@ -86,89 +95,70 @@ public class TankDriveOpMode extends OpMode{
         // Gamepad 1
         driver.tank_drive(leftfront, leftback, rightfront, rightback);
 
+        if(gamepad1.left_bumper) {
+            if(b_state == 0) {
+                b_state = 1;
+                if (zleft.getPosition() < 0.75) {
+                    zleft.setPosition(zleftdown);
+                    zright.setPosition(zrightdown);
+                } else if (zleft.getPosition() > 0.75) {
+                    zleft.setPosition(zleftUp);
+                    zright.setPosition(zrightUp);
+                }
+            }
+        } else b_state = 0;
 
-        //Gamepad2
-        if(gamepad2.dpad_up) {
-            arm.setPosition(arm.getPosition() + 0.1);
-        }
+        if(gamepad1.right_trigger > 0.0){
+            winchMotor.setPower(1.0);
+        } else if(gamepad1.right_bumper){
+            winchMotor.setPower(-1.0);
+        } else winchMotor.setPower(0.0);
 
-        if(gamepad2.dpad_down) {
-            arm.setPosition(arm.getPosition() - 0.1);
-        }
-
-        if(gamepad2.left_bumper) {
-           // Raise Claw
-            claw.setPower(0.5);
-        }
-
-        if(gamepad2.left_trigger > 0) {
-            //Lower Claw
-            claw.setPower(-0.5);
-        }
-
+        //Gamepad 2
         if(gamepad2.x) {
-            if(ud.getPosition() == upPosition){
+            if(ud.getPosition() < .8){
                 lr.setPosition(leftPosition);
             }
-            //Scoop lifted?
-                //no: nothing happens, press Y to bring up scoop
-                //yes: keep going
-            //Turn Scoop Left
         }
 
         if(gamepad2.b) {
-            if(ud.getPosition() == upPosition){
+            if(ud.getPosition() < .8){
                 lr.setPosition(rightPosition);
             }
-            //Scoop lifted?
-                //no: nothing happens, press Y to bring up scoop
-                //yes: keep going
-            //Turn Scoop Right
         }
 
+        if(gamepad2.right_bumper) {
+            lr.setPosition(centerPosition);
+        }
         if(gamepad2.y) {
-            if(ud.getPosition() == downPosition) {
-                ud.setPosition(upPosition);
-            }
-            //Scoop lifted?
-                //no: raise scoop
-                //yes: keep going
-            //Center Scoop
+            ud.setPosition(ud.getPosition()-0.01);
         }
 
         if(gamepad2.a) {
             lr.setPosition(centerPosition);
-            ud.setPosition(downPosition);
-            //Center Scoop
-            //Lower scoop
+            if(lr.getPosition() > .1 && lr.getPosition() < .3){
+                ud.setPosition(ud.getPosition()+0.01);
+            } else  lr.setPosition(centerPosition);
         }
 
-        if(gamepad2.right_bumper) {
-            if(zright.getPosition() == zUp && zleft.getPosition() == zUp) {
-                zleft.setPosition(zleftdown);
-                zright.setPosition(zrightdown);
-            } else if(zright.getPosition() == zrightdown && zleft.getPosition() == zleftdown) {
-                zleft.setPosition(zUp);
-                zright.setPosition(zUp);
-            }
-            //Is Zoop-zoop in?
-                //yes: put zoop-zoop out
-                //no: bring zoop-zoop in
+        if(gamepad2.left_bumper) {
+            blockGate.setPosition(bgopen);
+        } else blockGate.setPosition(bgclose);
+
+        if(gamepad2.right_trigger > 0) {
+            Sweeper.setPower(1.0);
+        } else Sweeper.setPower(0.0);
+
+        if(gamepad2.dpad_up){
+            tapeTilt.setPosition(tapeTilt.getPosition() + 0.005);
+        } else if(gamepad2.dpad_down){
+            tapeTilt.setPosition(tapeTilt.getPosition() - 0.005);
         }
 
-
-
-
-       // telemetry.addData("isPressed", String.valueOf(touchSensor.isPressed()));
-        //telemetry.addData("Distance", opDistSensor.getLightDetectedRaw());
-        //telemetry.addData("Blue:", colorSensor.blue());
-       // telemetry.addData("Red:", colorSensor.red());
-      //  telemetry.addData("Green:", colorSensor.green());
-        //telemetry.addData("Gyro X:", gyroSensor.rawX());
-       // telemetry.addData("Gyro Y:", gyroSensor.rawY());
-        //telemetry.addData("Gyro Z:", gyroSensor.rawZ());
-        //telemetry.addData("Gyro Heading:", gyroSensor.getHeading());
-        //telemetry.addData("Gyro Rotation:", gyroSensor.getRotation());
-
+        if(gamepad2.dpad_right){
+            tapeMotor.setPower(1.0);
+        } else if(gamepad2.dpad_left) {
+            tapeMotor.setPower(-1.0);
+        } else tapeMotor.setPower(0.0);
     }
 }
