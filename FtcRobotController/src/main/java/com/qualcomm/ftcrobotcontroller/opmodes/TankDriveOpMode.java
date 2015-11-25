@@ -21,17 +21,20 @@ public class TankDriveOpMode extends OpMode{
     //Grappling Hook
     DcMotor tapeMotor;
     Servo tapeTilt;
-    double initialTilt = 0.3;
+    double tapeTiltMonitorPosition;
+    double initialTilt = 0.4;
     DcMotor winchMotor;
 
    //Scoop
     Servo lr;//left-right, up-down
+    double l_state = 0;
+    double r_state = 0;
     double centerPosition = 0.2; // left 8, center 47, right 85
-    double leftPosition = 0.0;
-    double rightPosition = 0.4;
+    double leftPosition = 0.045;
+    double rightPosition = 0.35;
     Servo ud;
-    double upPosition = 0.6; //down 128, up 64
-    double downPosition = 0.8;
+    double upPosition = 0.55;
+    double downPosition = 0.89;
 
     //Zoop-Zoop
     Servo zleft, zright;
@@ -44,8 +47,8 @@ public class TankDriveOpMode extends OpMode{
 
     //BlockGate
     Servo blockGate;
-    double bgopen = 0.6;
-    double bgclose = 0;
+    double bgopen = 0.7;
+    double bgclose = 0.13;
 
     //Sweeper;
     DcMotor Sweeper;
@@ -108,7 +111,7 @@ public class TankDriveOpMode extends OpMode{
             }
         } else b_state = 0;
 
-        if(gamepad1.right_trigger > 0.0){
+        if(gamepad1.right_trigger > 0.7){
             winchMotor.setPower(1.0);
         } else if(gamepad1.right_bumper){
             winchMotor.setPower(-1.0);
@@ -116,37 +119,34 @@ public class TankDriveOpMode extends OpMode{
 
         //Gamepad 2
         if(gamepad2.x) {
-            if(ud.getPosition() < .8){
-                lr.setPosition(leftPosition);
-            }
+            lr.setPosition(lr.getPosition() - 0.05);
         }
 
         if(gamepad2.b) {
-            if(ud.getPosition() < .8){
-                lr.setPosition(rightPosition);
-            }
+            l_state = 1;
+            lr.setPosition(lr.getPosition() + 0.05);
         }
 
         if(gamepad2.right_bumper) {
             lr.setPosition(centerPosition);
         }
-        if(gamepad2.y) {
-            ud.setPosition(ud.getPosition()-0.01);
-        }
 
-        if(gamepad2.a) {
-            lr.setPosition(centerPosition);
-            if(lr.getPosition() > .1 && lr.getPosition() < .3){
-                ud.setPosition(ud.getPosition()+0.01);
-            } else  lr.setPosition(centerPosition);
+        if(gamepad2.y) {
+            ud.setPosition(upPosition);
+        } else if(gamepad2.a) {
+            if(lr.getPosition() > .175 && lr.getPosition() < .225) {
+                    ud.setPosition(downPosition);
+                }
         }
 
         if(gamepad2.left_bumper) {
-            blockGate.setPosition(bgopen);
+            if(ud.getPosition() < .69){
+                blockGate.setPosition(bgopen);
+            }
         } else blockGate.setPosition(bgclose);
 
-        if(gamepad2.right_trigger > 0) {
-            Sweeper.setPower(1.0);
+        if(gamepad2.left_trigger > 0) {
+            Sweeper.setPower(-1.0);
         } else Sweeper.setPower(0.0);
 
         if(gamepad2.dpad_up){
@@ -160,5 +160,9 @@ public class TankDriveOpMode extends OpMode{
         } else if(gamepad2.dpad_left) {
             tapeMotor.setPower(-1.0);
         } else tapeMotor.setPower(0.0);
+
+        telemetry.addData("servo value:", ud.getPosition());
     }
+
+
 }
