@@ -1,13 +1,10 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 import com.jacobamason.FTCRC_Extensions.Drive;
-import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.jacobamason.FTCRC_Extensions.ExtendedGamepad;
+import com.jacobamason.FTCRC_Extensions.ExtendedServo;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.GyroSensor;
-import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.TouchSensor;
-import com.qualcomm.robotcore.util.Range;
 
 
 /**
@@ -20,14 +17,13 @@ public class TankDriveOpMode extends OpMode{
 
     //Grappling Hook
     DcMotor tapeMotor;
-    Servo tapeTilt;
+    ExtendedServo tapeTilt;
     double tapeTiltMonitorPosition;
     double initialTilt = 0.4;
     DcMotor winchMotor;
 
    //Scoop
-    Servo lr;//left-right, up-down
-    double l_state = 0;
+    ExtendedServo lr;//left-right, up-down
     double r_state = 0;
     double centerPosition = 0.2; // left 8, center 47, right 85
     double leftPosition = 0.045;
@@ -53,6 +49,9 @@ public class TankDriveOpMode extends OpMode{
     //Sweeper;
     DcMotor Sweeper;
 
+    // Safety Hook
+    DcMotor safetyHook;
+
     double b_state = 0;
 
     @Override
@@ -65,7 +64,7 @@ public class TankDriveOpMode extends OpMode{
         driver = new Drive(this, 0.15f);
 
         //Scoop
-        lr = hardwareMap.servo.get("lr");
+        lr = new ExtendedServo(hardwareMap.servo.get("lr"));
         lr.setPosition(centerPosition);
 
         ud = hardwareMap.servo.get("ud");
@@ -87,10 +86,19 @@ public class TankDriveOpMode extends OpMode{
 
         //Grappling Hook
         tapeMotor = hardwareMap.dcMotor.get("tapeM");
-        tapeTilt = hardwareMap.servo.get("tapeT");
+        tapeTilt = new ExtendedServo(hardwareMap.servo.get("tapeT"));
         tapeTilt.setPosition(initialTilt);
         winchMotor = hardwareMap.dcMotor.get("wM");
 
+        // Safety hook
+        safetyHook = hardwareMap.dcMotor.get("safetyHook");
+    }
+
+    public TankDriveOpMode()
+    {
+        // Get a better controller
+        this.gamepad1 = new ExtendedGamepad();
+        this.gamepad2 = new ExtendedGamepad();
     }
 
     @Override
@@ -117,15 +125,22 @@ public class TankDriveOpMode extends OpMode{
             winchMotor.setPower(-1.0);
         } else winchMotor.setPower(0.0);
 
-        //Gamepad 2
-        if(gamepad2.x) {
-            lr.setPosition(lr.getPosition() - 0.05);
+
+
+        // Gamepad 2
+
+        if(Math.abs(gamepad2.right_stick_y) > 0.15f)
+        {
+            safetyHook.setPower(gamepad2.right_stick_y / 8.0);
+        }
+        else
+        {
+            safetyHook.setPower(0.0);
         }
 
-        if(gamepad2.b) {
-            l_state = 1;
-            lr.setPosition(lr.getPosition() + 0.05);
-        }
+        lr.runIf(gamepad2.b, +0.005);
+        lr.runIf(gamepad2.x, -0.005);
+        lr.runServo();
 
         if(gamepad2.right_bumper) {
             lr.setPosition(centerPosition);
@@ -149,11 +164,16 @@ public class TankDriveOpMode extends OpMode{
             Sweeper.setPower(-1.0);
         } else Sweeper.setPower(0.0);
 
-        if(gamepad2.dpad_up){
-            tapeTilt.setPosition(tapeTilt.getPosition() + 0.005);
-        } else if(gamepad2.dpad_down){
-            tapeTilt.setPosition(tapeTilt.getPosition() - 0.005);
-        }
+
+        tapeTilt.runIf(gamepad2.dpad_up, +0.005);
+        tapeTilt.runIf(gamepad2.dpad_down, -0.005);
+        tapeTilt.runServo();
+
+//        if(gamepad2.dpad_up){
+//            tapeTilt.setPosition(tapeTilt.getPosition() > 0.995 ? 1.0 : tapeTilt.getPosition() + 0.005);
+//        } else if(gamepad2.dpad_down){
+//            tapeTilt.setPosition(tapeTilt.getPosition() < 0.005 ? 0.0 : tapeTilt.getPosition() - 0.005);
+//        }
 
         if(gamepad2.dpad_right){
             tapeMotor.setPower(1.0);
@@ -161,7 +181,7 @@ public class TankDriveOpMode extends OpMode{
             tapeMotor.setPower(-1.0);
         } else tapeMotor.setPower(0.0);
 
-        telemetry.addData("servo value:", ud.getPosition());
+        telemetry.addData("servo value:", lr.getPosition());
     }
 
 
