@@ -27,7 +27,7 @@ public class ExtendedGamepad extends Gamepad
         boolean right_stick_button = false;
     }
 
-    Toggle toggle = new Toggle();
+    public Toggle toggle = new Toggle();
 
     @Override
     public void update(KeyEvent event)

@@ -19,7 +19,7 @@ public class TankDriveOpMode extends OpMode{
     DcMotor tapeMotor;
     ExtendedServo tapeTilt;
     double tapeTiltMonitorPosition;
-    double initialTilt = 0.4;
+    double initialTilt = 0.5;
     DcMotor winchMotor;
 
    //Scoop
@@ -105,7 +105,6 @@ public class TankDriveOpMode extends OpMode{
     public void loop() {
         // Gamepad 1
         driver.tank_drive(leftfront, leftback, rightfront, rightback);
-
         if(gamepad1.left_bumper) {
             if(b_state == 0) {
                 b_state = 1;
@@ -131,7 +130,7 @@ public class TankDriveOpMode extends OpMode{
 
         if(Math.abs(gamepad2.right_stick_y) > 0.15f)
         {
-            safetyHook.setPower(gamepad2.right_stick_y / 8.0);
+            safetyHook.setPower(gamepad2.right_stick_y / 4.0);
         }
         else
         {

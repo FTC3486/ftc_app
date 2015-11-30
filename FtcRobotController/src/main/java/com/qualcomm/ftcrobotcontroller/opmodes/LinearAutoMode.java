@@ -25,61 +25,71 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
+import com.jacobamason.FTCRC_Extensions.Drive;
+import com.jacobamason.FTCRC_Extensions.ExtendedServo;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.Servo;
 
 /**
  * Created by Matthew on 11/25/2015.
  */
 public class LinearAutoMode extends LinearOpMode {
-    final static double MOTOR_POWER = 0.15; // Higher values will cause the robot to move faster
-
     //DriveTrain
+    Drive driver;
     DcMotor leftfront,leftback,rightfront,rightback;
 
     //Grappling Hook
     DcMotor tapeMotor;
-    Servo tapeTilt;
-    double initialTilt = 0.2;
+    ExtendedServo tapeTilt;
+    double tapeTiltMonitorPosition;
+    double initialTilt = 0.5;
     DcMotor winchMotor;
 
     //Scoop
-    Servo lr;//left-right, up-down
+    ExtendedServo lr;//left-right, up-down
+    double r_state = 0;
     double centerPosition = 0.2; // left 8, center 47, right 85
-    double leftPosition = 0.0;
-    double rightPosition = 0.4;
-
+    double leftPosition = 0.045;
+    double rightPosition = 0.35;
     Servo ud;
-    double upPosition = 0.6; //down 128, up 64
-    double downPosition = 0.8;
+    double upPosition = 0.55;
+    double downPosition = 0.89;
 
     //Zoop-Zoop
     Servo zleft, zright;
-    double zleftUp = 0.3; //0
-    double zrightUp = 0.6; //255
+    double zleftInit = 0.3; //0
+    double zleftUp = .65;
+    double zrightInit = 0.6; //255
+    double zrightUp = .2;
     double zleftdown = .85; //140 down, 0 up
     double zrightdown = .01;//80 down, 255 up
 
     //BlockGate
     Servo blockGate;
-    double bgopen = 0.6;
-    double bgclose = 0;
+    double bgopen = 0.7;
+    double bgclose = 0.13;
 
     //Sweeper;
-    // DcMotor Sweeper;
+    DcMotor Sweeper;
+
+    // Safety Hook
+    DcMotor safetyHook;
+
+    double b_state = 0;
 
     @Override
     public void runOpMode() throws InterruptedException {
-        // set up the hardware devices we are going to use
         //Drivetrain
         leftfront = hardwareMap.dcMotor.get("leftfront");
         leftback = hardwareMap.dcMotor.get("leftback");
         rightfront = hardwareMap.dcMotor.get("rightfront");
         rightback = hardwareMap.dcMotor.get("rightback");
+        driver = new Drive(this, 0.15f);
 
         //Scoop
-        lr = hardwareMap.servo.get("lr");
+        lr = new ExtendedServo(hardwareMap.servo.get("lr"));
         lr.setPosition(centerPosition);
 
         ud = hardwareMap.servo.get("ud");
@@ -87,28 +97,59 @@ public class LinearAutoMode extends LinearOpMode {
 
         //Zoop-Zoop
         zleft = hardwareMap.servo.get("zleft");
-        zleft.setPosition(zleftUp);
+        zleft.setPosition(zleftInit);
 
         zright = hardwareMap.servo.get("zright");
-        zright.setPosition(zrightUp);
+        zright.setPosition(zrightInit);
 
         //Block Gate
         blockGate = hardwareMap.servo.get("bG");
         blockGate.setPosition(bgclose);
 
         // Sweeper
-        // Sweeper = hardwareMap.dcMotor.get("sw");
+        Sweeper = hardwareMap.dcMotor.get("sw");
 
         //Grappling Hook
         tapeMotor = hardwareMap.dcMotor.get("tapeM");
-        tapeTilt = hardwareMap.servo.get("tapeT");
+        tapeTilt = new ExtendedServo(hardwareMap.servo.get("tapeT"));
         tapeTilt.setPosition(initialTilt);
         winchMotor = hardwareMap.dcMotor.get("wM");
+
+        // Safety hook
+        safetyHook = hardwareMap.dcMotor.get("safetyHook");
+
 
         // wait for the start button to be pressed
         waitForStart();
 
         //Put Code Here:
+        leftback.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+        rightback.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+        leftback.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        rightback.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+
+        while(!(Math.abs(leftback.getCurrentPosition()) > 1000)) {
+            leftfront.setPower(-0.5f);
+            leftback.setPower(0.5f);
+            telemetry.addData("LeftBack Encoders:", leftback.getCurrentPosition());
+        }
+
+        leftfront.setPower(0);
+        leftback.setPower(0);
+
+        Sweeper.setPower(1.0);
+        sleep(1000);
+        Sweeper.setPower(0.0);
+
+
+
+
+
+
+
+
+
+
         // wait for the IR Seeker to detect a signal
         /*while (!irSeeker.signalDetected()) {
             sleep(1000);
