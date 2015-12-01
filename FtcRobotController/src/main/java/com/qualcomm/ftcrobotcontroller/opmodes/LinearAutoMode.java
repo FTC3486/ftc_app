@@ -84,8 +84,10 @@ public class LinearAutoMode extends LinearOpMode {
         //Drivetrain
         leftfront = hardwareMap.dcMotor.get("leftfront");
         leftback = hardwareMap.dcMotor.get("leftback");
+        leftback.setDirection(DcMotor.Direction.REVERSE);
         rightfront = hardwareMap.dcMotor.get("rightfront");
         rightback = hardwareMap.dcMotor.get("rightback");
+        rightback.setDirection(DcMotor.Direction.REVERSE);
         driver = new Drive(this, 0.15f);
 
         //Scoop
@@ -129,17 +131,48 @@ public class LinearAutoMode extends LinearOpMode {
         rightback.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
 
         while(!(Math.abs(leftback.getCurrentPosition()) > 1000)) {
-            leftfront.setPower(-0.5f);
-            leftback.setPower(0.5f);
+            leftfront.setPower(.6f);
+            leftback.setPower(.6f);
+            rightfront.setPower(.6f);
+            rightback.setPower(.6f);
             telemetry.addData("LeftBack Encoders:", leftback.getCurrentPosition());
         }
 
-        leftfront.setPower(0);
-        leftback.setPower(0);
+        leftfront.setPower(0f);
+        leftback.setPower(0f);
+        rightfront.setPower(0f);
+        rightback.setPower(0f);
 
-        Sweeper.setPower(1.0);
-        sleep(1000);
-        Sweeper.setPower(0.0);
+
+        while(!(leftback.getCurrentPosition() < 700)) {
+            leftfront.setPower(-.6f);
+            leftback.setPower(-.6f);
+            rightfront.setPower(.6f);
+            rightback.setPower(.6f);
+            telemetry.addData("LeftBack Encoders:", leftback.getCurrentPosition());
+        }
+
+        leftfront.setPower(0f);
+        leftback.setPower(0f);
+        rightfront.setPower(0f);
+        rightback.setPower(0f);
+
+        while(!(Math.abs(leftback.getCurrentPosition()) > 4000)) {
+            leftfront.setPower(.6f);
+            leftback.setPower(.6f);
+            rightfront.setPower(.6f);
+            rightback.setPower(.6f);
+            telemetry.addData("LeftBack Encoders:", leftback.getCurrentPosition());
+        }
+
+        leftfront.setPower(0f);
+        leftback.setPower(0f);
+        rightfront.setPower(0f);
+        rightback.setPower(0f);
+
+
+
+
 
 
 

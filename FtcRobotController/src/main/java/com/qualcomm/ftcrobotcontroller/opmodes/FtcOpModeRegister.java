@@ -65,6 +65,7 @@ public class FtcOpModeRegister implements OpModeRegister {
 
     manager.register("Tank Drive", TankDriveOpMode.class);
     manager.register("LinearAuto", LinearAutoMode.class);
+      manager.register("StateMachineAuto", StateMachineAutonomous.class);
 
 /*  manager.register("K9TeleOp", K9TeleOp.class);
     manager.register("K9IrSeeker", K9IrSeeker.class);
