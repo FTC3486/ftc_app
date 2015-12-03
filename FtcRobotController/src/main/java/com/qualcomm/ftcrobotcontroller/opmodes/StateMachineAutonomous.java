@@ -5,6 +5,7 @@ import com.jacobamason.FTCRC_Extensions.ExtendedServo;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
+import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 
@@ -13,7 +14,6 @@ import com.qualcomm.robotcore.hardware.Servo;
  */
 public class StateMachineAutonomous extends OpMode{
     //DriveTrain
-    Drive driver;
     DcMotor leftfront,leftback,rightfront,rightback;
 
     //Grappling Hook
@@ -55,16 +55,16 @@ public class StateMachineAutonomous extends OpMode{
 
     double b_state = 0;
 
+    GyroSensor gyro;
+    double angle;
+
     @Override
     public void init() {
         //Drivetrain
         leftfront = hardwareMap.dcMotor.get("leftfront");
         leftback = hardwareMap.dcMotor.get("leftback");
-        leftback.setDirection(DcMotor.Direction.REVERSE);
         rightfront = hardwareMap.dcMotor.get("rightfront");
         rightback = hardwareMap.dcMotor.get("rightback");
-        rightback.setDirection(DcMotor.Direction.REVERSE);
-        driver = new Drive(this, 0.15f);
 
         //Scoop
         lr = new ExtendedServo(hardwareMap.servo.get("lr"));
@@ -95,12 +95,13 @@ public class StateMachineAutonomous extends OpMode{
 
         // Safety hook
         safetyHook = hardwareMap.dcMotor.get("safetyHook");
+
+        //gyro = hardwareMap.gyroSensor.get("gyro");
+        //gyro.calibrate();
     }
     @Override public void start ()
 
     {
-        leftback.setMode(DcMotorController.RunMode.RESET_ENCODERS);
-        rightback.setMode(DcMotorController.RunMode.RESET_ENCODERS);
     }
 
     @Override public void loop ()
@@ -125,7 +126,7 @@ public class StateMachineAutonomous extends OpMode{
                 break;
 
 
-            case 2:
+            /*case 2:
                 zleft.setPosition(zleftdown);
                 zright.setPosition(zrightdown);
                 leftback.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
@@ -155,39 +156,28 @@ public class StateMachineAutonomous extends OpMode{
                 if(leftback.getCurrentPosition() == 0) {
                     v_state++;
                 }
-                break;
+                break;*/
 
-            case 4:
-                leftback.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-                rightback.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-                leftfront.setPower(-.6f);
-                leftback.setPower(-.6f);
-                rightfront.setPower(.6f);
-                rightback.setPower(.6f);
+           /* case 2:
+                leftfront.setPower(1.0);
+                leftback.setPower(1.0);
+                //rightfront.setPower(1);
+                //rightback.setPower(-1);
 
-                //
-                // Have the motor shafts turned the required amount?
-                //
-                // If they haven't, then the op-mode remains in this state (i.e this
-                // block will be executed the next time this method is called).
-                //
-                if (leftback.getCurrentPosition() < -275) {
-                    leftback.setMode(DcMotorController.RunMode.RESET_ENCODERS);
-                    rightback.setMode(DcMotorController.RunMode.RESET_ENCODERS);
-
-                    leftfront.setPower(0f);
-                    leftback.setPower(0f);
-                    rightfront.setPower(0f);
-                    rightback.setPower(0f);
+                /*if(gyro.getHeading() == 180) {
+                    leftfront.setPower(0);
+                    leftback.setPower(0);
+                    rightfront.setPower(0);
+                    rightback.setPower(0);
                     v_state++;
                 }
-                break;
+                break;*/
 
-            case 5:
+            /*case 5:
                 if(leftback.getCurrentPosition() == 0) {
                     v_state++;
                 }
-                break;
+                break;*/
 
             case 6:
                 leftback.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
@@ -214,7 +204,7 @@ public class StateMachineAutonomous extends OpMode{
                 }
                 break;
 
-            case 7:
+            /*case 7:
                 if(leftback.getCurrentPosition() == 0) {
                     v_state++;
                 }
@@ -244,13 +234,9 @@ public class StateMachineAutonomous extends OpMode{
                     rightback.setPower(0f);
                     v_state++;
                 }
-                break;
+                break;*/
         }
         telemetry.addData("state", v_state);
-
     }
-
     private int v_state = 0;
-
 }
-
