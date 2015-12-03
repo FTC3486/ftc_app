@@ -63,8 +63,10 @@ public class StateMachineAutonomous extends OpMode{
         //Drivetrain
         leftfront = hardwareMap.dcMotor.get("leftfront");
         leftback = hardwareMap.dcMotor.get("leftback");
+        leftback.setDirection(DcMotor.Direction.REVERSE);
         rightfront = hardwareMap.dcMotor.get("rightfront");
         rightback = hardwareMap.dcMotor.get("rightback");
+        rightback.setDirection(DcMotor.Direction.REVERSE);
 
         //Scoop
         lr = new ExtendedServo(hardwareMap.servo.get("lr"));
