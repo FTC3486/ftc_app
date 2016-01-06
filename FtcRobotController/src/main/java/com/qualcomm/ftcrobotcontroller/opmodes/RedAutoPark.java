@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.Servo;
-
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
  * Created by Matthew on 8/11/2015.
@@ -54,9 +54,7 @@ public class RedAutoPark extends OpMode{
 
     double waitTime;
 
-
-    @Override
-    public void init() {
+    @Override public void init() {
         //Drivetrain
         leftfront = hardwareMap.dcMotor.get("leftfront");
         leftback = hardwareMap.dcMotor.get("leftback");
@@ -100,10 +98,18 @@ public class RedAutoPark extends OpMode{
         gyro.calibrate();
 
     }
-    @Override public void start ()
 
+    @Override public void start ()
     {
-        Sweeper.setPower(1.0);
+        resetStartTime();
+        waitTime = 3;
+
+        while(waitTime < getRuntime()) {
+            zleft.setPosition(zleftdown);
+            zright.setPosition(zrightdown);
+            Sweeper.setPower(1.0);
+        }
+
         while(gyro.isCalibrating()){
             try {
                 Thread.sleep(20);
@@ -114,7 +120,6 @@ public class RedAutoPark extends OpMode{
     }
 
     @Override public void loop ()
-
     {
         //----------------------------------------------------------------------
         //
@@ -165,6 +170,7 @@ public class RedAutoPark extends OpMode{
                 break;
 
             case 2:
+
                 zleft.setPosition(zleftdown);
                 zright.setPosition(zrightdown);
                 leftfront.setPower(.6f);
@@ -291,7 +297,7 @@ public class RedAutoPark extends OpMode{
                 rightback.setPower(.3f);
                 telemetry.addData("lb encoder", leftback.getCurrentPosition());
                 telemetry.addData("rb encoder", rightback.getCurrentPosition());
-                if(Math.abs(leftback.getCurrentPosition()) > 650 && Math.abs(rightback.getCurrentPosition()) > 650) {
+                if(Math.abs(leftback.getCurrentPosition()) > 850 && Math.abs(rightback.getCurrentPosition()) > 850) {
                     blockGate.setPosition(bgclose);
                     resetStartTime();
                     waitTime = 2;

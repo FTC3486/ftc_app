@@ -4,6 +4,7 @@ import com.jacobamason.FTCRC_Extensions.ExtendedGamepad;
 import com.jacobamason.FTCRC_Extensions.ExtendedServo;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.Servo;
 
 
@@ -34,7 +35,7 @@ public class TankDriveOpMode extends OpMode{
 
     //Zoop-Zoop
     Servo zleft, zright;
-    double zleftInit = 0.3; //0
+    double zleftInit = 0.2; //0
     double zleftUp = .65;
     double zrightInit = 0.6; //255
     double zrightUp = .2;
@@ -85,6 +86,7 @@ public class TankDriveOpMode extends OpMode{
 
        // Sweeper
         Sweeper = hardwareMap.dcMotor.get("sw");
+        Sweeper.setDirection(DcMotor.Direction.REVERSE);
 
         //Grappling Hook
         tapeMotor = hardwareMap.dcMotor.get("tapeM");
@@ -162,7 +164,7 @@ public class TankDriveOpMode extends OpMode{
         } else blockGate.setPosition(bgclose);
 
         if(gamepad2.left_trigger > 0) {
-            Sweeper.setPower(-1.0);
+            Sweeper.setPower(1.0);
         } else Sweeper.setPower(0.0);
 
 
