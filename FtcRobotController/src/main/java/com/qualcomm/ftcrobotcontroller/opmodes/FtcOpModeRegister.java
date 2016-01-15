@@ -63,13 +63,15 @@ public class FtcOpModeRegister implements OpModeRegister {
      * Uncomment any of the following lines if you want to register an op mode.
      */
 
-    manager.register("Tank Drive", TankDriveOpMode.class);
+    //manager.register("Tank Drive", TankDriveOpMode.class);
     //manager.register("LinearAuto", LinearAutoMode.class);
-    manager.register("RedAutoStop", RedAutoStop.class);
-    manager.register("RedAutoPark", RedAutoPark.class);
-    manager.register("BlueAutoStop", BlueAutoStop.class);
-    manager.register("BlueAutoPark", BlueAutoPark.class);
-    manager.register("ContinuousServoTest", ContinuousServoTest.class);
+    //manager.register("RedAutoStop", RedAutoStop.class);
+   // manager.register("RedAutoPark", RedAutoPark.class);
+   // manager.register("BlueAutoStop", BlueAutoStop.class);
+    //manager.register("BlueAutoPark", BlueAutoPark.class);
+    //manager.register("ContinuousServoTest", ContinuousServoTest.class);
+
+      manager.register("TeleOp2016", TeleOp2016.class);
 
 /*  manager.register("K9TeleOp", K9TeleOp.class);
     manager.register("K9IrSeeker", K9IrSeeker.class);

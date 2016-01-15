@@ -110,7 +110,7 @@ public class TeleOp2016 extends OpMode{
 
         // Gamepad 2
 
-        tapeTilt.runIf(gamepad2.dpad_up, +0.005);
+       /* tapeTilt.runIf(gamepad2.dpad_up, +0.005);
         tapeTilt.runIf(gamepad2.dpad_down, -0.005);
         tapeTilt.runServo();
 
@@ -118,7 +118,7 @@ public class TeleOp2016 extends OpMode{
             tapeMotor.setPower(1.0);
         } else if(gamepad2.dpad_left) {
             tapeMotor.setPower(-1.0);
-        } else tapeMotor.setPower(0.0);
+        } else tapeMotor.setPower(0.0);*/
 
         if(gamepad2.left_stick_x > 0.2) {
             swivel.setPower(0.5);
@@ -132,17 +132,17 @@ public class TeleOp2016 extends OpMode{
             //swivel to center
             //extender.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
             //extender.setTargetPosition(bottomPosition);
-            //extender.setPower(0.5);
+            extender.setPower(-0.5);
         } else if(gamepad2.b) {
             //extender.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
             //extender.setTargetPosition(middlePosition);
-            //extender.setPower(0.5);
+            extender.setPower(0.5);
         } else if(gamepad2.y) {
             //extender.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
             //extender.setTargetPosition(highPosition);
-            //extender.setPower(0.5);
+            extender.setPower(0.5);
         } else {
-            //extender.setPower(0.0);
+            extender.setPower(0.0);
         }
 
         if(gamepad2.x) {
@@ -155,5 +155,9 @@ public class TeleOp2016 extends OpMode{
             pickup.setPower(1.0);
         }
 
+        telemetry.addData("swivel value:", swivel.getCurrentPosition());
+        telemetry.addData("extender value:", extender.getCurrentPosition());
+        telemetry.addData("left Plow:", leftPlow.getPosition());
+        telemetry.addData("right Plow", rightPlow.getPosition());
     }
 }
