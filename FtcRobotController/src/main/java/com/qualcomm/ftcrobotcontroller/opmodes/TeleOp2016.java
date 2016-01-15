@@ -33,6 +33,13 @@ public class TeleOp2016 extends OpMode{
     //Servo debrisDumper;
 
     //Plow
+    Servo leftPlow;
+    double lPdown;
+    double lPup;
+    Servo rightPlow;
+    double rPdown;
+    double rPup;
+    double b_state = 0;
 
     //Pickup
 
@@ -60,7 +67,10 @@ public class TeleOp2016 extends OpMode{
         extender = hardwareMap.dcMotor.get("extender");
         extender.setMode(DcMotorController.RunMode.RESET_ENCODERS);
         //debrisDumper = hardwareMap.servo.get("dd");
+
         //Plow
+        leftPlow = hardwareMap.servo.get("lP");
+        rightPlow = hardwareMap.servo.get("rP");
 
         //Pickup
 
@@ -84,7 +94,18 @@ public class TeleOp2016 extends OpMode{
             winchMotor.setPower(-1.0);
         } else winchMotor.setPower(0.0);
 
-
+        if(gamepad1.left_bumper) {
+            if(b_state == 0) {
+                b_state = 1;
+                if (leftPlow.getPosition() < 0.75) {
+                    leftPlow.setPosition(lPdown);
+                    rightPlow.setPosition(rPdown);
+                } else if (leftPlow.getPosition() > 0.75) {
+                    leftPlow.setPosition(lPup);
+                    rightPlow.setPosition(rPup);
+                }
+            }
+        } else b_state = 0;
 
         // Gamepad 2
 
@@ -126,7 +147,9 @@ public class TeleOp2016 extends OpMode{
         if(gamepad2.x) {
             //dump debris
         } else {
-            //don't dumb debris
+            //don't dump debris
         }
+
+
     }
 }
