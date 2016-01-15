@@ -25,6 +25,12 @@ public class TeleOp2016 extends OpMode{
     //Parking Brake
 
     //Turret
+    DcMotor swivel;
+    DcMotor extender;
+    //int bottomPosition;
+    //int middlePosition;
+    //int highPosition;
+    //Servo debrisDumper;
 
     //Plow
 
@@ -50,7 +56,10 @@ public class TeleOp2016 extends OpMode{
         //Parking Brake
 
         //Turret
-
+        swivel = hardwareMap.dcMotor.get("swivel");
+        extender = hardwareMap.dcMotor.get("extender");
+        extender.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+        //debrisDumper = hardwareMap.servo.get("dd");
         //Plow
 
         //Pickup
@@ -89,7 +98,35 @@ public class TeleOp2016 extends OpMode{
             tapeMotor.setPower(-1.0);
         } else tapeMotor.setPower(0.0);
 
+        if(gamepad2.left_stick_x > 0.2) {
+            swivel.setPower(0.5);
+        } else if(gamepad2.left_stick_x < -0.2) {
+            swivel.setPower(-0.5);
+        } else {
+            swivel.setPower(0.0);
+        }
+
+        if(gamepad2.a) {
+            //swivel to center
+            //extender.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
+            //extender.setTargetPosition(bottomPosition);
+            //extender.setPower(0.5);
+        } else if(gamepad2.b) {
+            //extender.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
+            //extender.setTargetPosition(middlePosition);
+            //extender.setPower(0.5);
+        } else if(gamepad2.y) {
+            //extender.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
+            //extender.setTargetPosition(highPosition);
+            //extender.setPower(0.5);
+        } else {
+            //extender.setPower(0.0);
+        }
+
+        if(gamepad2.x) {
+            //dump debris
+        } else {
+            //don't dumb debris
+        }
     }
-
-
 }
