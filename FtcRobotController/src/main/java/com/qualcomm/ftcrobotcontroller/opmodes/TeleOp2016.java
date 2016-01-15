@@ -56,17 +56,17 @@ public class TeleOp2016 extends OpMode{
         driver = new Drive(this, 0.15f);
 
         //Grappling Hook
-        tapeMotor = hardwareMap.dcMotor.get("tapeM");
+       /* tapeMotor = hardwareMap.dcMotor.get("tapeM");
         tapeTilt = new ExtendedServo(hardwareMap.servo.get("tapeT"));
-        tapeTilt.setPosition(initialTilt);
+        tapeTilt.setPosition(initialTilt);*/
         winchMotor = hardwareMap.dcMotor.get("wM");
 
         //Parking Brake
 
         //Turret
         swivel = hardwareMap.dcMotor.get("swivel");
-        extender = hardwareMap.dcMotor.get("extender");
-        extender.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+        //extender = hardwareMap.dcMotor.get("extender");
+       // extender.setMode(DcMotorController.RunMode.RESET_ENCODERS);
         //debrisDumper = hardwareMap.servo.get("dd");
 
         //Plow
@@ -74,7 +74,7 @@ public class TeleOp2016 extends OpMode{
         rightPlow = hardwareMap.servo.get("rP");
 
         //Pickup
-        pickup = hardwareMap.dcMotor.get("pickup");
+        //pickup = hardwareMap.dcMotor.get("pickup");
     }
 
     public TeleOp2016()
@@ -128,7 +128,7 @@ public class TeleOp2016 extends OpMode{
             swivel.setPower(0.0);
         }
 
-        if(gamepad2.a) {
+        /*if(gamepad2.a) {
             //swivel to center
             //extender.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
             //extender.setTargetPosition(bottomPosition);
@@ -143,7 +143,7 @@ public class TeleOp2016 extends OpMode{
             extender.setPower(0.5);
         } else {
             extender.setPower(0.0);
-        }
+        }*/
 
         if(gamepad2.x) {
             //dump debris
@@ -152,12 +152,12 @@ public class TeleOp2016 extends OpMode{
         }
 
         if(gamepad2.right_bumper) {
-            pickup.setPower(1.0);
+           // pickup.setPower(1.0);
         }
 
-        telemetry.addData("swivel value:", swivel.getCurrentPosition());
+        /*telemetry.addData("swivel value:", swivel.getCurrentPosition());
         telemetry.addData("extender value:", extender.getCurrentPosition());
         telemetry.addData("left Plow:", leftPlow.getPosition());
-        telemetry.addData("right Plow", rightPlow.getPosition());
+        telemetry.addData("right Plow", rightPlow.getPosition());*/
     }
 }
