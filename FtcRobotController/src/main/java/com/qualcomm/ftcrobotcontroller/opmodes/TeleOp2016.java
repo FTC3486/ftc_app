@@ -42,6 +42,7 @@ public class TeleOp2016 extends OpMode{
     double b_state = 0;
 
     //Pickup
+    DcMotor pickup;
 
     @Override
     public void init() {
@@ -73,7 +74,7 @@ public class TeleOp2016 extends OpMode{
         rightPlow = hardwareMap.servo.get("rP");
 
         //Pickup
-
+        pickup = hardwareMap.dcMotor.get("pickup");
     }
 
     public TeleOp2016()
@@ -150,6 +151,9 @@ public class TeleOp2016 extends OpMode{
             //don't dump debris
         }
 
+        if(gamepad2.right_bumper) {
+            pickup.setPower(1.0);
+        }
 
     }
 }
