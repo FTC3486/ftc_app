@@ -15,7 +15,14 @@ public class ContinuousServoTest extends OpMode {
 
     @Override
     public void loop() {
-        continuousServo.setPosition(0.9);
+        if(gamepad1.y){
+            continuousServo.setPosition(0.000001);
+        } else if(gamepad1.a) {
+            continuousServo.setPosition(0.999999);
+        } else {
+            continuousServo.setPosition(0.5);
+        }
+
     }
 
 }
