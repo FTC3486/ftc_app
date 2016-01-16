@@ -1,52 +1,43 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 import com.jacobamason.FTCRC_Extensions.Drive;
-import com.jacobamason.FTCRC_Extensions.ExtendedGamepad;
-import com.jacobamason.FTCRC_Extensions.ExtendedServo;
+import com.jacobamason.FTCRC_Extensions.GamepadWrapper;
+import com.qualcomm.ftcrobotcontroller.opmodes.Subsystems.ParkingBrake;
+import com.qualcomm.ftcrobotcontroller.opmodes.Subsystems.Pickup;
+import com.qualcomm.ftcrobotcontroller.opmodes.Subsystems.Plow;
+import com.qualcomm.ftcrobotcontroller.opmodes.Subsystems.TapeMeasure;
+import com.qualcomm.ftcrobotcontroller.opmodes.Subsystems.Turret;
+import com.qualcomm.ftcrobotcontroller.opmodes.Subsystems.Winch;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorController;
-import com.qualcomm.robotcore.hardware.Servo;
-
 
 /**
  * Created by Matthew on 8/11/2015.
  */
 public class TeleOp2016 extends OpMode{
+    GamepadWrapper joy1;
+    GamepadWrapper joy2;
+
     //DriveTrain
     Drive driver;
-    DcMotor leftfront,leftback,rightfront,rightback;
+    DcMotor leftfront, leftback, rightfront, rightback;
 
     //Grappling Hook
-    ExtendedServo tapeMotor;
-    //ExtendedServo tapeTilt;
-    //double initialTilt = 0.5;
-    DcMotor winchMotor;
+    TapeMeasure tapeMeasure;
+    /*ExtendedServo tapeMotor;
+    ExtendedServo tapeTilt;
+    double initialTilt = 0.5;*/
 
-    //Parking Brake
-    ExtendedServo parkingBrake;
-    double inPosition = 0.337;
-    double outPosition = 1.0;
-    int gp1_a_state = 0;
-
-    //Turret
-    DcMotor swivel;
-    DcMotor extender;
-    //Servo debrisDumper;
-
-    //Plow
-    ExtendedServo leftPlow;
-    double lPdown = 0.22;
-    double lPup = 0.57;
-    ExtendedServo rightPlow;
-    double rPdown = .729;
-    double rPup = .113;
-    double gp1_left_bumper_state = 0;
-
-    //Pickup
-    //DcMotor pickup;
+    Winch winch;
+    ParkingBrake parkingBrake;
+    Turret turret;
+    Plow plow;
+    Pickup pickup;
 
     @Override
     public void init() {
+        joy1 = new GamepadWrapper();
+        joy2 = new GamepadWrapper();
+
         //Drivetrain
         leftfront = hardwareMap.dcMotor.get("leftfront");
         leftback = hardwareMap.dcMotor.get("leftback");
@@ -54,113 +45,102 @@ public class TeleOp2016 extends OpMode{
         rightback = hardwareMap.dcMotor.get("rightback");
         driver = new Drive(this, 0.15f);
 
+
         //Grappling Hook
-        tapeMotor = new ExtendedServo(hardwareMap.servo.get("tapeM"));
-        //tapeTilt = new ExtendedServo(hardwareMap.servo.get("tapeT"));
-        //tapeTilt.setPosition(initialTilt);
-        winchMotor = hardwareMap.dcMotor.get("wM");
+        tapeMeasure = new TapeMeasure("tapeMotor", "tapeTilt", hardwareMap);
+        winch = new Winch("winchMotor", hardwareMap);
+
 
         //Parking Brake
-        parkingBrake = new ExtendedServo(hardwareMap.servo.get("pB"));
-        parkingBrake.setPosition(0.0);
+        parkingBrake = new ParkingBrake("parkingBrake", hardwareMap);
 
         //Turret
-        swivel = hardwareMap.dcMotor.get("swivel");
-        swivel.setMode(DcMotorController.RunMode.RESET_ENCODERS);
-        swivel.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-        extender = hardwareMap.dcMotor.get("extender");
-        //debrisDumper = hardwareMap.servo.get("dd");
+        turret = new Turret("swivel", "extender", "dumper", hardwareMap);
 
         //Plow
-        leftPlow = new ExtendedServo(hardwareMap.servo.get("lP"));
-        leftPlow.setPosition(lPup);
-        rightPlow =  new ExtendedServo(hardwareMap.servo.get("rP"));
-        rightPlow.setPosition(rPup);
+        plow = new Plow("leftPlow", "rightPlow", hardwareMap);
 
         //Pickup
-        //pickup = hardwareMap.dcMotor.get("pickup");
+        pickup = new Pickup("pickup", hardwareMap);
     }
 
-    public TeleOp2016()
-    {
-        // Get a better controller
-        this.gamepad1 = new ExtendedGamepad();
-        this.gamepad2 = new ExtendedGamepad();
-    }
 
     @Override
     public void loop() {
+        joy1.update(gamepad1);
+        joy2.update(gamepad2);
+
         // Gamepad 1
         driver.tank_drive(leftfront, leftback, rightfront, rightback);
 
         if(gamepad1.right_trigger > 0.7){
-            winchMotor.setPower(1.0);
+            winch.out();
         } else if(gamepad1.right_bumper){
-            winchMotor.setPower(-1.0);
-        } else winchMotor.setPower(0.0);
+            winch.in();
+        } else winch.stop();
 
-        if(gamepad1.left_bumper) {
-            if(gp1_left_bumper_state == 0) {
-                gp1_left_bumper_state = 1;
-                if (leftPlow.getPosition() < 0.4) {
-                    leftPlow.setPosition(lPup);
-                    rightPlow.setPosition(rPup);
-                } else if (leftPlow.getPosition() > 0.4) {
-                    leftPlow.setPosition(lPdown);
-                    rightPlow.setPosition(rPdown);
-                }
-            }
-        } else gp1_left_bumper_state = 0;
+        if(joy1.toggle.left_bumper){
+            plow.goDown();
+        } else {
+            plow.goUp();
+        }
 
-        if(gamepad1.a) {
-            if(gp1_a_state == 0) {
-                gp1_a_state = 1;
-                if (parkingBrake.getPosition() < 0.6) {
-                    parkingBrake.setPosition(outPosition);
-                } else if (parkingBrake.getPosition() > 0.6) {
-                    parkingBrake.setPosition(inPosition);
-                }
-            }
-        } else gp1_left_bumper_state = 0;
+        if(joy1.toggle.a){
+            parkingBrake.brake();
+        } else {
+            parkingBrake.release();
+        }
 
         // Gamepad 2
+        if(gamepad2.dpad_left) {
+            tapeMeasure.extendTapeMeasure();
+        } else if(gamepad2.dpad_right) {
+            tapeMeasure.retractTapeMeasure();
+        } else {
+            tapeMeasure.stopTapeMeasure();
+        }
 
-        /*tapeTilt.runIf(gamepad2.dpad_up, +0.005);
-        tapeTilt.runIf(gamepad2.dpad_down, -0.005);
-        tapeTilt.runServo();*/
-
-        tapeMotor.runIf(gamepad2.dpad_up, +0.005);
-        tapeMotor.runIf(gamepad2.dpad_down, -0.005);
-        tapeMotor.runServo();
+        if(gamepad2.dpad_up) {
+            tapeMeasure.tiltUp();
+        } else if(gamepad2.dpad_down) {
+            tapeMeasure.tiltDown();
+        } else {
+            tapeMeasure.stopTilt();
+        }
 
         if(gamepad2.left_stick_x > 0.2) {
-            swivel.setPower(0.5);
+            turret.swivelRight();
         } else if(gamepad2.left_stick_x < -0.2) {
-            swivel.setPower(-0.5);
+            turret.swivelLeft();
         } else {
-            swivel.setPower(0.0);
+            turret.swivelStop();
         }
 
         if(gamepad2.a) {
-            extender.setPower(-0.5);
+            turret.retract();
         } else if(gamepad2.y) {
-            extender.setPower(0.5);
+            turret.extend();
         } else {
-            extender.setPower(0.0);
+            turret.extenderStop();
         }
 
         if(gamepad2.x) {
-            //dump debris
+            turret.dumpDebris();
         } else {
-            //don't dump debris
+            turret.holdDebris();
         }
 
         if(gamepad2.right_bumper) {
-           // pickup.setPower(1.0);
+           pickup.collect();
+        } else {
+            pickup.stop();
         }
 
-        telemetry.addData("swivel value:", swivel.getCurrentPosition());
-        telemetry.addData("parking brake", parkingBrake.getPosition());
-        telemetry.addData("tapeMotor", tapeMotor.getPosition());
+        telemetry.addData("Turret ", turret);
+        telemetry.addData("Parking Brake ", parkingBrake);
+        telemetry.addData("Winch ", winch);
+        telemetry.addData("Plow ", plow);
+        telemetry.addData("Pickup ", pickup);
+        //telemetry.addData("tapeMotor ", tapeMotor.getPosition());
     }
 }

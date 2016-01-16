@@ -10,13 +10,6 @@ import java.util.Enumeration;
  */
 public class GamepadWrapper
 {
-    private Gamepad gamepad;
-
-    public GamepadWrapper(Gamepad gamepad)
-    {
-        this.gamepad = gamepad;
-    }
-
     public class ButtonMap
     {
         public boolean dpad_up = false;
@@ -37,9 +30,9 @@ public class GamepadWrapper
     }
 
     public ButtonMap toggle = new ButtonMap();
-    private ButtonMap previousButtonStates  = new ButtonMap();
+    private ButtonMap previousButtonStates = new ButtonMap();
 
-    public void updateButtonMap(ButtonMap map)
+    private void updateButtonMap(ButtonMap map, Gamepad gamepad)
     {
         map.dpad_up = gamepad.dpad_up;
         map.dpad_down = gamepad.dpad_down;
@@ -56,140 +49,137 @@ public class GamepadWrapper
         map.left_stick_button = gamepad.left_stick_button;
         map.right_stick_button = gamepad.right_stick_button;
     }
-
-
-    public void update()
+    
+    public void update(Gamepad gamepad)
     {
         if (!gamepad.dpad_up && previousButtonStates.dpad_up)
         {
-            this.toggle.dpad_up = !this.toggle.dpad_up;
+            toggle.dpad_up = !toggle.dpad_up;
         }
         if (!gamepad.dpad_down && previousButtonStates.dpad_down)
         {
-            this.toggle.dpad_down = !this.toggle.dpad_down;
+            toggle.dpad_down = !toggle.dpad_down;
         }
         if (!gamepad.dpad_left && previousButtonStates.dpad_left)
         {
-            this.toggle.dpad_left = !this.toggle.dpad_left;
+            toggle.dpad_left = !toggle.dpad_left;
         }
         if (!gamepad.dpad_right && previousButtonStates.dpad_right)
         {
-            this.toggle.dpad_right = !this.toggle.dpad_right;
+            toggle.dpad_right = !toggle.dpad_right;
         }
         if (!gamepad.a && previousButtonStates.a)
         {
-            this.toggle.a = !this.toggle.a;
+            toggle.a = !toggle.a;
         }
         if (!gamepad.b && previousButtonStates.b)
         {
-            this.toggle.b = !this.toggle.b;
+            toggle.b = !toggle.b;
         }
         if (!gamepad.x && previousButtonStates.x)
         {
-            this.toggle.x = !this.toggle.x;
+            toggle.x = !toggle.x;
         }
         if (!gamepad.y && previousButtonStates.y)
         {
-            this.toggle.y = !this.toggle.y;
+            toggle.y = !toggle.y;
         }
         if (!gamepad.guide && previousButtonStates.guide)
         {
-            this.toggle.guide = !this.toggle.guide;
+            toggle.guide = !toggle.guide;
         }
         if (!gamepad.start && previousButtonStates.start)
         {
-            this.toggle.start = !this.toggle.start;
+            toggle.start = !toggle.start;
         }
         if (!gamepad.back && previousButtonStates.back)
         {
-            this.toggle.back = !this.toggle.back;
+            toggle.back = !toggle.back;
         }
         if (!gamepad.right_bumper && previousButtonStates.right_bumper)
         {
-            this.toggle.right_bumper = !this.toggle.right_bumper;
+            toggle.right_bumper = !toggle.right_bumper;
         }
         if (!gamepad.left_bumper && previousButtonStates.left_bumper)
         {
-            this.toggle.left_bumper = !this.toggle.left_bumper;
+            toggle.left_bumper = !toggle.left_bumper;
         }
         if (!gamepad.left_stick_button && previousButtonStates.left_stick_button)
         {
-            this.toggle.left_stick_button = !this.toggle.left_stick_button;
+            toggle.left_stick_button = !toggle.left_stick_button;
         }
         if (!gamepad.right_stick_button && previousButtonStates.right_stick_button)
         {
-            this.toggle.right_stick_button = !this.toggle.right_stick_button;
+            toggle.right_stick_button = !toggle.right_stick_button;
         }
 
-        updateButtonMap(previousButtonStates);
+        updateButtonMap(previousButtonStates, gamepad);
     }
 
     @Override
     public String toString()
     {
-        String str = super.toString();
-
         String toggleStr = "";
-        if(this.toggle.dpad_up) {
+        if(toggle.dpad_up) {
             toggleStr = toggleStr + "tog.dpad_up ";
         }
 
-        if(this.toggle.dpad_down) {
+        if(toggle.dpad_down) {
             toggleStr = toggleStr + "tog.dpad_down ";
         }
 
-        if(this.toggle.dpad_left) {
+        if(toggle.dpad_left) {
             toggleStr = toggleStr + "tog.dpad_left ";
         }
 
-        if(this.toggle.dpad_right) {
+        if(toggle.dpad_right) {
             toggleStr = toggleStr + "tog.dpad_right ";
         }
 
-        if(this.toggle.a) {
+        if(toggle.a) {
             toggleStr = toggleStr + "tog.a ";
         }
 
-        if(this.toggle.b) {
+        if(toggle.b) {
             toggleStr = toggleStr + "tog.b ";
         }
 
-        if(this.toggle.x) {
+        if(toggle.x) {
             toggleStr = toggleStr + "tog.x ";
         }
 
-        if(this.toggle.y) {
+        if(toggle.y) {
             toggleStr = toggleStr + "tog.y ";
         }
 
-        if(this.toggle.guide) {
+        if(toggle.guide) {
             toggleStr = toggleStr + "tog.guide ";
         }
 
-        if(this.toggle.start) {
+        if(toggle.start) {
             toggleStr = toggleStr + "tog.start ";
         }
 
-        if(this.toggle.back) {
+        if(toggle.back) {
             toggleStr = toggleStr + "tog.back ";
         }
 
-        if(this.toggle.left_bumper) {
+        if(toggle.left_bumper) {
             toggleStr = toggleStr + "tog.left_bumper ";
         }
 
-        if(this.toggle.right_bumper) {
+        if(toggle.right_bumper) {
             toggleStr = toggleStr + "tog.right_bumper ";
         }
 
-        if(this.toggle.left_stick_button) {
+        if(toggle.left_stick_button) {
             toggleStr = toggleStr +  "tog.left_stick_button ";
         }
 
-        if(this.toggle.right_stick_button) {
+        if(toggle.right_stick_button) {
             toggleStr = toggleStr +  "toggle.right_stick_button";
         }
 
-        return str.concat(toggleStr);
+        return toggleStr;
     }
 }

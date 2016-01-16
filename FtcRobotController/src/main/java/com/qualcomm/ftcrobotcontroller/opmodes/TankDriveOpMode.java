@@ -1,6 +1,6 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 import com.jacobamason.FTCRC_Extensions.Drive;
-import com.jacobamason.FTCRC_Extensions.ExtendedGamepad;
+import com.jacobamason.FTCRC_Extensions.GamepadWrapper;
 import com.jacobamason.FTCRC_Extensions.ExtendedServo;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -98,12 +98,12 @@ public class TankDriveOpMode extends OpMode{
         safetyHook = hardwareMap.dcMotor.get("safetyHook");
     }
 
-    public TankDriveOpMode()
+   /* public TankDriveOpMode()
     {
         // Get a better controller
         this.gamepad1 = new ExtendedGamepad();
         this.gamepad2 = new ExtendedGamepad();
-    }
+    }*/
 
     @Override
     public void loop() {
