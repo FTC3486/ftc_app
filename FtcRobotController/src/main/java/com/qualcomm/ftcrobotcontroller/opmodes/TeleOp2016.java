@@ -24,6 +24,9 @@ public class TeleOp2016 extends OpMode{
 
     //Parking Brake
     ExtendedServo parkingBrake;
+    double inPosition = 0.337;
+    double outPosition = 1.0;
+    int gp1_a_state = 0;
 
     //Turret
     DcMotor swivel;
@@ -40,7 +43,7 @@ public class TeleOp2016 extends OpMode{
     ExtendedServo rightPlow;
     double rPdown = .729;
     double rPup = .113;
-    double b_state = 0;
+    double gp1_left_bumper_state = 0;
 
     //Pickup
     DcMotor pickup;
@@ -101,8 +104,8 @@ public class TeleOp2016 extends OpMode{
         } else winchMotor.setPower(0.0);
 
         if(gamepad1.left_bumper) {
-            if(b_state == 0) {
-                b_state = 1;
+            if(gp1_left_bumper_state == 0) {
+                gp1_left_bumper_state = 1;
                 if (leftPlow.getPosition() < 0.4) {
                     leftPlow.setPosition(lPup);
                     rightPlow.setPosition(rPup);
@@ -111,11 +114,19 @@ public class TeleOp2016 extends OpMode{
                     rightPlow.setPosition(rPdown);
                 }
             }
-        } else b_state = 0;
+        } else gp1_left_bumper_state = 0;
 
-        parkingBrake.runIf(gamepad1.b, +0.05);
-        parkingBrake.runIf(gamepad1.x, -0.05);
-        parkingBrake.runServo();
+        if(gamepad1.a) {
+            if(gp1_a_state == 0) {
+                gp1_a_state = 1;
+                if (parkingBrake.getPosition() < 0.6) {
+                    parkingBrake.setPosition(outPosition);
+                } else if (parkingBrake.getPosition() > 0.6) {
+                    parkingBrake.setPosition(inPosition);
+                }
+            }
+        } else gp1_left_bumper_state = 0;
+
         // Gamepad 2
 
         /*tapeTilt.runIf(gamepad2.dpad_up, +0.005);
