@@ -17,9 +17,9 @@ public class TeleOp2016 extends OpMode{
     DcMotor leftfront,leftback,rightfront,rightback;
 
     //Grappling Hook
-    DcMotor tapeMotor;
-    ExtendedServo tapeTilt;
-    double initialTilt = 0.5;
+    Servo tapeMotor;
+    //ExtendedServo tapeTilt;
+    //double initialTilt = 0.5;
     DcMotor winchMotor;
 
     //Parking Brake
@@ -33,12 +33,12 @@ public class TeleOp2016 extends OpMode{
     //Servo debrisDumper;
 
     //Plow
-    Servo leftPlow;
-    double lPdown;
-    double lPup;
-    Servo rightPlow;
-    double rPdown;
-    double rPup;
+    ExtendedServo leftPlow;
+    double lPdown = 0.22;
+    double lPup = 0.57;
+    ExtendedServo rightPlow;
+    double rPdown = .729;
+    double rPup = .113;
     double b_state = 0;
 
     //Pickup
@@ -49,29 +49,31 @@ public class TeleOp2016 extends OpMode{
         //Drivetrain
         leftfront = hardwareMap.dcMotor.get("leftfront");
         leftback = hardwareMap.dcMotor.get("leftback");
-        leftback.setDirection(DcMotor.Direction.REVERSE);
         rightfront = hardwareMap.dcMotor.get("rightfront");
         rightback = hardwareMap.dcMotor.get("rightback");
-        rightback.setDirection(DcMotor.Direction.REVERSE);
         driver = new Drive(this, 0.15f);
 
         //Grappling Hook
-       /* tapeMotor = hardwareMap.dcMotor.get("tapeM");
-        tapeTilt = new ExtendedServo(hardwareMap.servo.get("tapeT"));
-        tapeTilt.setPosition(initialTilt);*/
+        tapeMotor = hardwareMap.servo.get("tapeM");
+        tapeMotor.setPosition(0.5);
+        //tapeTilt = new ExtendedServo(hardwareMap.servo.get("tapeT"));
+        //tapeTilt.setPosition(initialTilt);
         winchMotor = hardwareMap.dcMotor.get("wM");
 
         //Parking Brake
 
         //Turret
         swivel = hardwareMap.dcMotor.get("swivel");
-        //extender = hardwareMap.dcMotor.get("extender");
-       // extender.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+        swivel.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+        swivel.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        extender = hardwareMap.dcMotor.get("extender");
         //debrisDumper = hardwareMap.servo.get("dd");
 
         //Plow
-        leftPlow = hardwareMap.servo.get("lP");
-        rightPlow = hardwareMap.servo.get("rP");
+        leftPlow = new ExtendedServo(hardwareMap.servo.get("lP"));
+        leftPlow.setPosition(lPup);
+        rightPlow =  new ExtendedServo(hardwareMap.servo.get("rP"));
+        rightPlow.setPosition(rPup);
 
         //Pickup
         //pickup = hardwareMap.dcMotor.get("pickup");
@@ -98,27 +100,33 @@ public class TeleOp2016 extends OpMode{
         if(gamepad1.left_bumper) {
             if(b_state == 0) {
                 b_state = 1;
-                if (leftPlow.getPosition() < 0.75) {
-                    leftPlow.setPosition(lPdown);
-                    rightPlow.setPosition(rPdown);
-                } else if (leftPlow.getPosition() > 0.75) {
+                if (leftPlow.getPosition() < 0.4) {
                     leftPlow.setPosition(lPup);
                     rightPlow.setPosition(rPup);
+                } else if (leftPlow.getPosition() > 0.4) {
+                    leftPlow.setPosition(lPdown);
+                    rightPlow.setPosition(rPdown);
                 }
             }
         } else b_state = 0;
 
+        if(gamepad1.b & gamepad1.left_trigger > 0.5) {
+            //lock the winch
+        }
+
         // Gamepad 2
 
-       /* tapeTilt.runIf(gamepad2.dpad_up, +0.005);
+        /*tapeTilt.runIf(gamepad2.dpad_up, +0.005);
         tapeTilt.runIf(gamepad2.dpad_down, -0.005);
-        tapeTilt.runServo();
+        tapeTilt.runServo();*/
 
         if(gamepad2.dpad_right){
-            tapeMotor.setPower(1.0);
+            tapeMotor.setPosition(0.99999);
         } else if(gamepad2.dpad_left) {
-            tapeMotor.setPower(-1.0);
-        } else tapeMotor.setPower(0.0);*/
+            tapeMotor.setPosition(0.11111);
+        } else {
+            tapeMotor.setPosition(0.5);
+        }
 
         if(gamepad2.left_stick_x > 0.2) {
             swivel.setPower(0.5);
@@ -128,22 +136,13 @@ public class TeleOp2016 extends OpMode{
             swivel.setPower(0.0);
         }
 
-        /*if(gamepad2.a) {
-            //swivel to center
-            //extender.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
-            //extender.setTargetPosition(bottomPosition);
+        if(gamepad2.a) {
             extender.setPower(-0.5);
-        } else if(gamepad2.b) {
-            //extender.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
-            //extender.setTargetPosition(middlePosition);
-            extender.setPower(0.5);
         } else if(gamepad2.y) {
-            //extender.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
-            //extender.setTargetPosition(highPosition);
             extender.setPower(0.5);
         } else {
             extender.setPower(0.0);
-        }*/
+        }
 
         if(gamepad2.x) {
             //dump debris
@@ -155,9 +154,6 @@ public class TeleOp2016 extends OpMode{
            // pickup.setPower(1.0);
         }
 
-        /*telemetry.addData("swivel value:", swivel.getCurrentPosition());
-        telemetry.addData("extender value:", extender.getCurrentPosition());
-        telemetry.addData("left Plow:", leftPlow.getPosition());
-        telemetry.addData("right Plow", rightPlow.getPosition());*/
+        telemetry.addData("swivel value:", swivel.getCurrentPosition());
     }
 }
