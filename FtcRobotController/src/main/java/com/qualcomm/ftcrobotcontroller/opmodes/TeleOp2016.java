@@ -17,7 +17,7 @@ public class TeleOp2016 extends OpMode{
     DcMotor leftfront,leftback,rightfront,rightback;
 
     //Grappling Hook
-    Servo tapeMotor;
+    ExtendedServo tapeMotor;
     //ExtendedServo tapeTilt;
     //double initialTilt = 0.5;
     DcMotor winchMotor;
@@ -31,9 +31,6 @@ public class TeleOp2016 extends OpMode{
     //Turret
     DcMotor swivel;
     DcMotor extender;
-    //int bottomPosition;
-    //int middlePosition;
-    //int highPosition;
     //Servo debrisDumper;
 
     //Plow
@@ -46,7 +43,7 @@ public class TeleOp2016 extends OpMode{
     double gp1_left_bumper_state = 0;
 
     //Pickup
-    DcMotor pickup;
+    //DcMotor pickup;
 
     @Override
     public void init() {
@@ -58,8 +55,7 @@ public class TeleOp2016 extends OpMode{
         driver = new Drive(this, 0.15f);
 
         //Grappling Hook
-        tapeMotor = hardwareMap.servo.get("tapeM");
-        tapeMotor.setPosition(0.5);
+        tapeMotor = new ExtendedServo(hardwareMap.servo.get("tapeM"));
         //tapeTilt = new ExtendedServo(hardwareMap.servo.get("tapeT"));
         //tapeTilt.setPosition(initialTilt);
         winchMotor = hardwareMap.dcMotor.get("wM");
@@ -133,13 +129,9 @@ public class TeleOp2016 extends OpMode{
         tapeTilt.runIf(gamepad2.dpad_down, -0.005);
         tapeTilt.runServo();*/
 
-        if(gamepad2.dpad_right){
-            tapeMotor.setPosition(0.99999);
-        } else if(gamepad2.dpad_left) {
-            tapeMotor.setPosition(0.11111);
-        } else {
-            tapeMotor.setPosition(0.5);
-        }
+        tapeMotor.runIf(gamepad2.dpad_up, +0.005);
+        tapeMotor.runIf(gamepad2.dpad_down, -0.005);
+        tapeMotor.runServo();
 
         if(gamepad2.left_stick_x > 0.2) {
             swivel.setPower(0.5);
@@ -169,5 +161,6 @@ public class TeleOp2016 extends OpMode{
 
         telemetry.addData("swivel value:", swivel.getCurrentPosition());
         telemetry.addData("parking brake", parkingBrake.getPosition());
+        telemetry.addData("tapeMotor", tapeMotor.getPosition());
     }
 }
