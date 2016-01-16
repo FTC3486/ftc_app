@@ -3,115 +3,125 @@ package com.jacobamason.FTCRC_Extensions;
 import android.view.KeyEvent;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
+import java.util.Enumeration;
+
 /**
  * Created by Jacob on 11/28/2015.
  */
-public class ExtendedGamepad extends Gamepad
+public class GamepadWrapper
 {
-    public class Toggle
+    private Gamepad gamepad;
+
+    public GamepadWrapper(Gamepad gamepad)
     {
-        boolean dpad_up = false;
-        boolean dpad_down = false;
-        boolean dpad_right = false;
-        boolean dpad_left = false;
-        boolean a = false;
-        boolean b = false;
-        boolean x = false;
-        boolean y = false;
-        boolean guide = false;
-        boolean start = false;
-        boolean back = false;
-        boolean right_bumper = false;
-        boolean left_bumper = false;
-        boolean left_stick_button = false;
-        boolean right_stick_button = false;
+        this.gamepad = gamepad;
     }
 
-    public Toggle toggle = new Toggle();
-
-    @Override
-    public void update(KeyEvent event)
+    public class ButtonMap
     {
-        this.id = event.getDeviceId();
-        this.timestamp = event.getEventTime();
-        int keyCode = event.getKeyCode();
-        if (keyCode == 19)
+        public boolean dpad_up = false;
+        public boolean dpad_down = false;
+        public boolean dpad_right = false;
+        public boolean dpad_left = false;
+        public boolean a = false;
+        public boolean b = false;
+        public boolean x = false;
+        public boolean y = false;
+        public boolean guide = false;
+        public boolean start = false;
+        public boolean back = false;
+        public boolean right_bumper = false;
+        public boolean left_bumper = false;
+        public boolean left_stick_button = false;
+        public boolean right_stick_button = false;
+    }
+
+    public ButtonMap toggle = new ButtonMap();
+    private ButtonMap previousButtonStates  = new ButtonMap();
+
+    public void updateButtonMap(ButtonMap map)
+    {
+        map.dpad_up = gamepad.dpad_up;
+        map.dpad_down = gamepad.dpad_down;
+        map.dpad_right = gamepad.dpad_right;
+        map.dpad_left = gamepad.dpad_left;
+        map.a = gamepad.a;
+        map.b = gamepad.b;
+        map.x = gamepad.x;
+        map.y = gamepad.y;
+        map.start = gamepad.start;
+        map.back = gamepad.back;
+        map.right_bumper = gamepad.right_bumper;
+        map.left_bumper = gamepad.left_bumper;
+        map.left_stick_button = gamepad.left_stick_button;
+        map.right_stick_button = gamepad.right_stick_button;
+    }
+
+
+    public void update()
+    {
+        if (!gamepad.dpad_up && previousButtonStates.dpad_up)
         {
-            this.dpad_up = this.pressed(event);
             this.toggle.dpad_up = !this.toggle.dpad_up;
         }
-        else if (keyCode == 20)
+        if (!gamepad.dpad_down && previousButtonStates.dpad_down)
         {
-            this.dpad_down = this.pressed(event);
             this.toggle.dpad_down = !this.toggle.dpad_down;
         }
-        else if (keyCode == 22)
+        if (!gamepad.dpad_left && previousButtonStates.dpad_left)
         {
-            this.dpad_right = this.pressed(event);
-            this.toggle.dpad_right = !this.toggle.dpad_right;
-        }
-        else if (keyCode == 21)
-        {
-            this.dpad_left = this.pressed(event);
             this.toggle.dpad_left = !this.toggle.dpad_left;
         }
-        else if (keyCode == 96)
+        if (!gamepad.dpad_right && previousButtonStates.dpad_right)
         {
-            this.a = this.pressed(event);
+            this.toggle.dpad_right = !this.toggle.dpad_right;
+        }
+        if (!gamepad.a && previousButtonStates.a)
+        {
             this.toggle.a = !this.toggle.a;
         }
-        else if (keyCode == 97)
+        if (!gamepad.b && previousButtonStates.b)
         {
-            this.b = this.pressed(event);
             this.toggle.b = !this.toggle.b;
         }
-        else if (keyCode == 99)
+        if (!gamepad.x && previousButtonStates.x)
         {
-            this.x = this.pressed(event);
             this.toggle.x = !this.toggle.x;
         }
-        else if (keyCode == 100)
+        if (!gamepad.y && previousButtonStates.y)
         {
-            this.y = this.pressed(event);
             this.toggle.y = !this.toggle.y;
         }
-        else if (keyCode == 110)
+        if (!gamepad.guide && previousButtonStates.guide)
         {
-            this.guide = this.pressed(event);
             this.toggle.guide = !this.toggle.guide;
         }
-        else if (keyCode == 108)
+        if (!gamepad.start && previousButtonStates.start)
         {
-            this.start = this.pressed(event);
             this.toggle.start = !this.toggle.start;
         }
-        else if (keyCode == 4)
+        if (!gamepad.back && previousButtonStates.back)
         {
-            this.back = this.pressed(event);
             this.toggle.back = !this.toggle.back;
         }
-        else if (keyCode == 103)
+        if (!gamepad.right_bumper && previousButtonStates.right_bumper)
         {
-            this.right_bumper = this.pressed(event);
             this.toggle.right_bumper = !this.toggle.right_bumper;
         }
-        else if (keyCode == 102)
+        if (!gamepad.left_bumper && previousButtonStates.left_bumper)
         {
-            this.left_bumper = this.pressed(event);
-            this.toggle.left_bumper = !this.toggle.right_bumper;
+            this.toggle.left_bumper = !this.toggle.left_bumper;
         }
-        else if (keyCode == 106)
+        if (!gamepad.left_stick_button && previousButtonStates.left_stick_button)
         {
-            this.left_stick_button = this.pressed(event);
             this.toggle.left_stick_button = !this.toggle.left_stick_button;
         }
-        else if (keyCode == 107)
+        if (!gamepad.right_stick_button && previousButtonStates.right_stick_button)
         {
-            this.right_stick_button = this.pressed(event);
             this.toggle.right_stick_button = !this.toggle.right_stick_button;
         }
 
-        this.callCallback();
+        updateButtonMap(previousButtonStates);
     }
 
     @Override
