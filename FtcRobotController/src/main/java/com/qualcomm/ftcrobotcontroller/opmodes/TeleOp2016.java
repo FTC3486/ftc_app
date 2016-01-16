@@ -23,6 +23,7 @@ public class TeleOp2016 extends OpMode{
     DcMotor winchMotor;
 
     //Parking Brake
+    ExtendedServo parkingBrake;
 
     //Turret
     DcMotor swivel;
@@ -61,6 +62,8 @@ public class TeleOp2016 extends OpMode{
         winchMotor = hardwareMap.dcMotor.get("wM");
 
         //Parking Brake
+        parkingBrake = new ExtendedServo(hardwareMap.servo.get("pB"));
+        parkingBrake.setPosition(0.0);
 
         //Turret
         swivel = hardwareMap.dcMotor.get("swivel");
@@ -110,10 +113,9 @@ public class TeleOp2016 extends OpMode{
             }
         } else b_state = 0;
 
-        if(gamepad1.b & gamepad1.left_trigger > 0.5) {
-            //lock the winch
-        }
-
+        parkingBrake.runIf(gamepad1.b, +0.05);
+        parkingBrake.runIf(gamepad1.x, -0.05);
+        parkingBrake.runServo();
         // Gamepad 2
 
         /*tapeTilt.runIf(gamepad2.dpad_up, +0.005);
@@ -155,5 +157,6 @@ public class TeleOp2016 extends OpMode{
         }
 
         telemetry.addData("swivel value:", swivel.getCurrentPosition());
+        telemetry.addData("parking brake", parkingBrake.getPosition());
     }
 }
