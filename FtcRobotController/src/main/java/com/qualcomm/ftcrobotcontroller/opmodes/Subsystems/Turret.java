@@ -17,7 +17,7 @@ public class Turret {
 
     private DcMotor extender;
     private enum extenderMotorEnum {IN, OUT, STOP};
-    private extenderMotorEnum extenderState = extenderMotorEnum.IN;
+    private extenderMotorEnum extenderState = extenderMotorEnum.STOP;
 
     private ExtendedServo dumper;
     private boolean isDumping = false;

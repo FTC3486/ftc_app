@@ -23,9 +23,6 @@ public class TeleOp2016 extends OpMode{
 
     //Grappling Hook
     TapeMeasure tapeMeasure;
-    /*ExtendedServo tapeMotor;
-    ExtendedServo tapeTilt;
-    double initialTilt = 0.5;*/
 
     Winch winch;
     ParkingBrake parkingBrake;
@@ -141,6 +138,6 @@ public class TeleOp2016 extends OpMode{
         telemetry.addData("Winch ", winch);
         telemetry.addData("Plow ", plow);
         telemetry.addData("Pickup ", pickup);
-        //telemetry.addData("tapeMotor ", tapeMotor.getPosition());
+        telemetry.addData("tapeMotor ", tapeMeasure);
     }
 }
