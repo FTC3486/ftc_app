@@ -116,10 +116,10 @@ public class TeleOp2016 extends OpMode{
             turret.holdDebris();
         }
 
-
-
         if(joy2.toggle.left_bumper) {
            pickup.collect();
+        } else if(gamepad2.left_trigger > 0.2) {
+            pickup.reverse();
         } else {
             pickup.stop();
         }
