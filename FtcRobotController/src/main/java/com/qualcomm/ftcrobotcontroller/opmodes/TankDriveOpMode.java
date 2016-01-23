@@ -108,7 +108,7 @@ public class TankDriveOpMode extends OpMode{
     @Override
     public void loop() {
         // Gamepad 1
-        driver.tank_drive(leftfront, leftback, rightfront, rightback);
+        driver.forward_tank_drive(leftfront, leftback, rightfront, rightback);
         if(gamepad1.left_bumper) {
             if(b_state == 0) {
                 b_state = 1;

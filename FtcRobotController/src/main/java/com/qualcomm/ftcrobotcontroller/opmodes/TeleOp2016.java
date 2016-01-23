@@ -51,7 +51,11 @@ public class TeleOp2016 extends OpMode{
         joy2.update(gamepad2);
 
         // Gamepad 1
-        driver.tank_drive(leftfront, leftback, rightfront, rightback);
+        if(joy1.toggle.x) {
+            driver.reverse_tank_drive(leftfront, leftback, rightfront, rightback);
+        } else {
+            driver.forward_tank_drive(leftfront, leftback, rightfront, rightback);
+        }
 
         if(gamepad1.right_trigger > 0.7){
             winch.in();
@@ -88,9 +92,9 @@ public class TeleOp2016 extends OpMode{
             tapeMeasure.stopTilt();
         }
 
-        if(gamepad2.left_stick_x < -0.2) {
+        if(gamepad2.left_stick_x > 0.2) {
             turret.swivelRight();
-        } else if(gamepad2.left_stick_x > 0.2) {
+        } else if(gamepad2.left_stick_x < -0.2) {
             turret.swivelLeft();
         } else {
             turret.swivelStop();
@@ -104,7 +108,7 @@ public class TeleOp2016 extends OpMode{
             turret.extenderStop();
         }
 
-        if(gamepad2.right_trigger > 0.2) {
+        if(gamepad2.right_bumper) {
             turret.wholeDumpDebris();
         } else if(gamepad2.x) {
             turret.halfDumpDebris();
@@ -114,7 +118,7 @@ public class TeleOp2016 extends OpMode{
 
 
 
-        if(joy2.toggle.right_bumper) {
+        if(joy2.toggle.left_bumper) {
            pickup.collect();
         } else {
             pickup.stop();

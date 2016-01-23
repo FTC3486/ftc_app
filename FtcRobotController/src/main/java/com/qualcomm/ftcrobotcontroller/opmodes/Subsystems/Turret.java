@@ -35,12 +35,12 @@ public class Turret {
     }
 
     public void swivelRight() {
-        swivel.setPower(0.2);
+        swivel.setPower(0.1);
         swivelState = swivelMotorEnum.RIGHT;
     }
 
     public void swivelLeft() {
-        swivel.setPower(-0.2);
+        swivel.setPower(-0.1);
         swivelState = swivelMotorEnum.LEFT;
     }
 
