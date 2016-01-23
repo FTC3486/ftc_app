@@ -16,14 +16,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 public class TeleOp2016 extends OpMode{
     GamepadWrapper joy1;
     GamepadWrapper joy2;
-
-    //DriveTrain
     Drive driver;
     DcMotor leftfront, leftback, rightfront, rightback;
-
-    //Grappling Hook
     TapeMeasure tapeMeasure;
-
     Winch winch;
     ParkingBrake parkingBrake;
     Turret turret;
@@ -41,23 +36,11 @@ public class TeleOp2016 extends OpMode{
         rightfront = hardwareMap.dcMotor.get("rightfront");
         rightback = hardwareMap.dcMotor.get("rightback");
         driver = new Drive(this, 0.15f);
-
-
-        //Grappling Hook
         tapeMeasure = new TapeMeasure("tapeMotor", "tapeTilt", hardwareMap);
         winch = new Winch("winchMotor", hardwareMap);
-
-
-        //Parking Brake
         parkingBrake = new ParkingBrake("parkingBrake", hardwareMap);
-
-        //Turret
         turret = new Turret("swivel", "extender", "dumper", hardwareMap);
-
-        //Plow
         plow = new Plow("leftPlow", "rightPlow", hardwareMap);
-
-        //Pickup
         pickup = new Pickup("pickup", hardwareMap);
     }
 
@@ -71,15 +54,15 @@ public class TeleOp2016 extends OpMode{
         driver.tank_drive(leftfront, leftback, rightfront, rightback);
 
         if(gamepad1.right_trigger > 0.7){
-            winch.out();
-        } else if(gamepad1.right_bumper){
             winch.in();
+        } else if(gamepad1.right_bumper){
+            winch.out();
         } else winch.stop();
 
         if(joy1.toggle.left_bumper){
-            plow.goDown();
-        } else {
             plow.goUp();
+        } else {
+            plow.goDown();
         }
 
         if(joy1.toggle.a){
@@ -89,9 +72,9 @@ public class TeleOp2016 extends OpMode{
         }
 
         // Gamepad 2
-        if(gamepad2.dpad_left) {
+        if(gamepad2.dpad_right) {
             tapeMeasure.extendTapeMeasure();
-        } else if(gamepad2.dpad_right) {
+        } else if(gamepad2.dpad_left) {
             tapeMeasure.retractTapeMeasure();
         } else {
             tapeMeasure.stopTapeMeasure();
@@ -105,9 +88,9 @@ public class TeleOp2016 extends OpMode{
             tapeMeasure.stopTilt();
         }
 
-        if(gamepad2.left_stick_x > 0.2) {
+        if(gamepad2.left_stick_x < -0.2) {
             turret.swivelRight();
-        } else if(gamepad2.left_stick_x < -0.2) {
+        } else if(gamepad2.left_stick_x > 0.2) {
             turret.swivelLeft();
         } else {
             turret.swivelStop();
@@ -121,13 +104,17 @@ public class TeleOp2016 extends OpMode{
             turret.extenderStop();
         }
 
-        if(gamepad2.x) {
-            turret.dumpDebris();
+        if(gamepad2.right_trigger > 0.2) {
+            turret.wholeDumpDebris();
+        } else if(gamepad2.x) {
+            turret.halfDumpDebris();
         } else {
             turret.holdDebris();
         }
 
-        if(gamepad2.right_bumper) {
+
+
+        if(joy2.toggle.right_bumper) {
            pickup.collect();
         } else {
             pickup.stop();

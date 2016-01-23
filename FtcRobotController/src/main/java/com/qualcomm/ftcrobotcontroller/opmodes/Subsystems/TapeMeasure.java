@@ -19,32 +19,34 @@ public class TapeMeasure {
     public TapeMeasure(String tapeMotor, String tapeTilt, HardwareMap hardwareMap) {
         this.tapeMotor = new ExtendedServo(hardwareMap.servo.get(tapeMotor));
         this.tapeTilt = new ExtendedServo(hardwareMap.servo.get(tapeTilt));
-        this.tapeMotor.setPosition(0.1);
-        this.tapeTilt.setPosition(0.3);
+        this.tapeMotor.setPosition(0.5);
+        this.tapeTilt.setPosition(0.19);
     }
 
 
     public void extendTapeMeasure() {
-        tapeMotor.setPosition(tapeMotor.getPosition() + 0.005);
+        tapeMotor.setPosition(0.999);
         tapeMotorState = tapeMotorEnum.EXTEND;
     }
 
     public void retractTapeMeasure() {
-        tapeMotor.setPosition(tapeMotor.getPosition() - 0.005);
+        tapeMotor.setPosition(0.111);
         tapeMotorState = tapeMotorEnum.RETRACT;
     }
 
-    public void stopTapeMeasure() {
+    public void stopTapeMeasure()
+    {
+        tapeMotor.setPosition(0.5);
         tapeMotorState = tapeMotorEnum.STOP;
     }
 
     public void tiltDown() {
-        tapeTilt.setPosition(tapeTilt.getPosition() - 0.005);
+        tapeTilt.setPosition(tapeTilt.getPosition() + 0.005);
         tapeTiltState = tapeTiltEnum.DOWN;
     }
 
     public void tiltUp() {
-        tapeTilt.setPosition(tapeTilt.getPosition() + 0.005);
+        tapeTilt.setPosition(tapeTilt.getPosition() - 0.005);
         tapeTiltState = tapeTiltEnum.UP;
     }
 

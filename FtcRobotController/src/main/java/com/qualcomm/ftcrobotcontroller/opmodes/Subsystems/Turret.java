@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  */
 public class Turret {
     private DcMotor swivel;
+
     private enum swivelMotorEnum {LEFT, RIGHT, STOP}
     private swivelMotorEnum swivelState = swivelMotorEnum.STOP;
 
@@ -29,15 +30,17 @@ public class Turret {
 
         this.swivel.setMode(DcMotorController.RunMode.RESET_ENCODERS);
         this.swivel.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+
+        this.dumper.setPosition(0.0);
     }
 
     public void swivelRight() {
-        swivel.setPower(0.5);
+        swivel.setPower(0.2);
         swivelState = swivelMotorEnum.RIGHT;
     }
 
     public void swivelLeft() {
-        swivel.setPower(-0.5);
+        swivel.setPower(-0.2);
         swivelState = swivelMotorEnum.LEFT;
     }
 
@@ -61,8 +64,13 @@ public class Turret {
         extenderState = extenderMotorEnum.STOP;
     }
 
-    public void dumpDebris() {
-        dumper.setPosition(1.0);
+    public void wholeDumpDebris() {
+        dumper.setPosition(0.7);
+    }
+
+
+    public void halfDumpDebris() {
+        dumper.setPosition(0.4);
         isDumping = true;
     }
 
