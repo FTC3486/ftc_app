@@ -8,7 +8,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  */
 public class Pickup {
     private DcMotor pickup;
-    private enum pickupMotorEnum {COLLECT, STOP}
+
+    private enum pickupMotorEnum {COLLECT, REVERSE, STOP}
     private pickupMotorEnum pickupState = pickupMotorEnum.STOP;
 
     public Pickup(String pickup, HardwareMap hardwareMap) {
@@ -18,6 +19,11 @@ public class Pickup {
     public void collect() {
         pickup.setPower(-1.0);
         pickupState = pickupMotorEnum.COLLECT;
+    }
+
+    public void reverse() {
+        pickup.setPower(1.0);
+        pickupState = pickupMotorEnum.REVERSE;
     }
 
     public void stop() {
@@ -30,6 +36,9 @@ public class Pickup {
         switch (pickupState) {
             case COLLECT:
                 return "COLLECT";
+
+            case REVERSE:
+                return "REVERSE";
 
             case STOP:
                 return "STOP";

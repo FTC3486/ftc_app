@@ -63,7 +63,7 @@ public class Drive
         this.minSpeed = minSpeed;
     }
 
-    public void forward_tank_drive(DcMotor leftfront, DcMotor leftback, DcMotor rightfront, DcMotor rightback)
+    public void reverse_tank_drive(DcMotor leftfront, DcMotor leftback, DcMotor rightfront, DcMotor rightback)
     {
         opMode.telemetry.addData("maxMotorSpeed", "max speed: " + String.format("%.2f", maxSpeed));
 
@@ -93,7 +93,7 @@ public class Drive
         leftback.setPower(left);
     }
 
-    public void reverse_tank_drive(DcMotor leftfront, DcMotor leftback, DcMotor rightfront, DcMotor rightback)
+    public void forward_tank_drive(DcMotor leftfront, DcMotor leftback, DcMotor rightfront, DcMotor rightback)
     {
         opMode.telemetry.addData("maxMotorSpeed", "max speed: " + String.format("%.2f", maxSpeed));
 
