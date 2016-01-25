@@ -1,12 +1,12 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 import com.FTC3486.FTCRC_Extensions.Driver;
 import com.FTC3486.FTCRC_Extensions.GamepadWrapper;
-import com.qualcomm.ftcrobotcontroller.opmodes.Subsystems.ParkingBrake;
-import com.qualcomm.ftcrobotcontroller.opmodes.Subsystems.Pickup;
-import com.qualcomm.ftcrobotcontroller.opmodes.Subsystems.Plow;
-import com.qualcomm.ftcrobotcontroller.opmodes.Subsystems.TapeMeasure;
-import com.qualcomm.ftcrobotcontroller.opmodes.Subsystems.Turret;
-import com.qualcomm.ftcrobotcontroller.opmodes.Subsystems.Winch;
+import com.FTC3486.Subsystems.ParkingBrake;
+import com.FTC3486.Subsystems.Pickup;
+import com.FTC3486.Subsystems.Plow;
+import com.FTC3486.Subsystems.TapeMeasure;
+import com.FTC3486.Subsystems.Turret;
+import com.FTC3486.Subsystems.Winch;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
