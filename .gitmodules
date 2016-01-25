@@ -1,0 +1,3 @@
+[submodule "FTCRC_Extensions"]
+	path = FtcRobotController/src/main/java/com/FTC3486/FTCRC_Extensions
+	url = https://github.com/FTC3486/FTCRC_Extensions.git
