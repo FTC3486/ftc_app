@@ -5,7 +5,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 // PushBotManual
 //
 
-import com.FTC3486.FTCRC_Extensions.Drive;
+import com.FTC3486.FTCRC_Extensions.Driver;
 
 /**
  * Extends the PushBotTelemetry and PushBotHardware classes to provide a basic
@@ -16,12 +16,12 @@ import com.FTC3486.FTCRC_Extensions.Drive;
  */
 public class DemoTeleOp extends DemoTelemetry
 {
-    Drive driver;
+    Driver driver;
 
 
 
     @Override public void init() {
-        driver = new Drive(this, 0.15f);
+        driver = new Driver(this, 0.15f);
     }
 
     @Override public void loop ()

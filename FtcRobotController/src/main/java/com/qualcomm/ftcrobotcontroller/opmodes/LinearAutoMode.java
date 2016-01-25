@@ -25,7 +25,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
-import com.FTC3486.FTCRC_Extensions.Drive;
+import com.FTC3486.FTCRC_Extensions.Driver;
 import com.qualcomm.ftcrobotcontroller.opmodes.Subsystems.ParkingBrake;
 import com.qualcomm.ftcrobotcontroller.opmodes.Subsystems.Pickup;
 import com.qualcomm.ftcrobotcontroller.opmodes.Subsystems.Plow;
@@ -41,7 +41,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 public class LinearAutoMode extends LinearOpMode {
     ElapsedTime timer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
-    Drive driver;
+    Driver driver;
     DcMotor leftfront, leftback, rightfront, rightback;
     TapeMeasure tapeMeasure;
     Winch winch;

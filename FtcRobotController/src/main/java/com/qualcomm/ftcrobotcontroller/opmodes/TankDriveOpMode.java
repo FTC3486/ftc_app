@@ -1,10 +1,8 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
-import com.FTC3486.FTCRC_Extensions.Drive;
-import com.FTC3486.FTCRC_Extensions.GamepadWrapper;
+import com.FTC3486.FTCRC_Extensions.Driver;
 import com.FTC3486.FTCRC_Extensions.ExtendedServo;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.Servo;
 
 
@@ -13,7 +11,7 @@ import com.qualcomm.robotcore.hardware.Servo;
  */
 public class TankDriveOpMode extends OpMode{
     //DriveTrain
-    Drive driver;
+    Driver driver;
     DcMotor leftfront,leftback,rightfront,rightback;
 
     //Grappling Hook
@@ -64,7 +62,7 @@ public class TankDriveOpMode extends OpMode{
         rightfront = hardwareMap.dcMotor.get("rightfront");
         rightback = hardwareMap.dcMotor.get("rightback");
         rightback.setDirection(DcMotor.Direction.REVERSE);
-        driver = new Drive(this, 0.15f);
+        driver = new Driver(this, 0.15f);
 
         //Scoop
         lr = new ExtendedServo(hardwareMap.servo.get("lr"));

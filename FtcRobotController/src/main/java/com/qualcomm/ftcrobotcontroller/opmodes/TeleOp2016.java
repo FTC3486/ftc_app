@@ -1,5 +1,5 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
-import com.FTC3486.FTCRC_Extensions.Drive;
+import com.FTC3486.FTCRC_Extensions.Driver;
 import com.FTC3486.FTCRC_Extensions.GamepadWrapper;
 import com.qualcomm.ftcrobotcontroller.opmodes.Subsystems.ParkingBrake;
 import com.qualcomm.ftcrobotcontroller.opmodes.Subsystems.Pickup;
@@ -16,7 +16,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 public class TeleOp2016 extends OpMode{
     GamepadWrapper joy1;
     GamepadWrapper joy2;
-    Drive driver;
+    Driver driver;
     DcMotor leftfront, leftback, rightfront, rightback;
     TapeMeasure tapeMeasure;
     Winch winch;
@@ -35,7 +35,7 @@ public class TeleOp2016 extends OpMode{
         leftback = hardwareMap.dcMotor.get("leftback");
         rightfront = hardwareMap.dcMotor.get("rightfront");
         rightback = hardwareMap.dcMotor.get("rightback");
-        driver = new Drive(this, 0.15f);
+        driver = new Driver(this, 0.15f);
         tapeMeasure = new TapeMeasure("tapeMotor", "tapeTilt", hardwareMap);
         winch = new Winch("winchMotor", hardwareMap);
         parkingBrake = new ParkingBrake("parkingBrake", hardwareMap);
