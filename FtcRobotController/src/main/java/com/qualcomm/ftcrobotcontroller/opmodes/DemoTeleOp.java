@@ -5,7 +5,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 // PushBotManual
 //
 
-import com.jacobamason.FTCRC_Extensions.Drive;
+import com.FTC3486.FTCRC_Extensions.Drive;
 
 /**
  * Extends the PushBotTelemetry and PushBotHardware classes to provide a basic

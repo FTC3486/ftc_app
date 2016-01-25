@@ -1,6 +1,6 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
-import com.jacobamason.FTCRC_Extensions.Drive;
-import com.jacobamason.FTCRC_Extensions.GamepadWrapper;
+import com.FTC3486.FTCRC_Extensions.Drive;
+import com.FTC3486.FTCRC_Extensions.GamepadWrapper;
 import com.qualcomm.ftcrobotcontroller.opmodes.Subsystems.ParkingBrake;
 import com.qualcomm.ftcrobotcontroller.opmodes.Subsystems.Pickup;
 import com.qualcomm.ftcrobotcontroller.opmodes.Subsystems.Plow;

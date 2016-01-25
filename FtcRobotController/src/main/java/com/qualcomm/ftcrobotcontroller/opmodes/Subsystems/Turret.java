@@ -2,7 +2,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes.Subsystems;
 
 import android.widget.Switch;
 
-import com.jacobamason.FTCRC_Extensions.ExtendedServo;
+import com.FTC3486.FTCRC_Extensions.ExtendedServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.HardwareMap;

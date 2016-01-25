@@ -1,7 +1,7 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
-import com.jacobamason.FTCRC_Extensions.Drive;
-import com.jacobamason.FTCRC_Extensions.GamepadWrapper;
-import com.jacobamason.FTCRC_Extensions.ExtendedServo;
+import com.FTC3486.FTCRC_Extensions.Drive;
+import com.FTC3486.FTCRC_Extensions.GamepadWrapper;
+import com.FTC3486.FTCRC_Extensions.ExtendedServo;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.GyroSensor;

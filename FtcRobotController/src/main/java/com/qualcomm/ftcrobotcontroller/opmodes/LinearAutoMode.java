@@ -25,7 +25,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
-import com.jacobamason.FTCRC_Extensions.Drive;
+import com.FTC3486.FTCRC_Extensions.Drive;
 import com.qualcomm.ftcrobotcontroller.opmodes.Subsystems.ParkingBrake;
 import com.qualcomm.ftcrobotcontroller.opmodes.Subsystems.Pickup;
 import com.qualcomm.ftcrobotcontroller.opmodes.Subsystems.Plow;

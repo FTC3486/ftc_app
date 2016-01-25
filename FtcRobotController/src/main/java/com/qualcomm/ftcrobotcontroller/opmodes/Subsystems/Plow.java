@@ -1,6 +1,6 @@
 package com.qualcomm.ftcrobotcontroller.opmodes.Subsystems;
 
-import com.jacobamason.FTCRC_Extensions.ExtendedServo;
+import com.FTC3486.FTCRC_Extensions.ExtendedServo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 /**
