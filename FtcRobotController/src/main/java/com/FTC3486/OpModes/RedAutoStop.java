@@ -1,16 +1,17 @@
-package com.qualcomm.ftcrobotcontroller.opmodes;
+package com.FTC3486.OpModes;
 import com.FTC3486.FTCRC_Extensions.ExtendedServo;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.GyroSensor;
+import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 
 /**
  * Created by Matthew on 8/11/2015.
  */
-public class BlueAutoStop extends OpMode{
+public class RedAutoStop extends OpMode{
     //DriveTrain
     DcMotor leftfront,leftback,rightfront,rightback;
 
@@ -173,12 +174,12 @@ public class BlueAutoStop extends OpMode{
                 break;
 
             case 5:
-                gyroTarget = 30;
+                gyroTarget = 330;
                 v_state++;
                 break;
 
             //counterclockwise angles
-            case 14:
+            case 6:
                 if(gyro.getHeading() < gyroTarget) {
                     leftfront.setPower(-.6);
                     leftback.setPower(-.6);
@@ -189,7 +190,7 @@ public class BlueAutoStop extends OpMode{
                 }
                 break;
 
-            case 15:
+            case 7:
                 leftfront.setPower(-.6);
                 leftback.setPower(-.6);
                 rightfront.setPower(.6);
@@ -215,11 +216,11 @@ public class BlueAutoStop extends OpMode{
             //clockwise angles
             case 13:
                 Sweeper.setPower(0);
-                gyroTarget = 280;
+                gyroTarget = 80;
                 v_state++;
                 break;
 
-            case 6:
+            case 14:
                 if(gyro.getHeading() > gyroTarget) {
                     leftfront.setPower(.6);
                     leftback.setPower(.6);
@@ -230,7 +231,7 @@ public class BlueAutoStop extends OpMode{
                 }
                 break;
 
-            case 7:
+            case 15:
                 leftfront.setPower(.6);
                 leftback.setPower(.6);
                 rightfront.setPower(-.6);

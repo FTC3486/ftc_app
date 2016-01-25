@@ -1,16 +1,16 @@
-package com.qualcomm.ftcrobotcontroller.opmodes;
+package com.FTC3486.OpModes;
 import com.FTC3486.FTCRC_Extensions.ExtendedServo;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.Servo;
-
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
  * Created by Matthew on 8/11/2015.
  */
-public class BlueAutoPark extends OpMode{
+public class RedAutoPark extends OpMode{
     //DriveTrain
     DcMotor leftfront,leftback,rightfront,rightback;
 
@@ -54,9 +54,7 @@ public class BlueAutoPark extends OpMode{
 
     double waitTime;
 
-
-    @Override
-    public void init() {
+    @Override public void init() {
         //Drivetrain
         leftfront = hardwareMap.dcMotor.get("leftfront");
         leftback = hardwareMap.dcMotor.get("leftback");
@@ -100,10 +98,18 @@ public class BlueAutoPark extends OpMode{
         gyro.calibrate();
 
     }
-    @Override public void start ()
 
+    @Override public void start ()
     {
-        Sweeper.setPower(1.0);
+        resetStartTime();
+        waitTime = 3;
+
+        while(waitTime < getRuntime()) {
+            zleft.setPosition(zleftdown);
+            zright.setPosition(zrightdown);
+            Sweeper.setPower(1.0);
+        }
+
         while(gyro.isCalibrating()){
             try {
                 Thread.sleep(20);
@@ -114,7 +120,6 @@ public class BlueAutoPark extends OpMode{
     }
 
     @Override public void loop ()
-
     {
         //----------------------------------------------------------------------
         //
@@ -165,6 +170,7 @@ public class BlueAutoPark extends OpMode{
                 break;
 
             case 2:
+
                 zleft.setPosition(zleftdown);
                 zright.setPosition(zrightdown);
                 leftfront.setPower(.6f);
@@ -179,13 +185,13 @@ public class BlueAutoPark extends OpMode{
                 break;
 
             case 5:
-                gyroTarget = 30;
+                gyroTarget = 330;
                 v_state++;
                 break;
 
             //counterclockwise angles
-            case 14:
-            case 33:
+            case 6:
+            case 40:
                 if(gyro.getHeading() < gyroTarget) {
                     leftfront.setPower(-.6);
                     leftback.setPower(-.6);
@@ -196,8 +202,8 @@ public class BlueAutoPark extends OpMode{
                 }
                 break;
 
-            case 15:
-            case 34:
+            case 7:
+            case 41:
                 leftfront.setPower(-.6);
                 leftback.setPower(-.6);
                 rightfront.setPower(.6);
@@ -223,12 +229,12 @@ public class BlueAutoPark extends OpMode{
             //clockwise angles
             case 13:
                 Sweeper.setPower(0);
-                gyroTarget = 280;
+                gyroTarget = 80;
                 v_state++;
                 break;
 
-            case 6:
-            case 40:
+            case 14:
+            case 33:
                 if(gyro.getHeading() > gyroTarget) {
                     leftfront.setPower(.6);
                     leftback.setPower(.6);
@@ -239,8 +245,8 @@ public class BlueAutoPark extends OpMode{
                 }
                 break;
 
-            case 7:
-            case 41:
+            case 15:
+            case 34:
                 leftfront.setPower(.6);
                 leftback.setPower(.6);
                 rightfront.setPower(-.6);
@@ -291,7 +297,7 @@ public class BlueAutoPark extends OpMode{
                 rightback.setPower(.3f);
                 telemetry.addData("lb encoder", leftback.getCurrentPosition());
                 telemetry.addData("rb encoder", rightback.getCurrentPosition());
-                if(Math.abs(leftback.getCurrentPosition()) > 650 && Math.abs(rightback.getCurrentPosition()) > 650) {
+                if(Math.abs(leftback.getCurrentPosition()) > 850 && Math.abs(rightback.getCurrentPosition()) > 850) {
                     blockGate.setPosition(bgclose);
                     resetStartTime();
                     waitTime = 2;
@@ -317,7 +323,7 @@ public class BlueAutoPark extends OpMode{
                 telemetry.addData("lb encoder", leftback.getCurrentPosition());
                 telemetry.addData("rb encoder", rightback.getCurrentPosition());
                 if(Math.abs(leftback.getCurrentPosition()) > 1850 && Math.abs(rightback.getCurrentPosition()) > 1850) {
-                    gyroTarget = 181;
+                    gyroTarget = 179;
                     v_state++;
                 }
                 break;

@@ -1,4 +1,4 @@
-package com.qualcomm.ftcrobotcontroller.opmodes;
+package com.FTC3486.OpModes;
 import com.FTC3486.FTCRC_Extensions.Driver;
 import com.FTC3486.FTCRC_Extensions.ExtendedServo;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
