@@ -4,3 +4,6 @@
 [submodule "Subsystems"]
 	path = FtcRobotController/src/main/java/com/FTC3486/Subsystems
 	url = https://github.com/FTC3486/Subsystems.git
+[submodule "OpModes"]
+	path = FtcRobotController/src/main/java/com/FTC3486/OpModes
+	url = https://github.com/FTC3486/OpModes.git
