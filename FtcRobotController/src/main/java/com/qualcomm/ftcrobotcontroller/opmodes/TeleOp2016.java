@@ -1,6 +1,7 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 import com.jacobamason.FTCRC_Extensions.Drive;
 import com.jacobamason.FTCRC_Extensions.GamepadWrapper;
+import com.qualcomm.ftcrobotcontroller.opmodes.Subsystems.ClimberDump;
 import com.qualcomm.ftcrobotcontroller.opmodes.Subsystems.ParkingBrake;
 import com.qualcomm.ftcrobotcontroller.opmodes.Subsystems.Pickup;
 import com.qualcomm.ftcrobotcontroller.opmodes.Subsystems.Plow;
@@ -24,6 +25,7 @@ public class TeleOp2016 extends OpMode{
     Turret turret;
     Plow plow;
     Pickup pickup;
+    ClimberDump climberDump;
 
     @Override
     public void init() {
@@ -42,6 +44,7 @@ public class TeleOp2016 extends OpMode{
         turret = new Turret("swivel", "extender", "dumper", hardwareMap);
         plow = new Plow("leftPlow", "rightPlow", hardwareMap);
         pickup = new Pickup("pickup", hardwareMap);
+        climberDump = new ClimberDump("climberDump", hardwareMap);
     }
 
 
