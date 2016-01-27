@@ -1,6 +1,7 @@
 package com.FTC3486.OpModes;
 import com.FTC3486.FTCRC_Extensions.Driver;
 import com.FTC3486.FTCRC_Extensions.GamepadWrapper;
+import com.FTC3486.Subsystems.ClimberDump;
 import com.FTC3486.Subsystems.ParkingBrake;
 import com.FTC3486.Subsystems.Pickup;
 import com.FTC3486.Subsystems.Plow;
@@ -24,6 +25,7 @@ public class TeleOp2016 extends OpMode{
     Turret turret;
     Plow plow;
     Pickup pickup;
+    ClimberDump climberDump;
 
     @Override
     public void init() {
@@ -42,6 +44,7 @@ public class TeleOp2016 extends OpMode{
         turret = new Turret("swivel", "extender", "dumper", hardwareMap);
         plow = new Plow("leftPlow", "rightPlow", hardwareMap);
         pickup = new Pickup("pickup", hardwareMap);
+        climberDump = new ClimberDump("climberDump", hardwareMap);
     }
 
 
