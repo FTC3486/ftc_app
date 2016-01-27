@@ -1,4 +1,5 @@
 package com.FTC3486.OpModes;
+import com.FTC3486.FTCRC_Extensions.DriveTrain;
 import com.FTC3486.FTCRC_Extensions.Driver;
 import com.FTC3486.FTCRC_Extensions.GamepadWrapper;
 import com.FTC3486.Subsystems.ClimberDump;
@@ -17,6 +18,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 public class TeleOp2016 extends OpMode{
     GamepadWrapper joy1;
     GamepadWrapper joy2;
+    DriveTrain driveTrain;
     Driver driver;
     DcMotor leftfront, leftback, rightfront, rightback;
     TapeMeasure tapeMeasure;
@@ -32,12 +34,14 @@ public class TeleOp2016 extends OpMode{
         joy1 = new GamepadWrapper();
         joy2 = new GamepadWrapper();
 
-        //Drivetrain
-        leftfront = hardwareMap.dcMotor.get("leftfront");
-        leftback = hardwareMap.dcMotor.get("leftback");
-        rightfront = hardwareMap.dcMotor.get("rightfront");
-        rightback = hardwareMap.dcMotor.get("rightback");
-        driver = new Driver(this, 0.15f);
+        driveTrain = new DriveTrain.Builder()
+                .addLeftMotor(hardwareMap.dcMotor.get("leftfront"))
+                .addLeftMotorWithEncoder(hardwareMap.dcMotor.get("leftback"))
+                .addRightMotor(hardwareMap.dcMotor.get("rightfront"))
+                .addRightMotorWithEncoder(hardwareMap.dcMotor.get("rightback"))
+                .build();
+        driver = new Driver(this, driveTrain);
+
         tapeMeasure = new TapeMeasure("tapeMotor", "tapeTilt", hardwareMap);
         winch = new Winch("winchMotor", hardwareMap);
         parkingBrake = new ParkingBrake("parkingBrake", hardwareMap);
@@ -55,9 +59,9 @@ public class TeleOp2016 extends OpMode{
 
         // Gamepad 1
         if(joy1.toggle.x) {
-            driver.reverse_tank_drive(leftfront, leftback, rightfront, rightback);
+            driver.tank_drive(gamepad1, Driver.Direction.BACKWARD);
         } else {
-            driver.forward_tank_drive(leftfront, leftback, rightfront, rightback);
+            driver.tank_drive(gamepad1, Driver.Direction.FORWARD);
         }
 
         if(gamepad1.right_trigger > 0.7){
