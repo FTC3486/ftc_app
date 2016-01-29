@@ -31,6 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
+import com.FTC3486.OpModes.ColorSensorTest;
 import com.FTC3486.OpModes.LinearAutoMode;
 import com.FTC3486.OpModes.TeleOp2016;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
@@ -67,6 +68,7 @@ public class FtcOpModeRegister implements OpModeRegister {
     //manager.register("ContinuousServoTest", ContinuousServoTest.class);
     manager.register("TeleOp2016", TeleOp2016.class);
     manager.register("LinearAutoMode", LinearAutoMode.class);
+    manager.register("ColorSensorTest", ColorSensorTest.class);
 
   }
 }
