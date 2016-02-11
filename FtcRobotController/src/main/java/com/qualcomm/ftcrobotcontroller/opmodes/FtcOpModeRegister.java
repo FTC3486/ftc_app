@@ -31,8 +31,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
+import com.FTC3486.OpModes.BlueAutoMode;
 import com.FTC3486.OpModes.ColorSensorTest;
-import com.FTC3486.OpModes.LinearAutoMode;
+import com.FTC3486.OpModes.RedAutoMode;
 import com.FTC3486.OpModes.TeleOp2016;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeRegister;
@@ -60,15 +61,16 @@ public class FtcOpModeRegister implements OpModeRegister {
 
     manager.register("NullOp", NullOp.class);
     //manager.register("Tank Drive", TankDriveOpMode.class);
-    //manager.register("LinearAuto", LinearAutoMode.class);
+    //manager.register("LinearAuto", RedAutoMode.class);
     //manager.register("RedAutoStop", RedAutoStop.class);
     //manager.register("RedAutoPark", RedAutoPark.class);
     //manager.register("BlueAutoStop", BlueAutoStop.class);
     //manager.register("BlueAutoPark", BlueAutoPark.class);
     //manager.register("ContinuousServoTest", ContinuousServoTest.class);
     manager.register("TeleOp2016", TeleOp2016.class);
-    manager.register("LinearAutoMode", LinearAutoMode.class);
-    manager.register("ColorSensorTest", ColorSensorTest.class);
+    manager.register("RedAutoMode", RedAutoMode.class);
+    manager.register("BlueAutoMode", BlueAutoMode.class);
+    //manager.register("ColorSensorTest", ColorSensorTest.class);
 
   }
 }
