@@ -31,10 +31,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
-import com.FTC3486.OpModes.BlueAutoMode;
-import com.FTC3486.OpModes.ColorSensorTest;
-import com.FTC3486.OpModes.RedAutoMode;
-import com.FTC3486.OpModes.TeleOp2016;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeRegister;
 
@@ -59,7 +55,7 @@ public class FtcOpModeRegister implements OpModeRegister {
      * If two or more op modes are registered with the same name, the app will display an error.
      */
 
-    manager.register("NullOp", NullOp.class);
+//    manager.register("NullOp", NullOp.class);
     //manager.register("Tank Drive", TankDriveOpMode.class);
     //manager.register("LinearAuto", RedAutoMode.class);
     //manager.register("RedAutoStop", RedAutoStop.class);
@@ -67,10 +63,10 @@ public class FtcOpModeRegister implements OpModeRegister {
     //manager.register("BlueAutoStop", BlueAutoStop.class);
     //manager.register("BlueAutoPark", BlueAutoPark.class);
     //manager.register("ContinuousServoTest", ContinuousServoTest.class);
-    manager.register("TeleOp2016", TeleOp2016.class);
-    manager.register("RedAutoMode", RedAutoMode.class);
-    manager.register("BlueAutoMode", BlueAutoMode.class);
+//    manager.register("TeleOp2016", TeleOp2016.class);
+//    manager.register("RedAutoMode", RedAutoMode.class);
+//    manager.register("BlueAutoMode", BlueAutoMode.class);
     //manager.register("ColorSensorTest", ColorSensorTest.class);
-
+    manager.register("GroupMe Test", GroupMeTest.class);
   }
 }
