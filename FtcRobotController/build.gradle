@@ -53,4 +53,6 @@ dependencies {
     compile(name: 'Analytics-release', ext: 'aar')
     compile(name: 'WirelessP2p-release', ext: 'aar')
     compile 'org.twitter4j:twitter4j-core:4.0.4'
+    compile 'com.loopj.android:android-async-http:1.4.9'
+    compile 'io.netty:netty:3.10.5.Final'
 }
