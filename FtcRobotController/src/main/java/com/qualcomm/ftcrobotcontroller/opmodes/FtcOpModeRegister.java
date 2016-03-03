@@ -33,6 +33,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.FTC3486.OpModes.BlueAutoMode;
 import com.FTC3486.OpModes.ColorSensorTest;
+import com.FTC3486.OpModes.NewGyroTest;
 import com.FTC3486.OpModes.RedAutoMode;
 import com.FTC3486.OpModes.TeleOp2016;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
@@ -70,6 +71,7 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("TeleOp2016", TeleOp2016.class);
     manager.register("RedAutoMode", RedAutoMode.class);
     manager.register("BlueAutoMode", BlueAutoMode.class);
+    manager.register("NewGyroTest", NewGyroTest.class);
     //manager.register("ColorSensorTest", ColorSensorTest.class);
 
   }
