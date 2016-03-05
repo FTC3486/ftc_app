@@ -31,10 +31,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
-import com.FTC3486.OpModes.BlueAutoMode;
-import com.FTC3486.OpModes.ColorSensorTest;
+import com.FTC3486.OpModes.BlueAutoPark;
+import com.FTC3486.OpModes.BlueAutoSmash;
 import com.FTC3486.OpModes.NewGyroTest;
-import com.FTC3486.OpModes.RedAutoMode;
+import com.FTC3486.OpModes.RedAutoPark;
+import com.FTC3486.OpModes.RedAutoSmash;
 import com.FTC3486.OpModes.TeleOp2016;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeRegister;
@@ -51,28 +52,9 @@ public class FtcOpModeRegister implements OpModeRegister {
    * @param manager op mode manager
    */
   public void register(OpModeManager manager) {
-
-    /*
-     * register your op modes here.
-     * The first parameter is the name of the op mode
-     * The second parameter is the op mode class property
-     *
-     * If two or more op modes are registered with the same name, the app will display an error.
-     */
-
     manager.register("NullOp", NullOp.class);
-    //manager.register("Tank Drive", TankDriveOpMode.class);
-    //manager.register("LinearAuto", RedAutoMode.class);
-    //manager.register("RedAutoStop", RedAutoStop.class);
-    //manager.register("RedAutoPark", RedAutoPark.class);
-    //manager.register("BlueAutoStop", BlueAutoStop.class);
-    //manager.register("BlueAutoPark", BlueAutoPark.class);
-    //manager.register("ContinuousServoTest", ContinuousServoTest.class);
     manager.register("TeleOp2016", TeleOp2016.class);
-    manager.register("RedAutoMode", RedAutoMode.class);
-    manager.register("BlueAutoMode", BlueAutoMode.class);
-    manager.register("NewGyroTest", NewGyroTest.class);
-    //manager.register("ColorSensorTest", ColorSensorTest.class);
-
+    manager.register("RedAutoPark", RedAutoPark.class);
+    manager.register("BlueAutoPark", BlueAutoPark.class);
   }
 }
