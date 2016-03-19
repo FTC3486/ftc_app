@@ -33,9 +33,12 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.FTC3486.OpModes.BlueAutoPark;
 import com.FTC3486.OpModes.BlueAutoSmash;
+import com.FTC3486.OpModes.ColorSensorTest;
 import com.FTC3486.OpModes.NewGyroTest;
+import com.FTC3486.OpModes.OpticalDistanceSensorTest;
 import com.FTC3486.OpModes.RedAutoPark;
 import com.FTC3486.OpModes.RedAutoSmash;
+import com.FTC3486.OpModes.StraightDefense;
 import com.FTC3486.OpModes.TeleOp2016;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeRegister;
@@ -58,5 +61,8 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("BlueAutoPark", BlueAutoPark.class);
     manager.register("RedAutoSmash", RedAutoSmash.class);
     manager.register("BlueAutoSmash", BlueAutoSmash.class);
+    manager.register("StraightDefense", StraightDefense.class);
+    manager.register("OpticalDistanceSensorTest", OpticalDistanceSensorTest.class);
+    manager.register("ColorSensorTest", ColorSensorTest.class);
   }
 }
