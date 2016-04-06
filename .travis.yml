@@ -12,3 +12,8 @@ cache:
   directories:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
+
+notifications:
+  email:
+    - jacob@jacobmason.net
+    - mdttrump97@bellsouth.net
