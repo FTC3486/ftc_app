@@ -36,6 +36,7 @@ import com.FTC3486.OpModes.BlueAutoSmash;
 import com.FTC3486.OpModes.ColorSensorDriveTest;
 import com.FTC3486.OpModes.ColorSensorTest;
 import com.FTC3486.OpModes.MultiDriverTest;
+import com.FTC3486.OpModes.NewGyroTest;
 import com.FTC3486.OpModes.OpticalDistanceDriveTest;
 import com.FTC3486.OpModes.OpticalDistanceSensorTest;
 import com.FTC3486.OpModes.ProtectedMotorAutoDriverTest;
@@ -65,9 +66,5 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("RedAutoSmash", RedAutoSmash.class);
     manager.register("BlueAutoSmash", BlueAutoSmash.class);
     manager.register("StraightDefense", StraightDefense.class);
-    manager.register("OpticalDistanceSensorTest", OpticalDistanceSensorTest.class);
-    manager.register("ColorSensorTest", ColorSensorTest.class);
-    manager.register("ColorSensorDriveTest", ColorSensorDriveTest.class);
-    manager.register("MultiDriverTest", MultiDriverTest.class);
   }
 }
