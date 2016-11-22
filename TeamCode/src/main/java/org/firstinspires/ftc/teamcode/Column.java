@@ -2,10 +2,10 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.util.ElapsedTime;
+
 
 /**
- * Created by Owner_2 on 11/13/2016.
+ * Created by John Paul Ashour on 11/13/2016.
  */
 
 public class Column {
@@ -13,8 +13,7 @@ public class Column {
 
     private enum columnEnum {Extend, Retract, Stop}
     private columnEnum ColumnState =columnEnum.Stop;
-    //HardwareMap hwMap = null;
-    //private ElapsedTime period = new ElapsedTime();
+
 
     public Column(String Column, HardwareMap hardwareMap) {
         this.Column = hardwareMap.dcMotor.get(Column);

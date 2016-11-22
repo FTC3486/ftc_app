@@ -1,10 +1,9 @@
 package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import org.firstinspires.ftc.teamcode.GamepadWrapper;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 /**
- * Created by Owner_2 on 11/5/2016.
+ * Created by John Paul Ashour on 11/5/2016.
  */
 @TeleOp(name="Teleop version 1.0", group="Teleop2016")
 public class Teleop_Iteration_1 extends OpMode{
@@ -17,7 +16,7 @@ public class Teleop_Iteration_1 extends OpMode{
     TroughGate troughGate;
     Column column;
 
-    //ParticleAcclerator particleAcclerator = new ParticleAcclerator();
+
 
     @Override
     public void init() {
@@ -102,7 +101,9 @@ public class Teleop_Iteration_1 extends OpMode{
         telemetry.addData("Acclerator 2", acclerator2);
         telemetry.addData("Pickup",pickup);
         telemetry.addData("Trough Gate", troughGate);
-
+        telemetry.addData("Column",column);
+        //telemetry.addData("",);
+        //telemetry.addData("",);
     }
 
     @Override

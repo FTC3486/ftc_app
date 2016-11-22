@@ -2,10 +2,9 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
- * Created by Owner_2 on 11/5/2016.
+ * Created by John Paul Ashour on 11/5/2016.
  */
 
 public class ParticleAcclerator {
@@ -13,8 +12,7 @@ public class ParticleAcclerator {
 
     private enum accleratorEnum {Run, Stop}
     private accleratorEnum AccleratorState =accleratorEnum.Stop;
-    //HardwareMap hwMap = null;
-    //private ElapsedTime period = new ElapsedTime();
+
 
     public ParticleAcclerator(String Acclerator, HardwareMap hardwareMap) {
         this.Acclerator = hardwareMap.dcMotor.get(Acclerator);
