@@ -20,11 +20,11 @@ public class Column {
     }
 
     public void extend(){
-        Column.setPower(1.0);
+        Column.setPower(-1.0);
     }
 
     public void retract(){
-        Column.setPower(-1.0);
+        Column.setPower(1.0);
     }
 
     public void stop(){

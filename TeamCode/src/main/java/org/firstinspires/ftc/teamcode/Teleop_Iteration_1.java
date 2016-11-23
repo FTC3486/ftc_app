@@ -15,6 +15,7 @@ public class Teleop_Iteration_1 extends OpMode{
     Pickup pickup;
     TroughGate troughGate;
     Column column;
+    TuskGate tuskGate;
 
 
 
@@ -26,6 +27,7 @@ public class Teleop_Iteration_1 extends OpMode{
         acclerator1 = new ParticleAcclerator("Acclerator 1", hardwareMap);
         acclerator2 = new ParticleAcclerator("Acclerator 2", hardwareMap);
         column = new Column("Column", hardwareMap);
+        tuskGate = new TuskGate("Tusk Gate", hardwareMap);
         joy1 = new GamepadWrapper();
         joy2 = new GamepadWrapper();
     }
@@ -94,13 +96,21 @@ public class Teleop_Iteration_1 extends OpMode{
             column.stop();
         }
 
+        if(gamepad1.left_stick_button){
+            tuskGate.releaseTusks();
+        }
+        else{
+            tuskGate.closeGate();
+        }
+
 
         telemetry.addData("left",  "%.2f", left);
         telemetry.addData("right", "%.2f", right);
         telemetry.addData("Accelerator 1", acclerator1);
-        telemetry.addData("Acclerator 2", acclerator2);
+        telemetry.addData("Accelerator 2", acclerator2);
         telemetry.addData("Pickup",pickup);
         telemetry.addData("Trough Gate", troughGate);
+        telemetry.addData("Tusk Gate", tuskGate);
         telemetry.addData("Column",column);
         //telemetry.addData("",);
         //telemetry.addData("",);

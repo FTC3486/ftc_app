@@ -23,13 +23,13 @@ public class TroughGate {
     }
 
     public void closeGate() {
-        troughGateServo.setPosition(1);
+        troughGateServo.setPosition(0.1);
         troughServoState = troughGateServoEnum.Close;
         isOpen = false;
     }
 
     public void openGate() {
-        troughGateServo.setPosition(0);
+        troughGateServo.setPosition(0.5);
         troughServoState = troughGateServoEnum.Open;
         isOpen = true;
     }
