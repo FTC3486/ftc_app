@@ -47,56 +47,58 @@ public class Teleop_Iteration_1 extends OpMode{
 
         double left;
         double right;
-        //double acc;
 
-        //acc = gamepad1.right_bumper;
-        left = -gamepad1.left_stick_y;
-        right = -gamepad1.right_stick_y;
-
+        if(joy1.toggle.x) {
+            left = get_scaled_power_from_gamepad_stick(gamepad1.left_stick_y);
+            right = get_scaled_power_from_gamepad_stick(gamepad1.right_stick_y);
+        }else {
+            left = get_scaled_power_from_gamepad_stick(-gamepad1.right_stick_y);
+            right= get_scaled_power_from_gamepad_stick(-gamepad1.left_stick_y);
+        }
         drivetrain.Left1.setPower(left);
         drivetrain.Left2.setPower(left);
         drivetrain.Right1.setPower(right);
         drivetrain.Right2.setPower(right);
 
-        if(joy1.toggle.dpad_left){
+        if(joy2.toggle.x){
             pickup.run();
         }
         else {
             pickup.stop();
         }
 
-        if(joy1.toggle.left_bumper){
+        if(joy2.toggle.right_bumper){
             troughGate.openGate();
         }
         else {
             troughGate.closeGate();
         }
 
-        if(joy1.toggle.right_bumper){
+        if(joy2.toggle.left_bumper){
             acclerator1.run();
         }
         else{
             acclerator1.stop();
         }
 
-        if(joy1.toggle.right_bumper){
+        if(joy2.toggle.left_bumper){
             acclerator2.run();
         }
         else{
             acclerator2.stop();
         }
 
-        if(gamepad1.dpad_up){
+        if(gamepad1.right_bumper){
             column.extend();
         }
-        else if(gamepad1.dpad_down){
+        else if(gamepad1.right_trigger > 0.5){
             column.retract();
         }
         else{
             column.stop();
         }
 
-        if(gamepad1.left_stick_button){
+        if(gamepad1.a & gamepad2.a){
             tuskGate.releaseTusks();
         }
         else{
@@ -112,12 +114,16 @@ public class Teleop_Iteration_1 extends OpMode{
         telemetry.addData("Trough Gate", troughGate);
         telemetry.addData("Tusk Gate", tuskGate);
         telemetry.addData("Column",column);
-        //telemetry.addData("",);
-        //telemetry.addData("",);
+
     }
 
     @Override
     public void stop(){
+    }
+
+    private double get_scaled_power_from_gamepad_stick(float stick)
+    {
+        return -(Math.signum(stick) * ((Math.pow(stick, 2) * (1 - .1)) + .1));
     }
 
 }
