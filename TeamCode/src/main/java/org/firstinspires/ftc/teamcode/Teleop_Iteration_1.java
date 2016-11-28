@@ -2,6 +2,9 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import static android.os.SystemClock.sleep;
+
+
 /**
  * Created by John Paul Ashour on 11/5/2016.
  */
@@ -16,6 +19,7 @@ public class Teleop_Iteration_1 extends OpMode{
     TroughGate troughGate;
     Column column;
     TuskGate tuskGate;
+    CapballHolder capballHolder;
 
 
 
@@ -30,6 +34,8 @@ public class Teleop_Iteration_1 extends OpMode{
         tuskGate = new TuskGate("Tusk Gate", hardwareMap);
         joy1 = new GamepadWrapper();
         joy2 = new GamepadWrapper();
+        capballHolder = new CapballHolder("Capball Holder", hardwareMap);
+
     }
 
     @Override
@@ -48,6 +54,7 @@ public class Teleop_Iteration_1 extends OpMode{
         double left;
         double right;
 
+
         if(joy1.toggle.x) {
             left = get_scaled_power_from_gamepad_stick(gamepad1.left_stick_y);
             right = get_scaled_power_from_gamepad_stick(gamepad1.right_stick_y);
@@ -60,6 +67,11 @@ public class Teleop_Iteration_1 extends OpMode{
         drivetrain.Right1.setPower(right);
         drivetrain.Right2.setPower(right);
 
+
+
+
+
+
         if(joy2.toggle.x){
             pickup.run();
         }
@@ -67,7 +79,7 @@ public class Teleop_Iteration_1 extends OpMode{
             pickup.stop();
         }
 
-        if(joy2.toggle.right_bumper){
+        if(gamepad2.right_bumper){
             troughGate.openGate();
         }
         else {
@@ -75,18 +87,33 @@ public class Teleop_Iteration_1 extends OpMode{
         }
 
         if(joy2.toggle.left_bumper){
+           while(acclerator1.Acclerator.getPower() >-1.0){
+               acclerator1.rampup();
+           }
+        }
+        else {
+            acclerator1.stop();
+        }
+        if (joy2.toggle.left_bumper){
+            while (acclerator2.Acclerator.getPower() >-1.0){
+                acclerator2.rampup();
+            }
+        }
+        else {
+            acclerator2.stop();
+        }
+        /*if(joy2.toggle.left_bumper){
             acclerator1.run();
+            acclerator2.run();
+        }
+        else if(joy2.toggle.y){
+            acclerator1.idle();
         }
         else{
             acclerator1.stop();
-        }
-
-        if(joy2.toggle.left_bumper){
-            acclerator2.run();
-        }
-        else{
             acclerator2.stop();
-        }
+        }*/
+
 
         if(gamepad1.right_bumper){
             column.extend();
@@ -101,19 +128,28 @@ public class Teleop_Iteration_1 extends OpMode{
         if(gamepad1.a & gamepad2.a){
             tuskGate.releaseTusks();
         }
-        else{
-            tuskGate.closeGate();
-        }
 
+
+        if(tuskGate.isOpen){
+            if (joy1.toggle.b){
+                capballHolder.captured();
+            }else {
+                capballHolder.released();
+            }
+
+        }else {
+            capballHolder.colapsed();
+        }
 
         telemetry.addData("left",  "%.2f", left);
         telemetry.addData("right", "%.2f", right);
         telemetry.addData("Accelerator 1", acclerator1);
         telemetry.addData("Accelerator 2", acclerator2);
-        telemetry.addData("Pickup",pickup);
-        telemetry.addData("Trough Gate", troughGate);
-        telemetry.addData("Tusk Gate", tuskGate);
+        telemetry.addData("Pickup",pickup.PickupState);
+        telemetry.addData("Trough Gate", troughGate.troughServoState);
+        telemetry.addData("Tusk Gate", tuskGate.tuskServoState);
         telemetry.addData("Column",column);
+        telemetry.addData("Capball", capballHolder.capballHolderServoState);
 
     }
 

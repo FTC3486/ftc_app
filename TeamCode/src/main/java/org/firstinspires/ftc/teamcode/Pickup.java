@@ -13,7 +13,7 @@ public class Pickup {
 
 
     private enum pickupEnum {Run, Stop}
-    private pickupEnum PickupState =pickupEnum.Stop;
+    pickupEnum PickupState =pickupEnum.Stop;
 
 
     public Pickup(String Pickup, HardwareMap hardwareMap) {
