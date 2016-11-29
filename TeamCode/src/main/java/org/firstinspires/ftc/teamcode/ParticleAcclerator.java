@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import static android.os.Looper.loop;
 import static android.os.SystemClock.sleep;
 
 /**
@@ -12,6 +13,8 @@ import static android.os.SystemClock.sleep;
 public class ParticleAcclerator {
     public DcMotor Acclerator = null;
 
+    double accleratorPower = 0;
+
     private enum accleratorEnum {Run, Rampup, Rampdown, Stop}
     private accleratorEnum AccleratorState =accleratorEnum.Stop;
 
@@ -20,36 +23,17 @@ public class ParticleAcclerator {
         this.Acclerator = hardwareMap.dcMotor.get(Acclerator);
     }
 
+
     public void run() {
         Acclerator.setPower(-1.0);
         AccleratorState = accleratorEnum.Run;
     }
 
     public void rampup(){
-        AccleratorState = accleratorEnum.Rampup;
-        Acclerator.setPower(0);
-        sleep(200);
-        Acclerator.setPower(-0.1);
-        sleep(200);
-        Acclerator.setPower(-0.2);
-        sleep(200);
-        Acclerator.setPower(-0.3);
-        sleep(200);
-        Acclerator.setPower(-0.4);
-        sleep(200);
-        Acclerator.setPower(-0.5);
-        sleep(200);
-        Acclerator.setPower(-0.6);
-        sleep(200);
-        Acclerator.setPower(-0.7);
-        sleep(200);
-        Acclerator.setPower(-0.8);
-        sleep(200);
-        Acclerator.setPower(-0.9);
-        sleep(200);
-        Acclerator.setPower(-1.0);
-        sleep(1000);
-        AccleratorState = accleratorEnum.Run;
+
+        accleratorPower = accleratorPower - 0.001;
+        Acclerator.setPower(accleratorPower);
+
     }
 
     public void rampdown(){

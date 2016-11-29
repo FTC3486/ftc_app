@@ -38,9 +38,9 @@ public class Drivetrain {
         Right1.setPower(0);
         Right2.setPower(0);
 
-        Left1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //Left1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         //Left2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        Right1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //Right1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         //Right2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
 
