@@ -26,7 +26,7 @@ public class CapballHolder {
     }
 
     public void captured(){
-        capballHolderServo.setPosition(0.2);
+        capballHolderServo.setPosition(0.25);
         isBallCaptured = true;
     }
 

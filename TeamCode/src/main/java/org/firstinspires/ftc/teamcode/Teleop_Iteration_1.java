@@ -2,8 +2,6 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import static android.os.SystemClock.sleep;
-
 
 /**
  * Created by John Paul Ashour on 11/5/2016.
@@ -20,6 +18,7 @@ public class Teleop_Iteration_1 extends OpMode{
     Column column;
     TuskGate tuskGate;
     CapballHolder capballHolder;
+    BaconActivator baconActivator;
 
 
 
@@ -35,10 +34,10 @@ public class Teleop_Iteration_1 extends OpMode{
         joy1 = new GamepadWrapper();
         joy2 = new GamepadWrapper();
         capballHolder = new CapballHolder("Capball Holder", hardwareMap);
-
+        baconActivator = new BaconActivator("Bacon Activator", hardwareMap);
         accelerator1.accleratorPower = 0;
         accelerator2.accleratorPower = 0;
-
+        baconActivator.armUp();
     }
 
     @Override
@@ -129,6 +128,18 @@ public class Teleop_Iteration_1 extends OpMode{
             capballHolder.colapsed();
         }
 
+        /*if(gamepad1.dpad_up){
+            baconActivator.armUp();
+        } else if(gamepad1.dpad_down){
+            baconActivator.armDown();
+        }else if (gamepad1.dpad_left){
+            baconActivator.armPressing();
+        }else if (gamepad1.dpad_right){
+            baconActivator.sensorScanning();
+        }else {
+            baconActivator.armDown();
+        }*/
+
         telemetry.addData("left",  "%.2f", left);
         telemetry.addData("right", "%.2f", right);
         telemetry.addData("Accelerator 1", accelerator1);
@@ -138,6 +149,7 @@ public class Teleop_Iteration_1 extends OpMode{
         telemetry.addData("Tusk Gate", tuskGate.tuskServoState);
         telemetry.addData("Column",column);
         telemetry.addData("Capball", capballHolder.capballHolderServoState);
+        telemetry.addData("Bacon Activator", baconActivator.baconServoState);
 
     }
 

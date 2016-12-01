@@ -31,7 +31,7 @@ public class ParticleAcclerator {
 
     public void rampup(){
 
-        accleratorPower = accleratorPower - 0.001;
+        accleratorPower = accleratorPower + 0.001;
         Acclerator.setPower(accleratorPower);
 
     }

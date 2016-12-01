@@ -7,15 +7,14 @@ import com.qualcomm.robotcore.hardware.Servo;
  * Created by Owner_2 on 11/26/2016.
  */
 
-public class BaconServo {
+public class BaconActivator {
     Servo baconActivatorServo;
 
     private enum baconServoEnum {Up, Down, Scanning, Pressing}
     baconServoEnum baconServoState = baconServoEnum.Down;
 
-    public BaconServo(String baconActivatorServo, HardwareMap hardwareMap){
+    public BaconActivator(String baconActivatorServo, HardwareMap hardwareMap){
     this.baconActivatorServo = hardwareMap.servo.get(baconActivatorServo);
-        this.armDown();
     }
 
     public void armDown(){
@@ -28,13 +27,14 @@ public class BaconServo {
         baconServoState = baconServoEnum.Up;
     }
     public void armPressing(){
-        baconActivatorServo.setPosition(0.5);
+        baconActivatorServo.setPosition(0.25);
         baconServoState = baconServoEnum.Pressing;
     }
-    private void sensorScanning(){
+    public void sensorScanning(){
         baconActivatorServo.setPosition(0.6);
         baconServoState = baconServoEnum.Scanning;
     }
+
     @Override
     public String toString(){
         switch (baconServoState){
