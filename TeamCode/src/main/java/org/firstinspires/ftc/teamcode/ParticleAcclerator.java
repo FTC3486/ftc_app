@@ -25,7 +25,7 @@ public class ParticleAcclerator {
 
 
     public void run() {
-        Acclerator.setPower(-1.0);
+        Acclerator.setPower(1.0);
         AccleratorState = accleratorEnum.Run;
     }
 

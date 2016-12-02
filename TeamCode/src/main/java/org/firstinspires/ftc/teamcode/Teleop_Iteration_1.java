@@ -150,7 +150,7 @@ public class Teleop_Iteration_1 extends OpMode{
         telemetry.addData("Column",column);
         telemetry.addData("Capball", capballHolder.capballHolderServoState);
         telemetry.addData("Bacon Activator", baconActivator.baconServoState);
-
+        telemetry.update();
     }
 
     @Override
