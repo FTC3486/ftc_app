@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 
@@ -15,13 +16,12 @@ public class Pickup {
     private enum pickupEnum {Run, Stop}
     pickupEnum PickupState =pickupEnum.Stop;
 
-
     public Pickup(String Pickup, HardwareMap hardwareMap) {
         this.Pickup = hardwareMap.dcMotor.get(Pickup);
     }
 
     public void run() {
-        Pickup.setPower(-1.0);
+        Pickup.setPower(1.0);
         PickupState = pickupEnum.Run;
     }
 

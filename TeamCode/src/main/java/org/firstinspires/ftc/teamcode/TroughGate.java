@@ -29,7 +29,7 @@ public class TroughGate {
     }
 
     public void openGate() {
-        troughGateServo.setPosition(0.5);
+        troughGateServo.setPosition(0.6);
         troughServoState = troughGateServoEnum.Open;
         isOpen = true;
     }
