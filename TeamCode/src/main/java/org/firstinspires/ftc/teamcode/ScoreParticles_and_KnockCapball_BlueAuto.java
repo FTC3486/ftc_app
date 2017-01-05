@@ -1,8 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.GyroSensor;
+import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
@@ -11,7 +15,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 @Autonomous(name = "Two Particles and Capball BlueAuto", group = "Autonomus2016")
 public class ScoreParticles_and_KnockCapball_BlueAuto extends LinearOpMode{
     private ElapsedTime     runtime = new ElapsedTime();
-    Drivetrain drivetrain = new Drivetrain();
+    PulseDrive pulseDrive = new PulseDrive();
     ParticleAcclerator accelerator1;
     ParticleAcclerator accelerator2;
     Pickup pickup;
@@ -20,6 +24,12 @@ public class ScoreParticles_and_KnockCapball_BlueAuto extends LinearOpMode{
     TuskGate tuskGate;
     CapballHolder capballHolder;
     BaconActivator baconActivator;
+    ColorSensor colorSensor;
+    OpticalDistanceSensor left_ods;
+    OpticalDistanceSensor right_ods;
+    GyroSensor gyro;
+    ModernRoboticsI2cRangeSensor range;
+
 
     static final double     COUNTS_PER_MOTOR_REV    = 1120 ;
     static final double     DRIVE_GEAR_REDUCTION    = 0.8 ;     // This is < 1.0 if geared UP
@@ -31,7 +41,7 @@ public class ScoreParticles_and_KnockCapball_BlueAuto extends LinearOpMode{
 
     @Override
     public void runOpMode() {
-        drivetrain.init(hardwareMap);
+        pulseDrive.init(hardwareMap);
         pickup = new Pickup("Pickup", hardwareMap);
         troughGate = new TroughGate("Trough Gate", hardwareMap);
         accelerator1 = new ParticleAcclerator("Accelerator 1", hardwareMap);
@@ -40,28 +50,33 @@ public class ScoreParticles_and_KnockCapball_BlueAuto extends LinearOpMode{
         tuskGate = new TuskGate("Tusk Gate", hardwareMap);
         capballHolder = new CapballHolder("Capball Holder", hardwareMap);
         baconActivator = new BaconActivator("Bacon Activator", hardwareMap);
+        colorSensor = hardwareMap.colorSensor.get("Beacon Color");
+        range = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "Range");
+        gyro = hardwareMap.gyroSensor.get("Gyro");
+        left_ods = hardwareMap.opticalDistanceSensor.get("Left ods");
+        right_ods = hardwareMap.opticalDistanceSensor.get("Right ods");
         accelerator1.accleratorPower = 0;
         accelerator2.accleratorPower = 0;
         baconActivator.armDown();
         telemetry.addData("Status", "Resetting Encoders");    //
         telemetry.update();
 
-        drivetrain.Left1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        drivetrain.Left2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        drivetrain.Right1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        drivetrain.Right2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        pulseDrive.Left1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        pulseDrive.Left2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        pulseDrive.Right1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        pulseDrive.Right2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         idle();
 
-        drivetrain.Left1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        drivetrain.Left2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        drivetrain.Right1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        drivetrain.Right2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        pulseDrive.Left1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        pulseDrive.Left2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        pulseDrive.Right1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        pulseDrive.Right2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         telemetry.addData("Path0", "Starting at %7d :%7d",
-                drivetrain.Left1.getCurrentPosition(),
-                drivetrain.Left2.getCurrentPosition(),
-                drivetrain.Right1.getCurrentPosition(),
-                drivetrain.Right2.getCurrentPosition());
+                pulseDrive.Left1.getCurrentPosition(),
+                pulseDrive.Left2.getCurrentPosition(),
+                pulseDrive.Right1.getCurrentPosition(),
+                pulseDrive.Right2.getCurrentPosition());
         telemetry.update();
 
 
@@ -100,53 +115,53 @@ public class ScoreParticles_and_KnockCapball_BlueAuto extends LinearOpMode{
         if (opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            newLeftTarget = drivetrain.Left2.getCurrentPosition() + (int) (leftInches * COUNTS_PER_INCH);
-            newRightTarget = drivetrain.Right2.getCurrentPosition() + (int) (rightInches * COUNTS_PER_INCH);
-            drivetrain.Left1.setTargetPosition(newLeftTarget);
-            drivetrain.Left2.setTargetPosition(newLeftTarget);
-            drivetrain.Right1.setTargetPosition(newRightTarget);
-            drivetrain.Right2.setTargetPosition(newRightTarget);
+            newLeftTarget = pulseDrive.Left2.getCurrentPosition() + (int) (leftInches * COUNTS_PER_INCH);
+            newRightTarget = pulseDrive.Right2.getCurrentPosition() + (int) (rightInches * COUNTS_PER_INCH);
+            pulseDrive.Left1.setTargetPosition(newLeftTarget);
+            pulseDrive.Left2.setTargetPosition(newLeftTarget);
+            pulseDrive.Right1.setTargetPosition(newRightTarget);
+            pulseDrive.Right2.setTargetPosition(newRightTarget);
 
 
             // Turn On RUN_TO_POSITION
-            drivetrain.Left1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            drivetrain.Left2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            drivetrain.Right1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            drivetrain.Right2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            pulseDrive.Left1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            pulseDrive.Left2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            pulseDrive.Right1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            pulseDrive.Right2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // reset the timeout time and start motion.
             runtime.reset();
-            drivetrain.Left1.setPower(Math.abs(speed));
-            drivetrain.Left2.setPower(Math.abs(speed));
-            drivetrain.Right1.setPower(Math.abs(speed));
-            drivetrain.Right2.setPower(Math.abs(speed));
+            pulseDrive.Left1.setPower(Math.abs(speed));
+            pulseDrive.Left2.setPower(Math.abs(speed));
+            pulseDrive.Right1.setPower(Math.abs(speed));
+            pulseDrive.Right2.setPower(Math.abs(speed));
 
             // keep looping while we are still active, and there is time left, and both motors are running.
             while (opModeIsActive() &&
                     (runtime.seconds() < timeoutS) &&
-                    (drivetrain.Left1.isBusy() && drivetrain.Left2.isBusy() && drivetrain.Right1.isBusy() && drivetrain.Right2.isBusy())) {
+                    (pulseDrive.Left1.isBusy() && pulseDrive.Left2.isBusy() && pulseDrive.Right1.isBusy() && pulseDrive.Right2.isBusy())) {
 
                 // Display it for the driver.
                 telemetry.addData("Path1", "Running to %7d :%7d", newLeftTarget, newRightTarget);
                 telemetry.addData("Path2", "Running at %7d :%7d",
-                        drivetrain.Left1.getCurrentPosition(),
-                        drivetrain.Left2.getCurrentPosition(),
-                        drivetrain.Right1.getCurrentPosition(),
-                        drivetrain.Right2.getCurrentPosition());
+                        pulseDrive.Left1.getCurrentPosition(),
+                        pulseDrive.Left2.getCurrentPosition(),
+                        pulseDrive.Right1.getCurrentPosition(),
+                        pulseDrive.Right2.getCurrentPosition());
                 telemetry.update();
             }
 
             // Stop all motion;
-            drivetrain.Left1.setPower(0);
-            drivetrain.Left2.setPower(0);
-            drivetrain.Right1.setPower(0);
-            drivetrain.Right2.setPower(0);
+            pulseDrive.Left1.setPower(0);
+            pulseDrive.Left2.setPower(0);
+            pulseDrive.Right1.setPower(0);
+            pulseDrive.Right2.setPower(0);
 
             // Turn off RUN_TO_POSITION
-            drivetrain.Left1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            drivetrain.Left2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            drivetrain.Right1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            drivetrain.Right2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            pulseDrive.Left1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            pulseDrive.Left2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            pulseDrive.Right1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            pulseDrive.Right2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         }
 

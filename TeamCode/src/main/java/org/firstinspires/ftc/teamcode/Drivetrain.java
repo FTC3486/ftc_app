@@ -1,50 +1,171 @@
 package org.firstinspires.ftc.teamcode;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import java.util.LinkedList;
 
-/**
- * Created by John Paul Ashour on 11/5/2016.
- */
+public class DriveTrain {
+    private double wheelDiameter;
+    private double gearRatio;
+    private int encoderCountsPerDriverGearRotation;
+    private LinkedList<DcMotor> leftMotors;
+    private LinkedList<DcMotor> rightMotors;
+    private LinkedList<DcMotor> leftMotorsWithEncoders;
+    private LinkedList<DcMotor> rightMotorsWithEncoders;
+    private double leftSpeed;
+    private double rightSpeed;
 
-public class Drivetrain {
-    public DcMotor Left1 = null;
-    public DcMotor Left2 = null;
-    public DcMotor Right1 = null;
-    public DcMotor Right2 = null;
-
-    HardwareMap hwMap = null;
-
-
-    public Drivetrain() {
+    private DriveTrain(Builder builder) {
+        this.wheelDiameter = builder.wheelDiameter;
+        this.gearRatio = builder.gearRatio;
+        this.encoderCountsPerDriverGearRotation = builder.encoderCountsPerDriverGearRotation;
+        this.leftMotors = builder.leftMotors;
+        this.rightMotors = builder.rightMotors;
+        this.leftMotorsWithEncoders = builder.leftMotorsWithEncoders;
+        this.rightMotorsWithEncoders = builder.rightMotorsWithEncoders;
     }
 
-    public void init(HardwareMap ahwMap) {
-        // Save reference to Hardware map
-        hwMap = ahwMap;
+    public static class Builder {
+        private double wheelDiameter = 4.0;
+        private double gearRatio = 1.0;
+        // 1120 is the number for the AndyMark motors. Tetrix Motors are 1440 PPR
+        private int encoderCountsPerDriverGearRotation = 1120;
+        private final LinkedList<DcMotor> leftMotors = new LinkedList<DcMotor>();
+        private final LinkedList<DcMotor> rightMotors = new LinkedList<DcMotor>();
+        private final LinkedList<DcMotor> leftMotorsWithEncoders =
+                new LinkedList<DcMotor>();
+        private final LinkedList<DcMotor> rightMotorsWithEncoders =
+                new LinkedList<DcMotor>();
 
-        Left1 = hwMap.dcMotor.get("Left 1");
-        Left2 = hwMap.dcMotor.get("Left 2");
-        Right1 = hwMap.dcMotor.get("Right 1");
-        Right2 = hwMap.dcMotor.get("Right 2");
+        public Builder setWheelDiameter(double wheelDiameter) {
+            this.wheelDiameter = wheelDiameter;
+            return this;
+        }
 
-        Left1.setDirection(DcMotor.Direction.REVERSE);
-        Left2.setDirection(DcMotor.Direction.REVERSE);
-        Right1.setDirection(DcMotor.Direction.FORWARD);
-        Right2.setDirection(DcMotor.Direction.FORWARD);
+        public Builder setGearRatio(double gearRatio) {
+            this.gearRatio = gearRatio;
+            return this;
+        }
 
-        Left1.setPower(0);
-        Left2.setPower(0);
-        Right1.setPower(0);
-        Right2.setPower(0);
+        public Builder setEncoderCountsPerDriverGearRotation(int encoderCountsPerDriverGearRotation) {
+            this.encoderCountsPerDriverGearRotation = encoderCountsPerDriverGearRotation;
+            return this;
+        }
 
-        //Left1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        //Left2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        //Right1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        //Right2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        public Builder addLeftMotor(DcMotor leftMotor) {
+            leftMotors.add(leftMotor);
+            return this;
+        }
 
+        public Builder addLeftMotorWithEncoder(DcMotor leftMotor) {
+            leftMotorsWithEncoders.add(leftMotor);
+            return this;
+        }
 
+        public Builder addRightMotor(DcMotor rightMotor) {
+            rightMotors.add(rightMotor);
+            return this;
+        }
+
+        public Builder addRightMotorWithEncoder(DcMotor rightMotor) {
+            rightMotorsWithEncoders.add(rightMotor);
+            return this;
+        }
+
+        public DriveTrain build() {
+            return new DriveTrain(this);
+        }
     }
 
+    protected LinkedList<DcMotor> getLeftMotorsWithEncoders() {
+        return leftMotorsWithEncoders;
+    }
 
+    protected LinkedList<DcMotor> getRightMotorsWithEncoders() {
+        return rightMotorsWithEncoders;
+    }
+
+    protected void haltDrive() {
+        for (DcMotor motor : leftMotorsWithEncoders) {
+            motor.setPower(0);
+        }
+
+        for (DcMotor motor : rightMotorsWithEncoders) {
+            motor.setPower(0);
+        }
+
+        for (DcMotor motor : leftMotors) {
+            motor.setPower(0);
+        }
+
+        for (DcMotor motor : rightMotors) {
+            motor.setPower(0);
+        }
+    }
+
+    protected void setPowers(double leftSpeed, double rightSpeed) {
+        this.leftSpeed = leftSpeed;
+        this.rightSpeed = rightSpeed;
+
+        for (DcMotor motor : leftMotorsWithEncoders) {
+            motor.setPower(leftSpeed);
+        }
+
+        for (DcMotor motor : rightMotorsWithEncoders) {
+            motor.setPower(rightSpeed);
+        }
+
+        for (DcMotor motor : leftMotors) {
+            motor.setPower(leftSpeed);
+        }
+
+        for (DcMotor motor : rightMotors) {
+            motor.setPower(rightSpeed);
+        }
+    }
+
+    protected long convertInchesToEncoderCounts(float distance) {
+        return Math.round(((distance / (Math.PI * wheelDiameter)) * gearRatio) /
+                encoderCountsPerDriverGearRotation);
+    }
+
+    protected double getLeftEncoderCount() {
+        double sumValue = 0;
+
+        for (DcMotor leftMotorWithEncoder : leftMotorsWithEncoders) {
+            sumValue += leftMotorWithEncoder.getCurrentPosition();
+        }
+
+        sumValue = sumValue / (leftMotorsWithEncoders.size());
+        return sumValue;
+    }
+
+    protected double getRightEncoderCount() {
+        double sumValue = 0;
+
+        for (DcMotor rightMotorWithEncoder : rightMotorsWithEncoders) {
+            sumValue += rightMotorWithEncoder.getCurrentPosition();
+        }
+
+        sumValue = sumValue / leftMotorsWithEncoders.size();
+        return sumValue;
+    }
+
+    protected void resetMotorEncoders() {
+        for (DcMotor leftMotorWithEncoders : leftMotorsWithEncoders) {
+            leftMotorWithEncoders.setMode(DcMotor.RunMode.RESET_ENCODERS);
+            leftMotorWithEncoders.setMode(DcMotor.RunMode.RUN_USING_ENCODERS);
+        }
+
+        for (DcMotor rightMotorWithEncoders : rightMotorsWithEncoders) {
+            rightMotorWithEncoders.setMode(DcMotor.RunMode.RESET_ENCODERS);
+            rightMotorWithEncoders.setMode(DcMotor.RunMode.RUN_USING_ENCODERS);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "left pwr: " + String.format("%.2f", leftSpeed) +
+                "\nright pwr: " + String.format("%.2f", rightSpeed);
+    }
 }
