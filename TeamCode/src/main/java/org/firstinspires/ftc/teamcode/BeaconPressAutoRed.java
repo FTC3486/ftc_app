@@ -11,15 +11,13 @@ import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.teamcode.GyroAutoDriver;
-
 /**
  * Created by Owner_2 on 12/31/2016.
  */
 @Autonomous(name = "Press Beacons RedAuto", group = "Autonomus2016")
 public class BeaconPressAutoRed extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
-    DriveTrain driveTrain;
+    Drivetrain driveTrain;
     ParticleAcclerator accelerator1;
     ParticleAcclerator accelerator2;
     Pickup pickup;
@@ -31,8 +29,11 @@ public class BeaconPressAutoRed extends LinearOpMode {
     ColorSensor colorSensor;
     OpticalDistanceSensor left_ods;
     OpticalDistanceSensor right_ods;
-    GyroSensor gyro;
-    ModernRoboticsI2cRangeSensor range;
+    ModernRoboticsI2cRangeSensor rangeSensor;
+
+    AutoDriver autoDriver;
+
+
     //GyroAutoDriver gyroAutoDriver;
 
 
@@ -57,12 +58,13 @@ public class BeaconPressAutoRed extends LinearOpMode {
         Left2.setDirection(DcMotor.Direction.REVERSE);
         Right1.setDirection(DcMotor.Direction.FORWARD);
         Right2.setDirection(DcMotor.Direction.FORWARD);
-        driveTrain = new DriveTrain.Builder()
+        driveTrain = new Drivetrain.Builder()
                 .addLeftMotor(Left1)
                 .addLeftMotorWithEncoder(Left2)
                 .addRightMotor(Right1)
                 .addRightMotorWithEncoder(Right2)
                 .build();
+        autoDriver = new GyroscopicAutoDriver(this, driveTrain, "gyroSensor", hardwareMap);
         pickup = new Pickup("Pickup", hardwareMap);
         troughGate = new TroughGate("Trough Gate", hardwareMap);
         accelerator1 = new ParticleAcclerator("Accelerator 1", hardwareMap);
@@ -72,7 +74,7 @@ public class BeaconPressAutoRed extends LinearOpMode {
         capballHolder = new CapballHolder("Capball Holder", hardwareMap);
         baconActivator = new BaconActivator("Bacon Activator", hardwareMap);
         colorSensor = hardwareMap.colorSensor.get("Beacon Color");
-        range = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "Range");
+        rangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "Range");
         left_ods = hardwareMap.opticalDistanceSensor.get("Left ods");
         right_ods = hardwareMap.opticalDistanceSensor.get("Right ods");
         //gyroAutoDriver = new GyroAutoDriver("GyroAuto", hardwareMap);
@@ -80,9 +82,10 @@ public class BeaconPressAutoRed extends LinearOpMode {
         accelerator2.accleratorPower = 0;
         baconActivator.armDown();
         telemetry.update();
-        sensorGyro = hardwareMap.gyroSensor.get("gyro");  //Point to the gyro in the configuration file
+        sensorGyro = hardwareMap.gyroSensor.get("gyroSensor");  //Point to the gyro in the configuration file
         mrGyro = (ModernRoboticsI2cGyro) sensorGyro;      //ModernRoboticsI2cGyro allows us to .getIntegratedZValue()
         mrGyro.calibrate();
+        mrGyro.resetZAxisIntegrator();
         colorSensor.enableLed(false);
 
 
@@ -93,6 +96,10 @@ public class BeaconPressAutoRed extends LinearOpMode {
         }
 
 
+        //autoDriver.drive_forward(2000);
+
+        //driveStraight(5000, 0.75);
+
         turnAbsolute(90);
 
 
@@ -100,21 +107,22 @@ public class BeaconPressAutoRed extends LinearOpMode {
 
 
     }
-    public void driveStraight(int duration, double power) {
+    public void driveStraight(int encodercounts, double power) {
         double leftSpeed; //Power to feed the motors
         double rightSpeed;
 
         double target = mrGyro.getIntegratedZValue();  //Starting direction
-        double startPosition = Left2.getCurrentPosition() & Right2.getCurrentPosition();//Starting position
+        double startPositionLeft = Left2.getCurrentPosition();//Starting position
+        double startPositionRight = Right2.getCurrentPosition();
 
-        while (Left2.getCurrentPosition() < duration + startPosition) {  //While we have not passed out intended distance
+        while (driveTrain.getLeftEncoderCount() < encodercounts + startPositionLeft && driveTrain.getRightEncoderCount()< encodercounts + startPositionRight) {  //While we have not passed out intended distance
             zAccumulated = mrGyro.getIntegratedZValue();  //Current direction
 
-            leftSpeed = power + (zAccumulated - target) / 100;  //Calculate speed for each side
-            rightSpeed = power - (zAccumulated - target) / 100;  //See Gyro Straight video for detailed explanation
+            leftSpeed = power + (zAccumulated - target) / 8;  //Calculate speed for each side
+            rightSpeed = power - (zAccumulated - target) / 8;  //See Gyro Straight video for detailed explanation
 
-            leftSpeed = Range.clip(leftSpeed, -1, 1);
-            rightSpeed = Range.clip(rightSpeed, -1, 1);
+            leftSpeed = Range.clip(leftSpeed, -0.75, 0.75);
+            rightSpeed = Range.clip(rightSpeed, -0.75, 0.75);
 
             Left1.setPower(leftSpeed);
             Left2.setPower(leftSpeed);
@@ -138,7 +146,7 @@ public class BeaconPressAutoRed extends LinearOpMode {
     //This function turns a number of degrees compared to where the robot was when the program started. Positive numbers trn left.
     public void turnAbsolute(int target) {
         zAccumulated = mrGyro.getIntegratedZValue();  //Set variables to gyro readings
-        double turnSpeed = 0.15;
+        double turnSpeed = 0.3;
 
         while (Math.abs(zAccumulated - target) > 3) {  //Continue while the robot direction is further than three degrees from the target
             if (zAccumulated > target) {  //if gyro is positive, we will turn right

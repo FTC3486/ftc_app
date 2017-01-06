@@ -3,8 +3,6 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.teamcode.TeleopDriver;
-
 
 /**
  * Created by John Paul Ashour on 11/5/2016.
@@ -13,7 +11,7 @@ import org.firstinspires.ftc.teamcode.TeleopDriver;
 public class Teleop_DrivetrainBuilder extends OpMode{
     GamepadWrapper joy1;
     GamepadWrapper joy2;
-    DriveTrain driveTrain;
+    Drivetrain driveTrain;
     ParticleAcclerator accelerator1;
     ParticleAcclerator accelerator2;
     Pickup pickup;
@@ -43,7 +41,7 @@ public class Teleop_DrivetrainBuilder extends OpMode{
         Left2.setDirection(DcMotor.Direction.REVERSE);
         Right1.setDirection(DcMotor.Direction.FORWARD);
         Right2.setDirection(DcMotor.Direction.FORWARD);
-        driveTrain = new DriveTrain.Builder()
+        driveTrain = new Drivetrain.Builder()
                 .addLeftMotor(Left1)
                 .addLeftMotorWithEncoder(Left2)
                 .addRightMotor(Right1)

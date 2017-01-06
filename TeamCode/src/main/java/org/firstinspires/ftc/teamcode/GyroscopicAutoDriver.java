@@ -1,13 +1,17 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.GyroSensor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+
 /**
  * Created by Matthew on 2/20/2016.
  */
-public class GyroscopeAutoDriver extends AutoDriver {
+ public class GyroscopicAutoDriver extends AutoDriver {
     private GyroSensor gyroSensor;
 
-    public GyroscopeAutoDriver(LinearOpMode linearOpMode, DriveTrain driveTrain, String gyroSensor,
-                               HardwareMap hardwaremap) {
+    public GyroscopicAutoDriver(LinearOpMode linearOpMode, Drivetrain driveTrain, String gyroSensor,
+                                HardwareMap hardwaremap) {
         super(linearOpMode, driveTrain);
         this.gyroSensor = hardwaremap.gyroSensor.get(gyroSensor);
     }
@@ -73,3 +77,13 @@ public class GyroscopeAutoDriver extends AutoDriver {
 
         return null;
     }
+    @Override
+    public AutoDriver turn_clockwise(int degrees) {
+        return null;
+    }
+
+    @Override
+    public AutoDriver turn_counterclockwise(int degrees) {
+        return null;
+    }
+}

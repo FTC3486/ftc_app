@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
  */
 public class EncoderAutoDriver extends AutoDriver {
 
-    public EncoderAutoDriver(LinearOpMode linearOpMode, DriveTrain driveTrain) {
+    public EncoderAutoDriver(LinearOpMode linearOpMode, Drivetrain driveTrain) {
         super(linearOpMode, driveTrain);
     }
 

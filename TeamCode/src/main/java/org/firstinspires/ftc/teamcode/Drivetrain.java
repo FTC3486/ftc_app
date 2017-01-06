@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import java.util.LinkedList;
 
-public class DriveTrain {
+public class Drivetrain {
     private double wheelDiameter;
     private double gearRatio;
     private int encoderCountsPerDriverGearRotation;
@@ -15,7 +15,7 @@ public class DriveTrain {
     private double leftSpeed;
     private double rightSpeed;
 
-    private DriveTrain(Builder builder) {
+    private Drivetrain(Builder builder) {
         this.wheelDiameter = builder.wheelDiameter;
         this.gearRatio = builder.gearRatio;
         this.encoderCountsPerDriverGearRotation = builder.encoderCountsPerDriverGearRotation;
@@ -72,8 +72,8 @@ public class DriveTrain {
             return this;
         }
 
-        public DriveTrain build() {
-            return new DriveTrain(this);
+        public Drivetrain build() {
+            return new Drivetrain(this);
         }
     }
 
