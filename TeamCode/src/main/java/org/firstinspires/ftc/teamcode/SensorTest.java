@@ -21,22 +21,29 @@ public class SensorTest extends LinearOpMode {
     OpticalDistanceSensor right_ods;
     GyroSensor gyro;
     ModernRoboticsI2cRangeSensor range;
+    BaconActivator baconActivator;
 
     @Override
     public void runOpMode() {
         colorSensor = hardwareMap.colorSensor.get("Beacon Color");
         range = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "Range");
-        gyro = hardwareMap.gyroSensor.get("Gyro");
+        gyro = hardwareMap.gyroSensor.get("gyroSensor");
         left_ods = hardwareMap.opticalDistanceSensor.get("Left ods");
         right_ods = hardwareMap.opticalDistanceSensor.get("Right ods");
+        baconActivator = new BaconActivator("Bacon Activator", hardwareMap);
+
         telemetry.update();
 
         colorSensor.enableLed(false);
+        baconActivator.sensorScanning();
         waitForStart();
+
         while (opModeIsActive()) {
             telemetry.addData("Blue ", colorSensor.blue());
             telemetry.addData("Raw Left", left_ods.getRawLightDetected());
+            telemetry.addData("Left ODS reading", left_ods.getLightDetected());
             telemetry.addData("Raw Right", right_ods.getRawLightDetected());
+            telemetry.addData("Right ODS reading", right_ods.getLightDetected());
             telemetry.addData("raw ultrasonic", range.rawUltrasonic());
             telemetry.addData("raw optical", range.rawOptical());
             telemetry.addData("cm optical", "%.2f cm", range.cmOptical());

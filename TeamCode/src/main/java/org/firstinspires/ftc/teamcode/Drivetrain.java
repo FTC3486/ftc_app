@@ -27,7 +27,7 @@ public class Drivetrain {
 
     public static class Builder {
         private double wheelDiameter = 4.0;
-        private double gearRatio = 1.0;
+        private double gearRatio = 1.19;
         // 1120 is the number for the AndyMark motors. Tetrix Motors are 1440 PPR
         private int encoderCountsPerDriverGearRotation = 1120;
         private final LinkedList<DcMotor> leftMotors = new LinkedList<DcMotor>();
@@ -153,15 +153,16 @@ public class Drivetrain {
 
     protected void resetMotorEncoders() {
         for (DcMotor leftMotorWithEncoders : leftMotorsWithEncoders) {
-            leftMotorWithEncoders.setMode(DcMotor.RunMode.RESET_ENCODERS);
-            leftMotorWithEncoders.setMode(DcMotor.RunMode.RUN_USING_ENCODERS);
+            leftMotorWithEncoders.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            leftMotorWithEncoders.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
 
         for (DcMotor rightMotorWithEncoders : rightMotorsWithEncoders) {
-            rightMotorWithEncoders.setMode(DcMotor.RunMode.RESET_ENCODERS);
-            rightMotorWithEncoders.setMode(DcMotor.RunMode.RUN_USING_ENCODERS);
+            rightMotorWithEncoders.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            rightMotorWithEncoders.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
     }
+
 
     @Override
     public String toString() {

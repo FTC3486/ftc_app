@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 public abstract class AutoDriver {
     protected LinearOpMode opMode;
     protected Drivetrain driveTrain;
-    protected double power = 0.25;
+    protected double power = 1;
 
 
     public AutoDriver(LinearOpMode opMode, Drivetrain driveTrain) {
