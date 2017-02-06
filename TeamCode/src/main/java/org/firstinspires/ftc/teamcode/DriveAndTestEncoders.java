@@ -12,10 +12,10 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 /**
- * Created by Owner_2 on 1/12/2017.
+ * Created by Owner_2 on 1/28/2017.
  */
-@Autonomous(name = "Press Beacon and Score balls Blue", group = "BlueAutonomus")
-public class BeaconPressAutoBlue extends LinearOpMode {
+@Autonomous(name = "Drive and check encoders", group = "RedAutonomus")
+public class DriveAndTestEncoders extends LinearOpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
     Drivetrain driveTrain;
@@ -60,9 +60,9 @@ public class BeaconPressAutoBlue extends LinearOpMode {
         Right1.setDirection(DcMotor.Direction.FORWARD);
         Right2.setDirection(DcMotor.Direction.FORWARD);
         driveTrain = new Drivetrain.Builder()
-                .addLeftMotor(Left1)
+                .addLeftMotorWithEncoder(Left1)
                 .addLeftMotorWithEncoder(Left2)
-                .addRightMotor(Right1)
+                .addRightMotorWithEncoder(Right1)
                 .addRightMotorWithEncoder(Right2)
                 .build();
         //autoDriver = new GyroscopicAutoDriver(this, driveTrain, "gyroSensor", hardwareMap);
@@ -89,78 +89,36 @@ public class BeaconPressAutoBlue extends LinearOpMode {
         mrGyro.resetZAxisIntegrator();
         colorSensor.enableLed(false);
         troughGate.closeGate();
+        int Left1Encoder = Left1.getCurrentPosition();
+        int Left2Encoder = Left2.getCurrentPosition();
+        int Right1Encoder = Right1.getCurrentPosition();
+        int Right2Encoder = Right2.getCurrentPosition();
 
 
         waitForStart();
         runtime.reset();
-        while (mrGyro.isCalibrating()) {
-
-        }
-        driveTrain.resetMotorEncoders();
-        driveStraightForwards(2800, 0.5);
-        sleep(200);
-        while (left_ods.getLightDetected() < 0.06) {
-            driveTrain.setPowers(0.2, 0.2);
-        }
-        driveTrain.haltDrive();
-        sleep(200);
-        driveTrain.resetMotorEncoders();
-        driveStraightBackwards(-100, -0.5);
-        driveTrain.haltDrive();
-        sleep(200);
-        driveTrain.resetMotorEncoders();
-        encoderDrive(0.3, 7.2, -7.2, 10);
-        driveTrain.haltDrive();
-        baconActivator.sensorScanning();
-        sleep(200);
-        while (rangeSensor.rawUltrasonic() > 25) {
-            driveTrain.setPowers(0.3, 0.3);
-        }
-        driveTrain.haltDrive();
-        driveTrain.resetMotorEncoders();
-        sleep(200);
-        if (colorSensor.blue() >= 2) {
-        baconActivator.armPressing();
-            sleep(500);
-            driveTrain.setPowers(0.2, 0.2);
-            sleep(500);
-            driveTrain.haltDrive();
-        } else {
-        baconActivator.armUp();
-            sleep(500);
-            driveTrain.setPowers(0.2, 0.2);
-            sleep(800);
-            driveTrain.haltDrive();
-
-        }
-        driveTrain.resetMotorEncoders();
-        sensorGyro.resetZAxisIntegrator();
-        sleep(100);
-
-        //driveStraightBackwards(-2100, -0.5);
-        encoderDrive(0.5, -28, -28, 10);
-        driveTrain.haltDrive();
+        /*while (mrGyro.isCalibrating()) {
+        }*/
         driveTrain.resetMotorEncoders();
 
-        while (accelerator1.accleratorPower < 1 && accelerator2.accleratorPower < 1) {
-            accelerator1.rampup();
-            accelerator2.rampup();
+        while (opModeIsActive()){
+            telemetry.addData("Left1 Encoder Counts", Left1Encoder);
+            telemetry.addData("Left2 Encoder Counts", Left2Encoder);
+            telemetry.addData("Right1 Encoder Counts", Right1Encoder);
+            telemetry.addData("Right2 Encoder Counts", Right2Encoder);
+            driveTrain.setPowers(0.5, 0.5);
+            telemetry.update();
         }
-        accelerator1.run();
-        accelerator2.run();
-        sleep(100);
-        troughGate.openGate();
-        sleep(2000);
-        troughGate.closeGate();
-
 
 
 
 
 
         baconActivator.armUp();
+        telemetry.update();
     }
-   /* public void driveToLine(double colorValue, double power) {
+
+    public void driveToLineLeft(double colorValue, double power) {
         double leftSpeed; //Power to feed the motors
         double rightSpeed;
 
@@ -169,7 +127,7 @@ public class BeaconPressAutoBlue extends LinearOpMode {
         double startPositionLeft = Left2.getCurrentPosition();//Starting position
         double startPositionRight = Right2.getCurrentPosition();
 
-        while (right_ods.getRawLightDetected()<colorValue && Left2.getCurrentPosition() < startPositionLeft && Right2.getCurrentPosition()< startPositionRight){   //While we have not passed out intended distance
+        while (right_ods.getLightDetected()<colorValue /*&& Left2.getCurrentPosition() < startPositionLeft && Right2.getCurrentPosition()< startPositionRight*/){   //While we have not passed out intended distance
             zAccumulated = mrGyro.getIntegratedZValue(); //Current direction
 
             leftSpeed = power + (zAccumulated - target) / 20;  //Calculate speed for each side
@@ -190,7 +148,7 @@ public class BeaconPressAutoBlue extends LinearOpMode {
         Left2.setPower(0);//Stop the motors
         Right1.setPower(0);
         Right2.setPower(0);
-    }*/
+    }
 
     public void driveStraightForwards(int encodercounts, double power) {
         double leftSpeed; //Power to feed the motors
@@ -247,11 +205,10 @@ public class BeaconPressAutoBlue extends LinearOpMode {
 
 
         }
-        Right1.setPower(0);
-        Right2.setPower(0);
         Left1.setPower(0);
         Left2.setPower(0);//Stop the motors
-
+        Right1.setPower(0);
+        Right2.setPower(0);
     }
 
 
@@ -327,8 +284,6 @@ public class BeaconPressAutoBlue extends LinearOpMode {
     }
 
 
-
 }
-
 
 

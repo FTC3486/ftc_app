@@ -96,7 +96,8 @@ public class ShootBallsFromCornerRed extends LinearOpMode{
         while (mrGyro.isCalibrating()) {
 
         }
-        driveStraightBackwards(-2600, -0.5);
+        driveTrain.resetMotorEncoders();
+        driveStraightBackwards(-2800, -0.5);
         driveTrain.haltDrive();
 
         while (accelerator1.accleratorPower < 1 && accelerator2.accleratorPower < 1) {
@@ -107,20 +108,17 @@ public class ShootBallsFromCornerRed extends LinearOpMode{
         accelerator2.run();
 
         troughGate.openGate();
-        sleep(2000);
+        sleep(3000);
         troughGate.closeGate();
-        //sleep(2000);
+        accelerator1.stop();
+        accelerator2.stop();
         driveTrain.resetMotorEncoders();
-        encoderDrive(0.5, -18, -16, 10);
-        driveTrain.resetMotorEncoders();
+        sleep(100);
+        encoderDrive(0.5, 22, -22, 3);
         driveTrain.haltDrive();
-        sleep(200);
-        baconActivator.armUp();
-        encoderDrive(0.5, -12, 12, 10);
         driveTrain.resetMotorEncoders();
-        driveTrain.haltDrive();
-        sleep(200);
-        encoderDrive(0.5, 8, 8, 10);
+        sleep(100);
+        encoderDrive(0.5, 25, 25,5);
 
 
 

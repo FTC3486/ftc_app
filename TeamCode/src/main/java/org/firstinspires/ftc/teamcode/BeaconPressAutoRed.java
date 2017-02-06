@@ -98,6 +98,7 @@ public class BeaconPressAutoRed extends LinearOpMode {
             }
             driveStraightForwards(2800, 0.5);
             sleep(200);
+        driveTrain.resetMotorEncoders();
             while (right_ods.getLightDetected() < 0.06) {
                 driveTrain.setPowers(0.2, 0.2);
             }
@@ -110,12 +111,14 @@ public class BeaconPressAutoRed extends LinearOpMode {
             driveTrain.resetMotorEncoders();
             encoderDrive(0.3, -6.5, 6.5, 10);
             driveTrain.haltDrive();
+        driveTrain.resetMotorEncoders();
             baconActivator.sensorScanning();
             sleep(200);
             while (rangeSensor.rawUltrasonic() > 25) {
                 driveTrain.setPowers(0.3, 0.3);
             }
             driveTrain.haltDrive();
+        driveTrain.resetMotorEncoders();
             sleep(200);
             if (colorSensor.blue() >= 2) {
                 baconActivator.armUp();

@@ -12,10 +12,10 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 /**
- * Created by Owner_2 on 1/12/2017.
+ * Created by Owner_2 on 12/31/2016.
  */
-@Autonomous(name = "Press Beacon and Score balls Blue", group = "BlueAutonomus")
-public class BeaconPressAutoBlue extends LinearOpMode {
+@Autonomous(name = "Press Inner Beacon, Outer Beacon and Score balls Red", group = "RedAutonomus")
+public class BeaconBeaconBallAutoRed extends LinearOpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
     Drivetrain driveTrain;
@@ -93,24 +93,79 @@ public class BeaconPressAutoBlue extends LinearOpMode {
 
         waitForStart();
         runtime.reset();
-        while (mrGyro.isCalibrating()) {
+            while (mrGyro.isCalibrating()) {
 
-        }
+            }
+            driveStraightForwards(2800, 0.5);
+            sleep(200);
         driveTrain.resetMotorEncoders();
-        driveStraightForwards(2800, 0.5);
-        sleep(200);
-        while (left_ods.getLightDetected() < 0.06) {
-            driveTrain.setPowers(0.2, 0.2);
-        }
-        driveTrain.haltDrive();
-        sleep(200);
+            while (right_ods.getLightDetected() < 0.06) {
+                driveTrain.setPowers(0.2, 0.2);
+            }
+            driveTrain.haltDrive();
+            sleep(200);
+            driveTrain.resetMotorEncoders();
+            driveStraightForwards(250, 0.5);
+            driveTrain.haltDrive();
+            sleep(200);
+            driveTrain.resetMotorEncoders();
+            encoderDrive(0.3, -7.4, 7.4, 10);
+            driveTrain.haltDrive();
         driveTrain.resetMotorEncoders();
-        driveStraightBackwards(-100, -0.5);
-        driveTrain.haltDrive();
-        sleep(200);
+            baconActivator.sensorScanning();
+            sleep(200);
+            while (rangeSensor.rawUltrasonic() > 25) {
+                driveTrain.setPowers(0.3, 0.3);
+            }
+            driveTrain.haltDrive();
         driveTrain.resetMotorEncoders();
-        encoderDrive(0.3, 7.2, -7.2, 10);
+            sleep(200);
+            if (colorSensor.blue() >= 2) {
+                baconActivator.armUp();
+                sleep(500);
+                driveTrain.setPowers(0.2, 0.2);
+                sleep(600);
+                driveTrain.haltDrive();
+            } else {
+                baconActivator.armPressing();
+                sleep(500);
+                driveTrain.setPowers(0.2, 0.2);
+                sleep(500);
+                driveTrain.haltDrive();
+            }
+        driveTrain.resetMotorEncoders();
+        sensorGyro.resetZAxisIntegrator();
+        sleep(200);
+
+        driveStraightBackwards(-500, -0.5);
         driveTrain.haltDrive();
+        driveTrain.resetMotorEncoders();
+        sleep(200);
+        encoderDrive(0.5,9.5,-9.5,3);
+        driveTrain.haltDrive();
+        driveTrain.resetMotorEncoders();
+        mrGyro.resetZAxisIntegrator();
+        sleep(200);
+        driveStraightForwards(2000, 0.5);
+        driveTrain.haltDrive();
+        driveTrain.resetMotorEncoders();
+        mrGyro.resetZAxisIntegrator();
+        sleep(200);
+        driveToLineLeft(0.06,0.3);
+        driveTrain.haltDrive();
+        driveTrain.resetMotorEncoders();
+        sleep(200);
+
+        /*while (rangeSensor.rawUltrasonic() > 68) {
+            driveTrain.setPowers(0.3, 0.3);
+        }*/
+            driveStraightForwards(300, 0.5);
+
+        driveTrain.haltDrive();
+        driveTrain.resetMotorEncoders();
+        sleep(200);
+        encoderDrive(0.3, -10.8, 10.8, 4);
+        driveTrain.resetMotorEncoders();
         baconActivator.sensorScanning();
         sleep(200);
         while (rangeSensor.rawUltrasonic() > 25) {
@@ -120,47 +175,36 @@ public class BeaconPressAutoBlue extends LinearOpMode {
         driveTrain.resetMotorEncoders();
         sleep(200);
         if (colorSensor.blue() >= 2) {
-        baconActivator.armPressing();
+            baconActivator.armUp();
             sleep(500);
             driveTrain.setPowers(0.2, 0.2);
-            sleep(500);
+            sleep(600);
             driveTrain.haltDrive();
         } else {
-        baconActivator.armUp();
+            baconActivator.armPressing();
             sleep(500);
             driveTrain.setPowers(0.2, 0.2);
-            sleep(800);
+            sleep(500);
             driveTrain.haltDrive();
-
         }
         driveTrain.resetMotorEncoders();
         sensorGyro.resetZAxisIntegrator();
-        sleep(100);
-
-        //driveStraightBackwards(-2100, -0.5);
-        encoderDrive(0.5, -28, -28, 10);
+        sleep(200);
+        driveStraightBackwards(-500, -0.5);
         driveTrain.haltDrive();
         driveTrain.resetMotorEncoders();
-
-        while (accelerator1.accleratorPower < 1 && accelerator2.accleratorPower < 1) {
-            accelerator1.rampup();
-            accelerator2.rampup();
-        }
-        accelerator1.run();
-        accelerator2.run();
-        sleep(100);
-        troughGate.openGate();
-        sleep(2000);
-        troughGate.closeGate();
+        sleep(200);
+        encoderDrive(0.5, 3.8, -3.8, 3);
 
 
 
 
 
 
-        baconActivator.armUp();
+
+            baconActivator.armUp();
     }
-   /* public void driveToLine(double colorValue, double power) {
+    public void driveToLineLeft(double colorValue, double power) {
         double leftSpeed; //Power to feed the motors
         double rightSpeed;
 
@@ -169,7 +213,7 @@ public class BeaconPressAutoBlue extends LinearOpMode {
         double startPositionLeft = Left2.getCurrentPosition();//Starting position
         double startPositionRight = Right2.getCurrentPosition();
 
-        while (right_ods.getRawLightDetected()<colorValue && Left2.getCurrentPosition() < startPositionLeft && Right2.getCurrentPosition()< startPositionRight){   //While we have not passed out intended distance
+        while (right_ods.getLightDetected()<colorValue /*&& Left2.getCurrentPosition() < startPositionLeft && Right2.getCurrentPosition()< startPositionRight*/){   //While we have not passed out intended distance
             zAccumulated = mrGyro.getIntegratedZValue(); //Current direction
 
             leftSpeed = power + (zAccumulated - target) / 20;  //Calculate speed for each side
@@ -190,7 +234,7 @@ public class BeaconPressAutoBlue extends LinearOpMode {
         Left2.setPower(0);//Stop the motors
         Right1.setPower(0);
         Right2.setPower(0);
-    }*/
+    }
 
     public void driveStraightForwards(int encodercounts, double power) {
         double leftSpeed; //Power to feed the motors
@@ -247,11 +291,10 @@ public class BeaconPressAutoBlue extends LinearOpMode {
 
 
         }
-        Right1.setPower(0);
-        Right2.setPower(0);
         Left1.setPower(0);
         Left2.setPower(0);//Stop the motors
-
+        Right1.setPower(0);
+        Right2.setPower(0);
     }
 
 
@@ -327,8 +370,6 @@ public class BeaconPressAutoBlue extends LinearOpMode {
     }
 
 
-
 }
-
 
 

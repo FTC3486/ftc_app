@@ -95,6 +95,7 @@ public class ShootBallsFromCornerBlue extends LinearOpMode {
         while (mrGyro.isCalibrating()) {
 
         }
+        driveTrain.resetMotorEncoders();
         driveStraightBackwards(-3400, -0.5);
         driveTrain.haltDrive();
 
@@ -109,6 +110,7 @@ public class ShootBallsFromCornerBlue extends LinearOpMode {
         sleep(2000);
         troughGate.closeGate();
         sleep(2000);
+        driveTrain.resetMotorEncoders();
         encoderDrive(0.5, -22, -22, 3);
         driveTrain.haltDrive();
 
