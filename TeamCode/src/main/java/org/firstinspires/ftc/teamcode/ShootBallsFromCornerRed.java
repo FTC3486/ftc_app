@@ -74,7 +74,7 @@ public class ShootBallsFromCornerRed extends LinearOpMode{
         capballHolder = new CapballHolder("Capball Holder", hardwareMap);
         baconActivator = new BaconActivator("Bacon Activator", hardwareMap);
         colorSensor = hardwareMap.colorSensor.get("Beacon Color");
-        rangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "Range");
+        //rangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "Range");
         left_ods = hardwareMap.opticalDistanceSensor.get("Left ods");
         right_ods = hardwareMap.opticalDistanceSensor.get("Right ods");
         //gyroAutoDriver = new GyroAutoDriver("GyroAuto", hardwareMap);

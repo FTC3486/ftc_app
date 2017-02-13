@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -15,6 +16,7 @@ import com.qualcomm.robotcore.util.Range;
  * Created by Owner_2 on 1/12/2017.
  */
 @Autonomous(name = "Press Beacon and Score balls Blue", group = "BlueAutonomus")
+@Disabled
 public class BeaconPressAutoBlue extends LinearOpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
