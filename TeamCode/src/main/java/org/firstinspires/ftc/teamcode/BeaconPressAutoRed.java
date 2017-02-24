@@ -16,7 +16,7 @@ import com.qualcomm.robotcore.util.Range;
  * Created by Owner_2 on 12/31/2016.
  */
 @Autonomous(name = "Press Beacon and Score balls Red", group = "RedAutonomus")
-@Disabled
+//@Disabled
 public class BeaconPressAutoRed extends LinearOpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
@@ -98,7 +98,7 @@ public class BeaconPressAutoRed extends LinearOpMode {
             driveStraightForwards(2800, 0.5);
             sleep(200);
         driveTrain.resetMotorEncoders();
-            while (right_ods.getLightDetected() < 0.06) {
+            while (left_ods.getLightDetected() < 0.06) {
                 driveTrain.setPowers(0.2, 0.2);
             }
             driveTrain.haltDrive();
@@ -106,14 +106,14 @@ public class BeaconPressAutoRed extends LinearOpMode {
             driveTrain.resetMotorEncoders();
             driveStraightForwards(200, 0.5);
             driveTrain.haltDrive();
-            sleep(200);
+            sleep(200)  ;
             driveTrain.resetMotorEncoders();
             encoderDrive(0.3, -6.5, 6.5, 10);
             driveTrain.haltDrive();
         driveTrain.resetMotorEncoders();
             baconActivator.sensorScanning();
             sleep(200);
-            while (rangeSensor.rawUltrasonic() > 25) {
+            /*while (rangeSensor.rawUltrasonic() > 25) {
                 driveTrain.setPowers(0.3, 0.3);
             }
             driveTrain.haltDrive();
@@ -147,7 +147,7 @@ public class BeaconPressAutoRed extends LinearOpMode {
 
             troughGate.openGate();
             sleep(2000);
-            troughGate.closeGate();
+            troughGate.closeGate();*/
 
 
 

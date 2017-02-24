@@ -23,7 +23,7 @@ public class BaconActivator {
 
     }
     public void armUp(){
-        baconActivatorServo.setPosition(1);
+        baconActivatorServo.setPosition(0.8);
         baconServoState = baconServoEnum.Up;
     }
     public void armPressing(){
@@ -31,7 +31,7 @@ public class BaconActivator {
         baconServoState = baconServoEnum.Pressing;
     }
     public void sensorScanning(){
-        baconActivatorServo.setPosition(0.5);
+        baconActivatorServo.setPosition(0.33);
         baconServoState = baconServoEnum.Scanning;
     }
 

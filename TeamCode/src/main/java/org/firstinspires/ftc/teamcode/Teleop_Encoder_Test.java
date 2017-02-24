@@ -72,16 +72,20 @@ public class Teleop_Encoder_Test extends OpMode{
 
     @Override
     public void loop(){
+        double negativepointfive = -0.5;
         joy1.update(gamepad1);
         joy2.update(gamepad2);
 
 
 
-        if (joy1.toggle.y){
+        if (gamepad1.y){
             driveTrain.setPowers(0.5, 0.5);
-        }else if(joy1.toggle.a){
-            driveTrain.setPowers(-0.5, -0.5);
-        }else if(joy1.toggle.y && joy1.toggle.a){
+        }else if(gamepad2.a){
+            Left1.setPower(negativepointfive);
+            Left2.setPower(negativepointfive);
+            Right1.setPower(negativepointfive);
+            Right2.setPower(negativepointfive);
+        }else if(gamepad1.y && gamepad2.a){
             driveTrain.haltDrive();
         }else{
             driveTrain.haltDrive();
