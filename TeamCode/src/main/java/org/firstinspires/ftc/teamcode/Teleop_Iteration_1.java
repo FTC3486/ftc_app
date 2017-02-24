@@ -11,8 +11,7 @@ public class Teleop_Iteration_1 extends OpMode{
     GamepadWrapper joy1;
     GamepadWrapper joy2;
     PulseDrive pulseDrive = new PulseDrive();
-    ParticleAcclerator accelerator1;
-    ParticleAcclerator accelerator2;
+    ParticleAcclerator accelerator;
     Pickup pickup;
     TroughGate troughGate;
     Column column;
@@ -27,16 +26,14 @@ public class Teleop_Iteration_1 extends OpMode{
         pulseDrive.init(hardwareMap);
         pickup = new Pickup("Pickup", hardwareMap);
         troughGate = new TroughGate("Trough Gate", hardwareMap);
-        accelerator1 = new ParticleAcclerator("Accelerator 1", hardwareMap);
-        accelerator2 = new ParticleAcclerator("Accelerator 2", hardwareMap);
-        column = new Column("Column", hardwareMap);
+        accelerator = new ParticleAcclerator("Accelerator 1", hardwareMap);
+        column = new Column("Column 1","Column 2", hardwareMap);
         tuskGate = new TuskGate("Tusk Gate", hardwareMap);
         joy1 = new GamepadWrapper();
         joy2 = new GamepadWrapper();
         capballHolder = new CapballHolder("Capball Holder", hardwareMap);
         baconActivator = new BaconActivator("Bacon Activator", hardwareMap);
-        accelerator1.accleratorPower = 0;
-        accelerator2.accleratorPower = 0;
+        accelerator.accleratorPower = 0;
         baconActivator.armUp();
     }
 
@@ -74,10 +71,12 @@ public class Teleop_Iteration_1 extends OpMode{
 
 
 
-        if(joy2.toggle.x){
-            pickup.run();
+        if(gamepad1.y){
+            pickup.reverse();
         }
-        else {
+        else if(joy1.toggle.x){
+            pickup.run();
+        }else{
             pickup.stop();
         }
 
@@ -91,14 +90,11 @@ public class Teleop_Iteration_1 extends OpMode{
 
 
         if (joy2.toggle.left_bumper){
-            accelerator1.rampup();
-            accelerator2.rampup();
+            accelerator.rampup();
         }
         else {
-            accelerator1.stop();
-            accelerator2.stop();
-            accelerator1.accleratorPower = 0;
-            accelerator2.accleratorPower = 0;
+            accelerator.stop();
+            accelerator.accleratorPower = 0;
         }
 
 
@@ -142,8 +138,7 @@ public class Teleop_Iteration_1 extends OpMode{
 
         telemetry.addData("left",  "%.2f", left);
         telemetry.addData("right", "%.2f", right);
-        telemetry.addData("Accelerator 1", accelerator1);
-        telemetry.addData("Accelerator 2", accelerator2);
+        telemetry.addData("Accelerator 1", accelerator);
         telemetry.addData("Pickup",pickup.PickupState);
         telemetry.addData("Trough Gate", troughGate.troughServoState);
         telemetry.addData("Tusk Gate", tuskGate.tuskServoState);

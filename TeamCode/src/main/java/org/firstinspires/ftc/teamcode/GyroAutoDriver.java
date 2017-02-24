@@ -66,11 +66,11 @@ public class GyroAutoDriver {
 
     //This function turns a number of degrees compared to where the robot was when the program started. Positive numbers trn left.
     public void turnAbsolute(int target) {
-        zAccumulated = mrGyro.getIntegratedZValue();  //Set variables to gyro readings
+        zAccumulated = mrGyro.getIntegratedZValue();  //Set variables to gyroSensor readings
         double turnSpeed = 0.15;
 
         while (Math.abs(zAccumulated - target) > 3) {  //Continue while the robot direction is further than three degrees from the target
-            if (zAccumulated > target) {  //if gyro is positive, we will turn right
+            if (zAccumulated > target) {  //if gyroSensor is positive, we will turn right
                 Left1.setPower(turnSpeed);
                 Left2.setPower(turnSpeed);
                 Right1.setPower(-turnSpeed);
@@ -78,14 +78,14 @@ public class GyroAutoDriver {
 
             }
 
-            if (zAccumulated < target) {  //if gyro is positive, we will turn left
+            if (zAccumulated < target) {  //if gyroSensor is positive, we will turn left
                 Left1.setPower(-turnSpeed);
                 Left2.setPower(-turnSpeed);
                 Right1.setPower(turnSpeed);
                 Right2.setPower(turnSpeed);
             }
 
-            zAccumulated = mrGyro.getIntegratedZValue();  //Set variables to gyro readings
+            zAccumulated = mrGyro.getIntegratedZValue();  //Set variables to gyroSensor readings
 
         }
 

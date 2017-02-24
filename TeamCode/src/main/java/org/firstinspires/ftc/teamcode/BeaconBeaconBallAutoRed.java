@@ -22,7 +22,6 @@ public class BeaconBeaconBallAutoRed extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
     Drivetrain driveTrain;
     ParticleAcclerator accelerator1;
-    ParticleAcclerator accelerator2;
     Pickup pickup;
     TroughGate troughGate;
     Column column;
@@ -71,8 +70,7 @@ public class BeaconBeaconBallAutoRed extends LinearOpMode {
         pickup = new Pickup("Pickup", hardwareMap);
         troughGate = new TroughGate("Trough Gate", hardwareMap);
         accelerator1 = new ParticleAcclerator("Accelerator 1", hardwareMap);
-        accelerator2 = new ParticleAcclerator("Accelerator 2", hardwareMap);
-        column = new Column("Column", hardwareMap);
+        column = new Column("Column1","Column 2", hardwareMap);
         tuskGate = new TuskGate("Tusk Gate", hardwareMap);
         capballHolder = new CapballHolder("Capball Holder", hardwareMap);
         baconActivator = new BaconActivator("Bacon Activator", hardwareMap);
@@ -82,10 +80,9 @@ public class BeaconBeaconBallAutoRed extends LinearOpMode {
         right_ods = hardwareMap.opticalDistanceSensor.get("Right ods");
         //gyroAutoDriver = new GyroAutoDriver("GyroAuto", hardwareMap);
         accelerator1.accleratorPower = 0;
-        accelerator2.accleratorPower = 0;
         baconActivator.armDown();
         telemetry.update();
-        sensorGyro = hardwareMap.gyroSensor.get("gyroSensor");  //Point to the gyro in the configuration file
+        sensorGyro = hardwareMap.gyroSensor.get("gyroSensor");  //Point to the gyroSensor in the configuration file
         mrGyro = (ModernRoboticsI2cGyro) sensorGyro;      //ModernRoboticsI2cGyro allows us to .getIntegratedZValue()
         mrGyro.calibrate();
         mrGyro.resetZAxisIntegrator();

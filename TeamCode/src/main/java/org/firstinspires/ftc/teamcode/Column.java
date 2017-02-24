@@ -9,26 +9,31 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  */
 
 public class Column {
-    public DcMotor Column = null;
+    public DcMotor Column1 = null;
+    public DcMotor Column2 = null;
 
     private enum columnEnum {Extend, Retract, Stop}
     private columnEnum ColumnState =columnEnum.Stop;
 
 
-    public Column(String Column, HardwareMap hardwareMap) {
-        this.Column = hardwareMap.dcMotor.get(Column);
+    public Column(String Column1, String Column2, HardwareMap hardwareMap) {
+        this.Column1 = hardwareMap.dcMotor.get(Column1);
+        this.Column2 = hardwareMap.dcMotor.get(Column2);
     }
 
     public void extend(){
-        Column.setPower(-1.0);
+        Column1.setPower(-1.0);
+        Column2.setPower(1.0);
     }
 
     public void retract(){
-        Column.setPower(1.0);
+        Column1.setPower(1.0);
+        Column2.setPower(-1.0);
     }
 
     public void stop(){
-        Column.setPower(0);
+        Column1.setPower(0);
+        Column2.setPower(0);
     }
 
     @Override

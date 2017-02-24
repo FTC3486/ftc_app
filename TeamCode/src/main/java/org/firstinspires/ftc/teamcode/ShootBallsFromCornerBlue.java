@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -15,11 +16,12 @@ import com.qualcomm.robotcore.util.Range;
  * Created by Owner_2 on 1/12/2017.
  */
 @Autonomous(name = "Score balls From Corner Blue", group = "BlueAutonomus")
+
+@Disabled
 public class ShootBallsFromCornerBlue extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
     Drivetrain driveTrain;
     ParticleAcclerator accelerator1;
-    ParticleAcclerator accelerator2;
     Pickup pickup;
     TroughGate troughGate;
     Column column;
@@ -68,8 +70,7 @@ public class ShootBallsFromCornerBlue extends LinearOpMode {
         pickup = new Pickup("Pickup", hardwareMap);
         troughGate = new TroughGate("Trough Gate", hardwareMap);
         accelerator1 = new ParticleAcclerator("Accelerator 1", hardwareMap);
-        accelerator2 = new ParticleAcclerator("Accelerator 2", hardwareMap);
-        column = new Column("Column", hardwareMap);
+        column = new Column("Column 1","Column 2", hardwareMap);
         tuskGate = new TuskGate("Tusk Gate", hardwareMap);
         capballHolder = new CapballHolder("Capball Holder", hardwareMap);
         baconActivator = new BaconActivator("Bacon Activator", hardwareMap);
@@ -79,10 +80,9 @@ public class ShootBallsFromCornerBlue extends LinearOpMode {
         right_ods = hardwareMap.opticalDistanceSensor.get("Right ods");
         //gyroAutoDriver = new GyroAutoDriver("GyroAuto", hardwareMap);
         accelerator1.accleratorPower = 0;
-        accelerator2.accleratorPower = 0;
         baconActivator.armDown();
         telemetry.update();
-        sensorGyro = hardwareMap.gyroSensor.get("gyroSensor");  //Point to the gyro in the configuration file
+        sensorGyro = hardwareMap.gyroSensor.get("gyroSensor");  //Point to the gyroSensor in the configuration file
         mrGyro = (ModernRoboticsI2cGyro) sensorGyro;      //ModernRoboticsI2cGyro allows us to .getIntegratedZValue()
         mrGyro.calibrate();
         mrGyro.resetZAxisIntegrator();
@@ -99,12 +99,10 @@ public class ShootBallsFromCornerBlue extends LinearOpMode {
         driveStraightBackwards(-3400, -0.5);
         driveTrain.haltDrive();
 
-        while (accelerator1.accleratorPower < 1 && accelerator2.accleratorPower < 1) {
+        while (accelerator1.accleratorPower < 1) {
             accelerator1.rampup();
-            accelerator2.rampup();
         }
         accelerator1.run();
-        accelerator2.run();
 
         troughGate.openGate();
         sleep(2000);

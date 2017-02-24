@@ -63,7 +63,7 @@ public class ScoreParticles_and_KnockCapball_BlueAuto extends LinearOpMode{
         troughGate = new TroughGate("Trough Gate", hardwareMap);
         accelerator1 = new ParticleAcclerator("Accelerator 1", hardwareMap);
         accelerator2 = new ParticleAcclerator("Accelerator 2", hardwareMap);
-        column = new Column("Column", hardwareMap);
+        column = new Column("Column 1", "Column 2", hardwareMap);
         tuskGate = new TuskGate("Tusk Gate", hardwareMap);
         capballHolder = new CapballHolder("Capball Holder", hardwareMap);
         baconActivator = new BaconActivator("Bacon Activator", hardwareMap);

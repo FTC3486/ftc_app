@@ -13,7 +13,6 @@ public class Teleop_Encoder_Test extends OpMode{
     GamepadWrapper joy2;
     Drivetrain driveTrain;
     ParticleAcclerator accelerator1;
-    ParticleAcclerator accelerator2;
     Pickup pickup;
     TroughGate troughGate;
     Column column;
@@ -51,15 +50,13 @@ public class Teleop_Encoder_Test extends OpMode{
         pickup = new Pickup("Pickup", hardwareMap);
         troughGate = new TroughGate("Trough Gate", hardwareMap);
         accelerator1 = new ParticleAcclerator("Accelerator 1", hardwareMap);
-        accelerator2 = new ParticleAcclerator("Accelerator 2", hardwareMap);
-        column = new Column("Column", hardwareMap);
+        column = new Column("Column 1", "Column 2", hardwareMap);
         tuskGate = new TuskGate("Tusk Gate", hardwareMap);
         joy1 = new GamepadWrapper();
         joy2 = new GamepadWrapper();
         capballHolder = new CapballHolder("Capball Holder", hardwareMap);
         baconActivator = new BaconActivator("Bacon Activator", hardwareMap);
         accelerator1.accleratorPower = 0;
-        accelerator2.accleratorPower = 0;
         baconActivator.armUp();
 
 
@@ -80,11 +77,13 @@ public class Teleop_Encoder_Test extends OpMode{
 
 
 
-        if (gamepad1.y){
+        if (joy1.toggle.y){
             driveTrain.setPowers(0.5, 0.5);
-        }else if(gamepad1.a){
+        }else if(joy1.toggle.a){
             driveTrain.setPowers(-0.5, -0.5);
-        }else {
+        }else if(joy1.toggle.y && joy1.toggle.a){
+            driveTrain.haltDrive();
+        }else{
             driveTrain.haltDrive();
         }
         if(gamepad1.b){

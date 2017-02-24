@@ -26,12 +26,12 @@ public class CapballHolder {
     }
 
     public void captured(){
-        capballHolderServo.setPosition(0.25);
+        capballHolderServo.setPosition(0.3);
         isBallCaptured = true;
     }
 
     public void colapsed(){
-        capballHolderServo.setPosition(1);
+        capballHolderServo.setPosition(0.95);
     }
     @Override
     public String toString(){

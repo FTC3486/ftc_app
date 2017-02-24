@@ -13,7 +13,7 @@ public class Pickup {
     public DcMotor Pickup = null;
 
 
-    private enum pickupEnum {Run, Stop}
+    private enum pickupEnum {Run, Reverse, Stop}
     pickupEnum PickupState =pickupEnum.Stop;
 
     public Pickup(String Pickup, HardwareMap hardwareMap) {
@@ -28,6 +28,10 @@ public class Pickup {
     public void stop() {
         Pickup.setPower(0);
         PickupState = pickupEnum.Stop;
+    }
+    public void reverse(){
+        Pickup.setPower(-1.0);
+        PickupState = pickupEnum.Reverse;
     }
 
     @Override

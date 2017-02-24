@@ -68,7 +68,7 @@ public class WallFollowAuto1 extends LinearOpMode {
         right_back_ods = hardwareMap.opticalDistanceSensor.get("Right Back ods");
 
 
-        sensorGyro = hardwareMap.gyroSensor.get("gyroSensor");  //Point to the gyro in the configuration file
+        sensorGyro = hardwareMap.gyroSensor.get("gyroSensor");  //Point to the gyroSensor in the configuration file
         mrGyro = (ModernRoboticsI2cGyro) sensorGyro;      //ModernRoboticsI2cGyro allows us to .getIntegratedZValue()
         mrGyro.calibrate();
         mrGyro.resetZAxisIntegrator();
