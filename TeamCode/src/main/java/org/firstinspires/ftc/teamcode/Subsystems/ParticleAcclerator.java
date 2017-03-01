@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Subsystems;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -13,7 +13,7 @@ import static android.os.SystemClock.sleep;
 public class ParticleAcclerator {
     public DcMotor Acclerator = null;
 
-    double accleratorPower = 0;
+    public double accleratorPower = 0;
 
     private enum accleratorEnum {Run, Rampup, Rampdown, Stop}
     private accleratorEnum AccleratorState =accleratorEnum.Stop;

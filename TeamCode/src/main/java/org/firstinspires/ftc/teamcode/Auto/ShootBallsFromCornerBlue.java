@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Auto;
 
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
@@ -12,17 +12,26 @@ import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.teamcode.Extension.AutoDriver;
+import org.firstinspires.ftc.teamcode.Subsystems.BaconActivator;
+import org.firstinspires.ftc.teamcode.Subsystems.CapballHolder;
+import org.firstinspires.ftc.teamcode.Subsystems.Column;
+import org.firstinspires.ftc.teamcode.Extension.Drivetrain;
+import org.firstinspires.ftc.teamcode.Subsystems.ParticleAcclerator;
+import org.firstinspires.ftc.teamcode.Subsystems.Pickup;
+import org.firstinspires.ftc.teamcode.Subsystems.TroughGate;
+import org.firstinspires.ftc.teamcode.Subsystems.TuskGate;
+
 /**
  * Created by Owner_2 on 1/12/2017.
  */
-@Autonomous(name = "Press Beacon and Score balls Blue", group = "BlueAutonomus")
-@Disabled
-public class BeaconPressAutoBlue extends LinearOpMode {
+@Autonomous(name = "Score balls From Corner Blue", group = "BlueAutonomus")
 
+@Disabled
+public class ShootBallsFromCornerBlue extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
     Drivetrain driveTrain;
     ParticleAcclerator accelerator1;
-
     Pickup pickup;
     TroughGate troughGate;
     Column column;
@@ -76,7 +85,7 @@ public class BeaconPressAutoBlue extends LinearOpMode {
         capballHolder = new CapballHolder("Capball Holder", hardwareMap);
         baconActivator = new BaconActivator("Bacon Activator", hardwareMap);
         colorSensor = hardwareMap.colorSensor.get("Beacon Color");
-        rangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "Range");
+        //rangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "Range");
         left_ods = hardwareMap.opticalDistanceSensor.get("Left ods");
         right_ods = hardwareMap.opticalDistanceSensor.get("Right ods");
         //gyroAutoDriver = new GyroAutoDriver("GyroAuto", hardwareMap);
@@ -97,59 +106,22 @@ public class BeaconPressAutoBlue extends LinearOpMode {
 
         }
         driveTrain.resetMotorEncoders();
-        driveStraightForwards(2800, 0.5);
-        sleep(200);
-        while (left_ods.getLightDetected() < 0.06) {
-            driveTrain.setPowers(0.2, 0.2);
-        }
+        driveStraightBackwards(-3400, -0.5);
         driveTrain.haltDrive();
-        sleep(200);
-        driveTrain.resetMotorEncoders();
-        driveStraightBackwards(-100, -0.5);
-        driveTrain.haltDrive();
-        sleep(200);
-        driveTrain.resetMotorEncoders();
-        encoderDrive(0.3, 7.2, -7.2, 10);
-        driveTrain.haltDrive();
-        baconActivator.sensorScanning();
-        sleep(200);
-        while (rangeSensor.rawUltrasonic() > 25) {
-            driveTrain.setPowers(0.3, 0.3);
-        }
-        driveTrain.haltDrive();
-        driveTrain.resetMotorEncoders();
-        sleep(200);
-        if (colorSensor.blue() >= 2) {
-        baconActivator.armPressing();
-            sleep(500);
-            driveTrain.setPowers(0.2, 0.2);
-            sleep(500);
-            driveTrain.haltDrive();
-        } else {
-        baconActivator.armUp();
-            sleep(500);
-            driveTrain.setPowers(0.2, 0.2);
-            sleep(800);
-            driveTrain.haltDrive();
-
-        }
-        driveTrain.resetMotorEncoders();
-        sensorGyro.resetZAxisIntegrator();
-        sleep(100);
-
-        //driveStraightBackwards(-2100, -0.5);
-        encoderDrive(0.5, -28, -28, 10);
-        driveTrain.haltDrive();
-        driveTrain.resetMotorEncoders();
 
         while (accelerator1.accleratorPower < 1) {
             accelerator1.rampup();
         }
         accelerator1.run();
-        sleep(100);
+
         troughGate.openGate();
         sleep(2000);
         troughGate.closeGate();
+        sleep(2000);
+        driveTrain.resetMotorEncoders();
+        encoderDrive(0.5, -22, -22, 3);
+        driveTrain.haltDrive();
+
 
 
 
@@ -245,11 +217,10 @@ public class BeaconPressAutoBlue extends LinearOpMode {
 
 
         }
-        Right1.setPower(0);
-        Right2.setPower(0);
         Left1.setPower(0);
         Left2.setPower(0);//Stop the motors
-
+        Right1.setPower(0);
+        Right2.setPower(0);
     }
 
 
@@ -327,6 +298,4 @@ public class BeaconPressAutoBlue extends LinearOpMode {
 
 
 }
-
-
 

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Extension;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 
@@ -85,7 +85,7 @@ public class Drivetrain {
         return rightMotorsWithEncoders;
     }
 
-    protected void haltDrive() {
+    public void haltDrive() {
         for (DcMotor motor : leftMotorsWithEncoders) {
             motor.setPower(0);
         }
@@ -103,7 +103,7 @@ public class Drivetrain {
         }
     }
 
-    protected void setPowers(double leftSpeed, double rightSpeed) {
+    public void setPowers(double leftSpeed, double rightSpeed) {
         this.leftSpeed = leftSpeed;
         this.rightSpeed = rightSpeed;
 
@@ -151,7 +151,7 @@ public class Drivetrain {
         return sumValue;
     }
 
-    protected void resetMotorEncoders() {
+    public void resetMotorEncoders() {
         for (DcMotor leftMotorWithEncoders : leftMotorsWithEncoders) {
             leftMotorWithEncoders.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             leftMotorWithEncoders.setMode(DcMotor.RunMode.RUN_USING_ENCODER);

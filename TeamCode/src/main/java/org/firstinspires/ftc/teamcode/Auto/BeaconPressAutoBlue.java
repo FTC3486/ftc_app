@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Auto;
 
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
@@ -12,16 +12,27 @@ import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.teamcode.Extension.AutoDriver;
+import org.firstinspires.ftc.teamcode.Subsystems.BaconActivator;
+import org.firstinspires.ftc.teamcode.Subsystems.CapballHolder;
+import org.firstinspires.ftc.teamcode.Subsystems.Column;
+import org.firstinspires.ftc.teamcode.Extension.Drivetrain;
+import org.firstinspires.ftc.teamcode.Subsystems.ParticleAcclerator;
+import org.firstinspires.ftc.teamcode.Subsystems.Pickup;
+import org.firstinspires.ftc.teamcode.Subsystems.TroughGate;
+import org.firstinspires.ftc.teamcode.Subsystems.TuskGate;
+
 /**
- * Created by Owner_2 on 12/31/2016.
+ * Created by Owner_2 on 1/12/2017.
  */
-@Autonomous(name ="Beacon,Score balls, Beacon - Red", group = "RedAutonomus")
+@Autonomous(name = "Press Beacon and Score balls Blue", group = "BlueAutonomus")
 @Disabled
-public class BeaconBallBeaconAutoRed extends LinearOpMode {
+public class BeaconPressAutoBlue extends LinearOpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
     Drivetrain driveTrain;
     ParticleAcclerator accelerator1;
+
     Pickup pickup;
     TroughGate troughGate;
     Column column;
@@ -70,7 +81,7 @@ public class BeaconBallBeaconAutoRed extends LinearOpMode {
         pickup = new Pickup("Pickup", hardwareMap);
         troughGate = new TroughGate("Trough Gate", hardwareMap);
         accelerator1 = new ParticleAcclerator("Accelerator 1", hardwareMap);
-        column = new Column("Column 1", "Column 2", hardwareMap);
+        column = new Column("Column 1","Column 2", hardwareMap);
         tuskGate = new TuskGate("Tusk Gate", hardwareMap);
         capballHolder = new CapballHolder("Capball Holder", hardwareMap);
         baconActivator = new BaconActivator("Bacon Activator", hardwareMap);
@@ -92,88 +103,24 @@ public class BeaconBallBeaconAutoRed extends LinearOpMode {
 
         waitForStart();
         runtime.reset();
-            while (mrGyro.isCalibrating()) {
+        while (mrGyro.isCalibrating()) {
 
-            }
-        /*driveStraightForwards(2800, 0.5);
+        }
+        driveTrain.resetMotorEncoders();
+        driveStraightForwards(2800, 0.5);
         sleep(200);
-        driveTrain.resetMotorEncoders();
-            while (right_ods.getLightDetected() < 0.06) {
-                driveTrain.setPowers(0.2, 0.2);
-            }
-            driveTrain.haltDrive();
-            sleep(200);
-            driveTrain.resetMotorEncoders();
-            driveStraightForwards(200, 0.5);
-            driveTrain.haltDrive();
-            sleep(200);
-            driveTrain.resetMotorEncoders();
-            encoderDrive(0.3, -6.5, 6.5, 10);
-            driveTrain.haltDrive();
-        driveTrain.resetMotorEncoders();
-            baconActivator.sensorScanning();
-            sleep(200);
-            while (rangeSensor.rawUltrasonic() > 25) {
-                driveTrain.setPowers(0.3, 0.3);
-            }
-            driveTrain.haltDrive();
-        driveTrain.resetMotorEncoders();
-            sleep(200);
-            if (colorSensor.blue() >= 2) {
-                baconActivator.armUp();
-                sleep(500);
-                driveTrain.setPowers(0.2, 0.2);
-                sleep(600);
-                driveTrain.haltDrive();
-            } else {
-                baconActivator.armPressing();
-                sleep(500);
-                driveTrain.setPowers(0.2, 0.2);
-                sleep(500);
-                driveTrain.haltDrive();
-            }
-        driveTrain.resetMotorEncoders();
-        sensorGyro.resetZAxisIntegrator();
-        sleep(100);
-
-        //driveStraightBackwards(-2100, -0.5);
-        encoderDrive(0.5, -30, -30, 10);
-        driveTrain.haltDrive();
-
-            while (accelerator1.accleratorPower < 1 && accelerator2.accleratorPower < 1) {
-                accelerator1.rampup();
-                accelerator2.rampup();
-            }
-            accelerator1.run();
-            accelerator2.run();
-
-            troughGate.openGate();
-            sleep(2000);
-            troughGate.closeGate();*/
-            encoderDrive(0.5, 6.5 ,-6.5, 3);
-        driveTrain.haltDrive();
-        driveTrain.resetMotorEncoders();
-        mrGyro.resetZAxisIntegrator();
-        sleep(200);
-            driveStraightForwards(2200, 0.5);
-        driveTrain.haltDrive();
-        sleep(200);
-        driveTrain.resetMotorEncoders();
-        mrGyro.resetZAxisIntegrator();
-        while (right_ods.getLightDetected() < 0.06) {
+        while (left_ods.getLightDetected() < 0.06) {
             driveTrain.setPowers(0.2, 0.2);
         }
         driveTrain.haltDrive();
         sleep(200);
         driveTrain.resetMotorEncoders();
-        mrGyro.resetZAxisIntegrator();
-        driveStraightForwards(250, 0.5);
+        driveStraightBackwards(-100, -0.5);
         driveTrain.haltDrive();
         sleep(200);
         driveTrain.resetMotorEncoders();
-        encoderDrive(0.3, -7.2, 7.2, 10);
+        encoderDrive(0.3, 7.2, -7.2, 10);
         driveTrain.haltDrive();
-        driveTrain.resetMotorEncoders();
         baconActivator.sensorScanning();
         sleep(200);
         while (rangeSensor.rawUltrasonic() > 25) {
@@ -183,27 +130,45 @@ public class BeaconBallBeaconAutoRed extends LinearOpMode {
         driveTrain.resetMotorEncoders();
         sleep(200);
         if (colorSensor.blue() >= 2) {
-            baconActivator.armUp();
+        baconActivator.armPressing();
             sleep(500);
             driveTrain.setPowers(0.2, 0.2);
-            sleep(600);
+            sleep(500);
             driveTrain.haltDrive();
         } else {
-            baconActivator.armPressing();
+        baconActivator.armUp();
             sleep(500);
             driveTrain.setPowers(0.2, 0.2);
-            sleep(500);
+            sleep(800);
             driveTrain.haltDrive();
+
         }
+        driveTrain.resetMotorEncoders();
+        sensorGyro.resetZAxisIntegrator();
+        sleep(100);
+
+        //driveStraightBackwards(-2100, -0.5);
+        encoderDrive(0.5, -28, -28, 10);
+        driveTrain.haltDrive();
+        driveTrain.resetMotorEncoders();
+
+        while (accelerator1.accleratorPower < 1) {
+            accelerator1.rampup();
+        }
+        accelerator1.run();
+        sleep(100);
+        troughGate.openGate();
+        sleep(2000);
+        troughGate.closeGate();
 
 
 
 
 
 
-            baconActivator.armUp();
+        baconActivator.armUp();
     }
-    public void driveToLineLeft(double colorValue, double power) {
+   /* public void driveToLine(double colorValue, double power) {
         double leftSpeed; //Power to feed the motors
         double rightSpeed;
 
@@ -212,7 +177,7 @@ public class BeaconBallBeaconAutoRed extends LinearOpMode {
         double startPositionLeft = Left2.getCurrentPosition();//Starting position
         double startPositionRight = Right2.getCurrentPosition();
 
-        while (right_ods.getLightDetected()<colorValue /*&& Left2.getCurrentPosition() < startPositionLeft && Right2.getCurrentPosition()< startPositionRight*/){   //While we have not passed out intended distance
+        while (right_ods.getRawLightDetected()<colorValue && Left2.getCurrentPosition() < startPositionLeft && Right2.getCurrentPosition()< startPositionRight){   //While we have not passed out intended distance
             zAccumulated = mrGyro.getIntegratedZValue(); //Current direction
 
             leftSpeed = power + (zAccumulated - target) / 20;  //Calculate speed for each side
@@ -233,7 +198,7 @@ public class BeaconBallBeaconAutoRed extends LinearOpMode {
         Left2.setPower(0);//Stop the motors
         Right1.setPower(0);
         Right2.setPower(0);
-    }
+    }*/
 
     public void driveStraightForwards(int encodercounts, double power) {
         double leftSpeed; //Power to feed the motors
@@ -290,10 +255,11 @@ public class BeaconBallBeaconAutoRed extends LinearOpMode {
 
 
         }
-        Left1.setPower(0);
-        Left2.setPower(0);//Stop the motors
         Right1.setPower(0);
         Right2.setPower(0);
+        Left1.setPower(0);
+        Left2.setPower(0);//Stop the motors
+
     }
 
 
@@ -371,5 +337,6 @@ public class BeaconBallBeaconAutoRed extends LinearOpMode {
 
 
 }
+
 
 

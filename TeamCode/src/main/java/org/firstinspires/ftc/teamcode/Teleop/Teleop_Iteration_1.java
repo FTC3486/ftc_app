@@ -1,18 +1,26 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Teleop;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
+
+import org.firstinspires.ftc.teamcode.Subsystems.BaconActivator;
+import org.firstinspires.ftc.teamcode.Subsystems.CapballHolder;
+import org.firstinspires.ftc.teamcode.Subsystems.Column;
+import org.firstinspires.ftc.teamcode.Extension.GamepadWrapper;
+import org.firstinspires.ftc.teamcode.Subsystems.ParticleAcclerator;
+import org.firstinspires.ftc.teamcode.Subsystems.Pickup;
+import org.firstinspires.ftc.teamcode.Subsystems.PulseDrive;
+import org.firstinspires.ftc.teamcode.Subsystems.TroughGate;
+import org.firstinspires.ftc.teamcode.Subsystems.TuskGate;
 
 
 /**
  * Created by John Paul Ashour on 11/5/2016.
  */
-@TeleOp(name="Teleop With DrivetrainBuilder", group="Teleop2016")
-public class Teleop_DrivetrainBuilder extends OpMode{
+@TeleOp(name="Teleop version 1.0", group="Teleop2016")
+public class Teleop_Iteration_1 extends OpMode{
     GamepadWrapper joy1;
     GamepadWrapper joy2;
-    Drivetrain driveTrain;
+    PulseDrive pulseDrive = new PulseDrive();
     ParticleAcclerator accelerator;
     Pickup pickup;
     TroughGate troughGate;
@@ -20,34 +28,12 @@ public class Teleop_DrivetrainBuilder extends OpMode{
     TuskGate tuskGate;
     CapballHolder capballHolder;
     BaconActivator baconActivator;
-    TeleopDriver teleopDriver;
-
-    public DcMotor Left1 = null;
-    public DcMotor Left2 = null;
-    public DcMotor Right1 = null;
-    public DcMotor Right2 = null;
-
 
 
 
     @Override
     public void init() {
-        Left1 = hardwareMap.dcMotor.get("Left 1");
-        Left2 = hardwareMap.dcMotor.get("Left 2");
-        Right1 = hardwareMap.dcMotor.get("Right 1");
-        Right2 = hardwareMap.dcMotor.get("Right 2");
-
-        Left1.setDirection(DcMotor.Direction.REVERSE);
-        Left2.setDirection(DcMotor.Direction.REVERSE);
-        Right1.setDirection(DcMotor.Direction.FORWARD);
-        Right2.setDirection(DcMotor.Direction.FORWARD);
-        driveTrain = new Drivetrain.Builder()
-                .addLeftMotor(Left1)
-                .addLeftMotorWithEncoder(Left2)
-                .addRightMotor(Right1)
-                .addRightMotorWithEncoder(Right2)
-                .build();
-        teleopDriver = new TeleopDriver(this, driveTrain);
+        pulseDrive.init(hardwareMap);
         pickup = new Pickup("Pickup", hardwareMap);
         troughGate = new TroughGate("Trough Gate", hardwareMap);
         accelerator = new ParticleAcclerator("Accelerator 1", hardwareMap);
@@ -58,7 +44,6 @@ public class Teleop_DrivetrainBuilder extends OpMode{
         capballHolder = new CapballHolder("Capball Holder", hardwareMap);
         baconActivator = new BaconActivator("Bacon Activator", hardwareMap);
         accelerator.accleratorPower = 0;
-
         baconActivator.armUp();
     }
 
@@ -75,19 +60,31 @@ public class Teleop_DrivetrainBuilder extends OpMode{
         joy1.update(gamepad1);
         joy2.update(gamepad2);
 
+        double left;
+        double right;
+
 
         if(joy1.toggle.x) {
-            teleopDriver.tank_drive(gamepad1, TeleopDriver.Direction.BACKWARD);
-        } else{
-            teleopDriver.tank_drive(gamepad1, TeleopDriver.Direction.FORWARD);
+            left = get_scaled_power_from_gamepad_stick(gamepad1.left_stick_y);
+            right = get_scaled_power_from_gamepad_stick(gamepad1.right_stick_y);
+        }else {
+            left = get_scaled_power_from_gamepad_stick(-gamepad1.right_stick_y);
+            right= get_scaled_power_from_gamepad_stick(-gamepad1.left_stick_y);
         }
+        pulseDrive.Left1.setPower(left);
+        pulseDrive.Left2.setPower(left);
+        pulseDrive.Right1.setPower(right);
+        pulseDrive.Right2.setPower(right);
 
 
 
-        if(gamepad2.y){
+
+
+
+        if(gamepad1.y){
             pickup.reverse();
         }
-        else if(joy2.toggle.x){
+        else if(joy1.toggle.x){
             pickup.run();
         }else{
             pickup.stop();
@@ -104,13 +101,10 @@ public class Teleop_DrivetrainBuilder extends OpMode{
 
         if (joy2.toggle.left_bumper){
             accelerator.rampup();
-
         }
         else {
             accelerator.stop();
-
-            //accelerator.accleratorPower = 0;
-
+            accelerator.accleratorPower = 0;
         }
 
 
@@ -152,15 +146,15 @@ public class Teleop_DrivetrainBuilder extends OpMode{
             baconActivator.armDown();
         }*/
 
-
+        telemetry.addData("left",  "%.2f", left);
+        telemetry.addData("right", "%.2f", right);
         telemetry.addData("Accelerator 1", accelerator);
-
-        telemetry.addData("Pickup",pickup.PickupState);
-        telemetry.addData("Trough Gate", troughGate.troughServoState);
-        telemetry.addData("Tusk Gate", tuskGate.tuskServoState);
+        telemetry.addData("Pickup",pickup);
+        telemetry.addData("Trough Gate", troughGate);
+        telemetry.addData("Tusk Gate", tuskGate);
         telemetry.addData("Column",column);
-        telemetry.addData("Capball", capballHolder.capballHolderServoState);
-        telemetry.addData("Bacon Activator", baconActivator.baconServoState);
+        telemetry.addData("Capball", capballHolder);
+        telemetry.addData("Bacon Activator", baconActivator);
         telemetry.update();
     }
 
@@ -168,5 +162,9 @@ public class Teleop_DrivetrainBuilder extends OpMode{
     public void stop(){
     }
 
+    private double get_scaled_power_from_gamepad_stick(float stick)
+    {
+        return -(Math.signum(stick) * ((Math.pow(stick, 2) * (1 - .1)) + .1));
+    }
 
 }

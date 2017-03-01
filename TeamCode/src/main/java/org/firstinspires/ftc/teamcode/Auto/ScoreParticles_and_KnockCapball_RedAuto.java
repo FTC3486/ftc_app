@@ -1,37 +1,38 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Auto;
 
-import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.GyroSensor;
-import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.teamcode.Subsystems.BaconActivator;
+import org.firstinspires.ftc.teamcode.Subsystems.CapballHolder;
+import org.firstinspires.ftc.teamcode.Subsystems.Column;
+import org.firstinspires.ftc.teamcode.Extension.Drivetrain;
+import org.firstinspires.ftc.teamcode.Subsystems.ParticleAcclerator;
+import org.firstinspires.ftc.teamcode.Subsystems.Pickup;
+import org.firstinspires.ftc.teamcode.Subsystems.TroughGate;
+import org.firstinspires.ftc.teamcode.Subsystems.TuskGate;
 
 /**
  * Created by Owner_2 on 12/1/2016.
  */
-@Autonomous(name = "Two Particles and Capball BlueAuto", group = "Autonomus2016")
-public class ScoreParticles_and_KnockCapball_BlueAuto extends LinearOpMode{
+@Autonomous(name = "Two Particles and Capball RedAuto", group = "Autonomus2016")
+public class ScoreParticles_and_KnockCapball_RedAuto extends LinearOpMode{
     private ElapsedTime     runtime = new ElapsedTime();
-
+    Drivetrain driveTrain;
     ParticleAcclerator accelerator1;
-    ParticleAcclerator accelerator2;
     Pickup pickup;
     TroughGate troughGate;
     Column column;
     TuskGate tuskGate;
     CapballHolder capballHolder;
     BaconActivator baconActivator;
-    Drivetrain driveTrain;
 
     public DcMotor Left1 = null;
     public DcMotor Left2 = null;
     public DcMotor Right1 = null;
     public DcMotor Right2 = null;
-
-
 
     static final double     COUNTS_PER_MOTOR_REV    = 1120 ;
     static final double     DRIVE_GEAR_REDUCTION    = 0.8 ;     // This is < 1.0 if geared UP
@@ -43,6 +44,7 @@ public class ScoreParticles_and_KnockCapball_BlueAuto extends LinearOpMode{
 
     @Override
     public void runOpMode() {
+
         Left1 = hardwareMap.dcMotor.get("Left 1");
         Left2 = hardwareMap.dcMotor.get("Left 2");
         Right1 = hardwareMap.dcMotor.get("Right 1");
@@ -59,16 +61,15 @@ public class ScoreParticles_and_KnockCapball_BlueAuto extends LinearOpMode{
                 .addRightMotor(Right1)
                 .addRightMotorWithEncoder(Right2)
                 .build();
+
         pickup = new Pickup("Pickup", hardwareMap);
         troughGate = new TroughGate("Trough Gate", hardwareMap);
         accelerator1 = new ParticleAcclerator("Accelerator 1", hardwareMap);
-        accelerator2 = new ParticleAcclerator("Accelerator 2", hardwareMap);
         column = new Column("Column 1", "Column 2", hardwareMap);
         tuskGate = new TuskGate("Tusk Gate", hardwareMap);
         capballHolder = new CapballHolder("Capball Holder", hardwareMap);
         baconActivator = new BaconActivator("Bacon Activator", hardwareMap);
         accelerator1.accleratorPower = 0;
-        accelerator2.accleratorPower = 0;
         baconActivator.armDown();
         telemetry.addData("Status", "Resetting Encoders");    //
         telemetry.update();
@@ -85,25 +86,21 @@ public class ScoreParticles_and_KnockCapball_BlueAuto extends LinearOpMode{
 
         waitForStart();
 
-        while (accelerator1.accleratorPower <1 && accelerator2.accleratorPower <1) {
+        while (accelerator1.accleratorPower <1) {
             accelerator1.rampup();
-            accelerator2.rampup();
         }
         accelerator1.run();
-        accelerator2.run();
         driveTrain.resetMotorEncoders();
         encoderDrive(DRIVE_SPEED, -33, -33, 3.0);
-
         sleep(250);
         troughGate.openGate();
         sleep(2000);
         accelerator1.stop();
-        accelerator2.stop();
         driveTrain.resetMotorEncoders();
-        encoderDrive(TURN_SPEED, 8, -8, 3.0);
+        encoderDrive(TURN_SPEED, -8, 8, 3.0);
         sleep(500);
         driveTrain.resetMotorEncoders();
-        encoderDrive(TURN_SPEED, -10, 10, 3.0);
+        encoderDrive(TURN_SPEED, 10, -10, 3.0);
         sleep(500);
         driveTrain.resetMotorEncoders();
         encoderDrive(DRIVE_SPEED, -9, -9, 3.0);
@@ -172,5 +169,6 @@ public class ScoreParticles_and_KnockCapball_BlueAuto extends LinearOpMode{
             Right2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         }
+
     }
 }

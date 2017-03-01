@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Auto;
 
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
@@ -12,12 +12,22 @@ import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.teamcode.Extension.AutoDriver;
+import org.firstinspires.ftc.teamcode.Subsystems.BaconActivator;
+import org.firstinspires.ftc.teamcode.Subsystems.CapballHolder;
+import org.firstinspires.ftc.teamcode.Subsystems.Column;
+import org.firstinspires.ftc.teamcode.Extension.Drivetrain;
+import org.firstinspires.ftc.teamcode.Subsystems.ParticleAcclerator;
+import org.firstinspires.ftc.teamcode.Subsystems.Pickup;
+import org.firstinspires.ftc.teamcode.Subsystems.TroughGate;
+import org.firstinspires.ftc.teamcode.Subsystems.TuskGate;
+
 /**
  * Created by Owner_2 on 12/31/2016.
  */
-@Autonomous(name = "Press Inner Beacon, Outer Beacon and Score balls Red", group = "RedAutonomus")
+@Autonomous(name ="Beacon,Score balls, Beacon - Red", group = "RedAutonomus")
 @Disabled
-public class BeaconBeaconBallAutoRed extends LinearOpMode {
+public class BeaconBallBeaconAutoRed extends LinearOpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
     Drivetrain driveTrain;
@@ -70,7 +80,7 @@ public class BeaconBeaconBallAutoRed extends LinearOpMode {
         pickup = new Pickup("Pickup", hardwareMap);
         troughGate = new TroughGate("Trough Gate", hardwareMap);
         accelerator1 = new ParticleAcclerator("Accelerator 1", hardwareMap);
-        column = new Column("Column1","Column 2", hardwareMap);
+        column = new Column("Column 1", "Column 2", hardwareMap);
         tuskGate = new TuskGate("Tusk Gate", hardwareMap);
         capballHolder = new CapballHolder("Capball Holder", hardwareMap);
         baconActivator = new BaconActivator("Bacon Activator", hardwareMap);
@@ -95,8 +105,8 @@ public class BeaconBeaconBallAutoRed extends LinearOpMode {
             while (mrGyro.isCalibrating()) {
 
             }
-            driveStraightForwards(2800, 0.5);
-            sleep(200);
+        /*driveStraightForwards(2800, 0.5);
+        sleep(200);
         driveTrain.resetMotorEncoders();
             while (right_ods.getLightDetected() < 0.06) {
                 driveTrain.setPowers(0.2, 0.2);
@@ -104,11 +114,11 @@ public class BeaconBeaconBallAutoRed extends LinearOpMode {
             driveTrain.haltDrive();
             sleep(200);
             driveTrain.resetMotorEncoders();
-            driveStraightForwards(250, 0.5);
+            driveStraightForwards(200, 0.5);
             driveTrain.haltDrive();
             sleep(200);
             driveTrain.resetMotorEncoders();
-            encoderDrive(0.3, -7.4, 7.4, 10);
+            encoderDrive(0.3, -6.5, 6.5, 10);
             driveTrain.haltDrive();
         driveTrain.resetMotorEncoders();
             baconActivator.sensorScanning();
@@ -134,36 +144,45 @@ public class BeaconBeaconBallAutoRed extends LinearOpMode {
             }
         driveTrain.resetMotorEncoders();
         sensorGyro.resetZAxisIntegrator();
-        sleep(200);
+        sleep(100);
 
-        driveStraightBackwards(-500, -0.5);
+        //driveStraightBackwards(-2100, -0.5);
+        encoderDrive(0.5, -30, -30, 10);
         driveTrain.haltDrive();
-        driveTrain.resetMotorEncoders();
-        sleep(200);
-        encoderDrive(0.5,9.5,-9.5,3);
+
+            while (accelerator1.accleratorPower < 1 && accelerator2.accleratorPower < 1) {
+                accelerator1.rampup();
+                accelerator2.rampup();
+            }
+            accelerator1.run();
+            accelerator2.run();
+
+            troughGate.openGate();
+            sleep(2000);
+            troughGate.closeGate();*/
+            encoderDrive(0.5, 6.5 ,-6.5, 3);
         driveTrain.haltDrive();
         driveTrain.resetMotorEncoders();
         mrGyro.resetZAxisIntegrator();
         sleep(200);
-        driveStraightForwards(2000, 0.5);
+            driveStraightForwards(2200, 0.5);
         driveTrain.haltDrive();
+        sleep(200);
         driveTrain.resetMotorEncoders();
         mrGyro.resetZAxisIntegrator();
-        sleep(200);
-        driveToLineLeft(0.06,0.3);
+        while (right_ods.getLightDetected() < 0.06) {
+            driveTrain.setPowers(0.2, 0.2);
+        }
         driveTrain.haltDrive();
-        driveTrain.resetMotorEncoders();
         sleep(200);
-
-        /*while (rangeSensor.rawUltrasonic() > 68) {
-            driveTrain.setPowers(0.3, 0.3);
-        }*/
-            driveStraightForwards(300, 0.5);
-
+        driveTrain.resetMotorEncoders();
+        mrGyro.resetZAxisIntegrator();
+        driveStraightForwards(250, 0.5);
         driveTrain.haltDrive();
-        driveTrain.resetMotorEncoders();
         sleep(200);
-        encoderDrive(0.3, -10.8, 10.8, 4);
+        driveTrain.resetMotorEncoders();
+        encoderDrive(0.3, -7.2, 7.2, 10);
+        driveTrain.haltDrive();
         driveTrain.resetMotorEncoders();
         baconActivator.sensorScanning();
         sleep(200);
@@ -186,15 +205,6 @@ public class BeaconBeaconBallAutoRed extends LinearOpMode {
             sleep(500);
             driveTrain.haltDrive();
         }
-        driveTrain.resetMotorEncoders();
-        sensorGyro.resetZAxisIntegrator();
-        sleep(200);
-        driveStraightBackwards(-500, -0.5);
-        driveTrain.haltDrive();
-        driveTrain.resetMotorEncoders();
-        sleep(200);
-        encoderDrive(0.5, 3.8, -3.8, 3);
-
 
 
 
@@ -367,6 +377,7 @@ public class BeaconBeaconBallAutoRed extends LinearOpMode {
         }
 
     }
+
 
 
 }

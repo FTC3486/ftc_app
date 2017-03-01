@@ -1,7 +1,18 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Teleop;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+
+import org.firstinspires.ftc.teamcode.Subsystems.BaconActivator;
+import org.firstinspires.ftc.teamcode.Subsystems.CapballHolder;
+import org.firstinspires.ftc.teamcode.Subsystems.Column;
+import org.firstinspires.ftc.teamcode.Extension.Drivetrain;
+import org.firstinspires.ftc.teamcode.Extension.GamepadWrapper;
+import org.firstinspires.ftc.teamcode.Subsystems.ParticleAcclerator;
+import org.firstinspires.ftc.teamcode.Subsystems.Pickup;
+import org.firstinspires.ftc.teamcode.Extension.TeleopDriver;
+import org.firstinspires.ftc.teamcode.Subsystems.TroughGate;
+import org.firstinspires.ftc.teamcode.Subsystems.TuskGate;
 
 
 /**
@@ -9,7 +20,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  */
 @TeleOp(name="Teleop Encoder Test", group="Teleop2016")
 public class Teleop_Encoder_Test extends OpMode{
-    GamepadWrapper joy1;
+/*    GamepadWrapper joy1;
     GamepadWrapper joy2;
     Drivetrain driveTrain;
     ParticleAcclerator accelerator1;
@@ -20,7 +31,7 @@ public class Teleop_Encoder_Test extends OpMode{
     CapballHolder capballHolder;
     BaconActivator baconActivator;
     TeleopDriver teleopDriver;
-
+*/
     public DcMotor Left1 = null;
     public DcMotor Left2 = null;
     public DcMotor Right1 = null;
@@ -40,7 +51,7 @@ public class Teleop_Encoder_Test extends OpMode{
         Left2.setDirection(DcMotor.Direction.REVERSE);
         Right1.setDirection(DcMotor.Direction.FORWARD);
         Right2.setDirection(DcMotor.Direction.FORWARD);
-        driveTrain = new Drivetrain.Builder()
+  /*      driveTrain = new Drivetrain.Builder()
                 .addLeftMotorWithEncoder(Left1)
                 .addLeftMotorWithEncoder(Left2)
                 .addRightMotorWithEncoder(Right1)
@@ -57,7 +68,7 @@ public class Teleop_Encoder_Test extends OpMode{
         capballHolder = new CapballHolder("Capball Holder", hardwareMap);
         baconActivator = new BaconActivator("Bacon Activator", hardwareMap);
         accelerator1.accleratorPower = 0;
-        baconActivator.armUp();
+        baconActivator.armUp();*/
 
 
     }
@@ -72,26 +83,46 @@ public class Teleop_Encoder_Test extends OpMode{
 
     @Override
     public void loop(){
-        double negativepointfive = -0.5;
-        joy1.update(gamepad1);
-        joy2.update(gamepad2);
+        //double negativepointfive = -0.5;
+        //joy1.update(gamepad1);
+        //joy2.update(gamepad2);
 
 
 
         if (gamepad1.y){
-            driveTrain.setPowers(0.5, 0.5);
+            Left1.setPower(0.5);
+            Left2.setPower(0.5);
+            Right1.setPower(0.5);
+            Right2.setPower(0.5);
+            //driveTrain.setPowers(0.5, 0.5);
         }else if(gamepad2.a){
-            Left1.setPower(negativepointfive);
-            Left2.setPower(negativepointfive);
-            Right1.setPower(negativepointfive);
-            Right2.setPower(negativepointfive);
+            Left1.setPower(-0.5);
+            Left2.setPower(-0.5);
+            Right1.setPower(-0.5);
+            Right2.setPower(-0.5);
         }else if(gamepad1.y && gamepad2.a){
-            driveTrain.haltDrive();
+            Left1.setPower(0);
+            Left2.setPower(0);
+            Right1.setPower(0);
+            Right2.setPower(0);
+            //driveTrain.haltDrive();
         }else{
-            driveTrain.haltDrive();
+            Left1.setPower(0);
+            Left2.setPower(0);
+            Right1.setPower(0);
+            Right2.setPower(0);
+            //driveTrain.haltDrive();
         }
         if(gamepad1.b){
-            driveTrain.resetMotorEncoders();
+            Left1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            Left1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            Left2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            Left2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            Right1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            Right1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            Right2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            Right2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            //driveTrain.resetMotorEncoders();
         }
 
 
