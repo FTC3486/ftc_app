@@ -155,6 +155,20 @@ public class Drivetrain {
         }
     }
 
+    public boolean isBusy()
+    {
+        boolean busyStatus = false;
+        for(DcMotor leftMotor: leftMotorsWithEncoders)
+        {
+            busyStatus = leftMotor.isBusy();
+        }
+        for(DcMotor rightMotor: rightMotorsWithEncoders)
+        {
+            busyStatus = rightMotor.isBusy();
+        }
+        return busyStatus;
+    }
+
     public void setPowers(double leftSpeed, double rightSpeed) {
         this.leftSpeed = leftSpeed;
         this.rightSpeed = rightSpeed;
