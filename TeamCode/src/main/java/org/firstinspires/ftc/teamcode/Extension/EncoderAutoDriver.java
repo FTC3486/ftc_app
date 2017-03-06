@@ -25,37 +25,35 @@ public class EncoderAutoDriver {
         drivetrain = inputDrivetrain;
     }
 
-    public void encoderDrive(double speed,
+    public void driveToTarget(double speed,
                              double leftInches, double rightInches,
                              double timeoutS) {
         int newLeftTarget;
         int newRightTarget;
 
-        // Ensure that the opmode is still active
-        while(opMode.opModeIsActive()) {
-            // Determine new target position, and pass to motor controller
-            newLeftTarget = (int) drivetrain.getLeftEncoderCount() + (int) (leftInches * COUNTS_PER_INCH);
-            newRightTarget = (int) drivetrain.getRightEncoderCount() + (int) (rightInches * COUNTS_PER_INCH);
+        // Determine new target position, and pass to motor controller
+        newLeftTarget = (int) drivetrain.getLeftEncoderCount() + (int) (leftInches * COUNTS_PER_INCH);
+        newRightTarget = (int) drivetrain.getRightEncoderCount() + (int) (rightInches * COUNTS_PER_INCH);
 
-            drivetrain.setTargetPosition(newLeftTarget, newRightTarget);
-            drivetrain.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        drivetrain.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        drivetrain.setTargetPosition(newLeftTarget, newRightTarget);
 
-            // reset the timeout time and start motion.
-            runtime.reset();
 
-            drivetrain.setPowers(Math.abs(speed), Math.abs(speed));
+        // reset the timeout time and start motion.
+        runtime.reset();
 
-            // keep looping while we are still active, and there is time left, and both motors are running.
-            while (opMode.opModeIsActive() &&
-                    (runtime.seconds() < timeoutS) &&
-                    (drivetrain.isBusy())) {
-                //Wait for completion
-            }
+        drivetrain.setPowers(Math.abs(speed), Math.abs(speed));
 
-            drivetrain.setPowers(0.0,0.0);
-
-            // Turn off RUN_TO_POSITION
-            drivetrain.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        // keep looping while we are still active, and there is time left, and both motors are running.
+        while (opMode.opModeIsActive() &&
+                (runtime.seconds() < timeoutS)
+                && drivetrain.isBusy()) {
+            //Wait for completion
         }
+
+        drivetrain.setPowers(0.0,0.0);
+
+        // Turn off RUN_TO_POSITION
+        drivetrain.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 }
