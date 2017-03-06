@@ -103,6 +103,58 @@ public class Drivetrain {
         }
     }
 
+    public void setMode(DcMotor.RunMode runMode)
+    {
+        switch(runMode)
+        {
+            case RUN_TO_POSITION:
+                for(DcMotor leftMotor: leftMotors)
+                {
+                    leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                }
+                for(DcMotor rightMotor: rightMotors)
+                {
+                    rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                }
+                break;
+
+            case RUN_USING_ENCODER:
+                for(DcMotor leftMotor: leftMotors)
+                {
+                    leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                }
+                for(DcMotor rightMotor: rightMotors)
+                {
+                    rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                }
+                break;
+
+            default:
+            case RUN_WITHOUT_ENCODER:
+                for(DcMotor leftMotor: leftMotors)
+                {
+                    leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                }
+                for(DcMotor rightMotor: rightMotors)
+                {
+                    rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                }
+                break;
+        }
+    }
+
+    public void setTargetPosition(int leftTargetPosition, int rightTargetPosition)
+    {
+        for(DcMotor leftMotor: leftMotors)
+        {
+            leftMotor.setTargetPosition(leftTargetPosition);
+        }
+        for(DcMotor rightMotor: rightMotors)
+        {
+            rightMotor.setTargetPosition(rightTargetPosition);
+        }
+    }
+
     public void setPowers(double leftSpeed, double rightSpeed) {
         this.leftSpeed = leftSpeed;
         this.rightSpeed = rightSpeed;
