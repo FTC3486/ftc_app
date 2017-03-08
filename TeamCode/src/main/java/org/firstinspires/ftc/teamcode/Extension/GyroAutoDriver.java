@@ -80,25 +80,23 @@ public class GyroAutoDriver {
         drivetrain.setPowers(0.0, 0.0);
     }
 
-    public void turnClockwise(int target)
-    {
+    public void turn(int target) {
         gyroSensor.resetZAxisIntegrator();
 
-        while(gyroSensor.getHeading() != target)
+        while(this.getAdjustedHeading()  != target)
         {
-            double power = ( (target - gyroSensor.getHeading()) / target) * (2/3);
+            double power = ( (target - this.getAdjustedHeading()) / Math.abs(target)) * (2.0/3.0);
             drivetrain.setPowers(power, -power);
         }
     }
 
-    public void turnCounterClockwise(int target)
-    {
-        gyroSensor.resetZAxisIntegrator();
+    private double getAdjustedHeading() {
+        double sensorValue = gyroSensor.getHeading();
 
-        while(gyroSensor.getHeading() != target)
+        if(sensorValue > 180)
         {
-            double power = ( (target - gyroSensor.getHeading()) / target) * (2/3);
-            drivetrain.setPowers(-power, power);
+            sensorValue -= 360;
         }
+        return sensorValue;
     }
 }
