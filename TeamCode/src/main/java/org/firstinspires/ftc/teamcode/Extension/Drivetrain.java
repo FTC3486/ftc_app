@@ -103,74 +103,36 @@ public class Drivetrain {
         }
     }
 
-    public void setMode(DcMotor.RunMode runMode)
-    {
-        switch(runMode)
-        {
-            case RUN_TO_POSITION:
-                for(DcMotor leftMotor: leftMotorsWithEncoders)
-                {
-                    leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                }
-                for(DcMotor rightMotor: rightMotorsWithEncoders)
-                {
-                    rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                }
-                break;
+    public void setMode(DcMotor.RunMode runMode) {
+        for (DcMotor leftMotor : leftMotorsWithEncoders) {
+            leftMotor.setMode(runMode);
+        }
 
-            case RUN_USING_ENCODER:
-                for(DcMotor leftMotor: leftMotorsWithEncoders)
-                {
-                    leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                }
-                for(DcMotor rightMotor: rightMotorsWithEncoders)
-                {
-                    rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                }
-                break;
-
-            default:
-            case RUN_WITHOUT_ENCODER:
-                for(DcMotor leftMotor: leftMotorsWithEncoders)
-                {
-                    leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                }
-                for(DcMotor rightMotor: rightMotorsWithEncoders)
-                {
-                    rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                }
-                break;
+        for (DcMotor rightMotor : rightMotorsWithEncoders) {
+            rightMotor.setMode(runMode);
         }
     }
 
-    public void setTargetPosition(int leftTargetPosition, int rightTargetPosition)
-    {
-        for(DcMotor leftMotor: leftMotorsWithEncoders)
-        {
+    public void setTargetPosition(int leftTargetPosition, int rightTargetPosition) {
+        for (DcMotor leftMotor : leftMotorsWithEncoders) {
             leftMotor.setTargetPosition(leftTargetPosition);
         }
-        for(DcMotor rightMotor: rightMotorsWithEncoders)
-        {
+        for (DcMotor rightMotor : rightMotorsWithEncoders) {
             rightMotor.setTargetPosition(rightTargetPosition);
         }
     }
 
-    public boolean isBusy()
-    {
+    public boolean isBusy() {
         boolean leftBusyStatus = true;
         boolean rightBusyStatus = true;
 
-        for(DcMotor leftMotor: leftMotorsWithEncoders)
-        {
-            if(!leftMotor.isBusy())
-            {
+        for (DcMotor leftMotor : leftMotorsWithEncoders) {
+            if (!leftMotor.isBusy()) {
                 leftBusyStatus = false;
             }
         }
-        for(DcMotor rightMotor: rightMotorsWithEncoders)
-        {
-            if(!rightMotor.isBusy())
-            {
+        for (DcMotor rightMotor : rightMotorsWithEncoders) {
+            if (!rightMotor.isBusy()) {
                 rightBusyStatus = false;
             }
         }
