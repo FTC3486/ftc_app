@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 
+import org.firstinspires.ftc.teamcode.Extension.RangeAutoDriver;
 import org.firstinspires.ftc.teamcode.Subsystems.BaconActivator;
 
 /**
@@ -20,8 +21,8 @@ public class SensorTest extends LinearOpMode {
     OpticalDistanceSensor right_back_ods;
     GyroSensor gyro;
    // ModernRoboticsI2cRangeSensor range;
-    ModernRoboticsI2cRangeSensor rangeSensor1;
-    ModernRoboticsI2cRangeSensor rangeSensor2;
+    //ModernRoboticsI2cRangeSensor rangeSensor1;
+    //ModernRoboticsI2cRangeSensor rangeSensor2;
 
     BaconActivator baconActivator;
 
@@ -29,14 +30,17 @@ public class SensorTest extends LinearOpMode {
     public void runOpMode() {
         colorSensor = hardwareMap.colorSensor.get("Beacon Color");
         //range = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "Range");
-        rangeSensor1 = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "Range 1");
-        rangeSensor2 = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "Range 2");
+        //rangeSensor1 = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "Range 1");
+        //rangeSensor2 = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "Range 2");
         gyro = hardwareMap.gyroSensor.get("gyroSensor");
         left_ods = hardwareMap.opticalDistanceSensor.get("Left ods");
         right_ods = hardwareMap.opticalDistanceSensor.get("Right ods");
 
         right_back_ods = hardwareMap.opticalDistanceSensor.get("Right Back ods");
         baconActivator = new BaconActivator("Bacon Activator", hardwareMap);
+
+        RangeAutoDriver rangeAutoDriver;
+        rangeAutoDriver = new RangeAutoDriver(this, null, "Range 1", "Range 2");
 
         telemetry.update();
 
@@ -52,10 +56,8 @@ public class SensorTest extends LinearOpMode {
             telemetry.addData("Right ODS reading", right_ods.getLightDetected());
             telemetry.addData("Raw Back Right", right_back_ods.getRawLightDetected());
             telemetry.addData("Right Back ODS reading", right_back_ods.getLightDetected());
-            telemetry.addData("Raw Ultrasonic 1", rangeSensor1.rawUltrasonic());
-            telemetry.addData("Cm Ultrasonic 1", rangeSensor1.cmUltrasonic());
-            telemetry.addData("Raw Ultrasonic 2", rangeSensor2.rawUltrasonic());
-            telemetry.addData("Cm Ultrasonic 2", rangeSensor2.cmUltrasonic());
+            telemetry.addData("Side Ultrasonic", rangeAutoDriver.getSideUltrasonicRange());
+            telemetry.addData("Front Ultrasonic", rangeAutoDriver.getFrontUltrasonicRange());
            // telemetry.addData("raw ultrasonic", range.rawUltrasonic());
             //telemetry.addData("raw optical", range.rawOptical());
             //telemetry.addData("cm optical", "%.2f cm", range.cmOptical());
