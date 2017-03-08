@@ -80,14 +80,25 @@ public class GyroAutoDriver {
         drivetrain.setPowers(0.0, 0.0);
     }
 
-    //This function turns a number of degrees compared to where the robot was when the program started. Positive numbers trn left.
-    public void turn(int target, double power) {
+    public void turnClockwise(int target)
+    {
         gyroSensor.resetZAxisIntegrator();
 
-        drivetrain.setPowers(power, -power);
+        while(gyroSensor.getHeading() != target)
+        {
+            double power = ( (target - gyroSensor.getHeading()) / target) * (2/3);
+            drivetrain.setPowers(power, -power);
+        }
+    }
 
-        while (gyroSensor.getHeading() < target && opMode.opModeIsActive()) {}
+    public void turnCounterClockwise(int target)
+    {
+        gyroSensor.resetZAxisIntegrator();
 
-        drivetrain.setPowers(0.0, 0.0);
+        while(gyroSensor.getHeading() != target)
+        {
+            double power = ( (target - gyroSensor.getHeading()) / target) * (2/3);
+            drivetrain.setPowers(-power, power);
+        }
     }
 }
