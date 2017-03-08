@@ -117,26 +117,26 @@ public class Drivetrain {
         for (DcMotor leftMotor : leftMotorsWithEncoders) {
             leftMotor.setTargetPosition(leftTargetPosition);
         }
+
         for (DcMotor rightMotor : rightMotorsWithEncoders) {
             rightMotor.setTargetPosition(rightTargetPosition);
         }
     }
 
     public boolean isBusy() {
-        boolean leftBusyStatus = true;
-        boolean rightBusyStatus = true;
-
         for (DcMotor leftMotor : leftMotorsWithEncoders) {
-            if (!leftMotor.isBusy()) {
-                leftBusyStatus = false;
+            if (leftMotor.isBusy()) {
+                return true;
             }
         }
+
         for (DcMotor rightMotor : rightMotorsWithEncoders) {
-            if (!rightMotor.isBusy()) {
-                rightBusyStatus = false;
+            if (rightMotor.isBusy()) {
+                return true;
             }
         }
-        return leftBusyStatus && rightBusyStatus;
+        
+        return false;
     }
 
     public void setPowers(double leftSpeed, double rightSpeed) {
