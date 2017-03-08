@@ -12,7 +12,6 @@ import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.teamcode.Extension.AutoDriver;
 import org.firstinspires.ftc.teamcode.Subsystems.BaconActivator;
 import org.firstinspires.ftc.teamcode.Subsystems.CapballHolder;
 import org.firstinspires.ftc.teamcode.Subsystems.Column;
@@ -42,9 +41,6 @@ public class BeaconBallBeaconAutoRed extends LinearOpMode {
     OpticalDistanceSensor left_ods;
     OpticalDistanceSensor right_ods;
     ModernRoboticsI2cRangeSensor rangeSensor;
-
-    AutoDriver autoDriver;
-
 
     //GyroAutoDriver gyroAutoDriver;
 
