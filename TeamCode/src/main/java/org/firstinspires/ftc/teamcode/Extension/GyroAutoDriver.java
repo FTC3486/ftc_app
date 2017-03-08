@@ -82,12 +82,25 @@ public class GyroAutoDriver {
 
     public void turn(int target) {
         gyroSensor.resetZAxisIntegrator();
+        double gyroHeading = this.getAdjustedHeading();
 
-        while(this.getAdjustedHeading()  != target)
+        while(gyroHeading  < target - 1 || gyroHeading > target + 1 && opMode.opModeIsActive())
         {
-            double power = ( (target - this.getAdjustedHeading()) / Math.abs(target)) * (2.0/3.0);
+            double power = ( (target - gyroHeading) / Math.abs(target)) * (1.0/4.0);
+
+            if(power < 0.05 && power > 0.0)
+            {
+                power = 0.05;
+            }
+            else if(power > -0.05 && power < 0.0)
+            {
+                power = -0.05;
+            }
+
             drivetrain.setPowers(power, -power);
+            gyroHeading = this.getAdjustedHeading();
         }
+        drivetrain.haltDrive();
     }
 
     private double getAdjustedHeading() {
