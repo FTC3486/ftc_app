@@ -87,18 +87,22 @@ public class Drivetrain {
 
     public void haltDrive() {
         for (DcMotor motor : leftMotorsWithEncoders) {
+            motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             motor.setPower(0);
         }
 
         for (DcMotor motor : rightMotorsWithEncoders) {
+            motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             motor.setPower(0);
         }
 
         for (DcMotor motor : leftMotors) {
+            motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             motor.setPower(0);
         }
 
         for (DcMotor motor : rightMotors) {
+            motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             motor.setPower(0);
         }
     }
