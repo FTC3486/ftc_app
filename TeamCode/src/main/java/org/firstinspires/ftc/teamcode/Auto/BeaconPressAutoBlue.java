@@ -48,18 +48,13 @@ public class BeaconPressAutoBlue extends LinearOpMode {
     GyroAutoDriver gyroAutoDriver;
     EncoderAutoDriver encoderAutoDriver;
 
-    public DcMotor Left1 = null;
-    public DcMotor Left2 = null;
-    public DcMotor Right1 = null;
-    public DcMotor Right2 = null;
-
     @Override
     public void runOpMode() throws InterruptedException {
         //Define robot components
-        Left1 = hardwareMap.dcMotor.get("Left 1");
-        Left2 = hardwareMap.dcMotor.get("Left 2");
-        Right1 = hardwareMap.dcMotor.get("Right 1");
-        Right2 = hardwareMap.dcMotor.get("Right 2");
+        DcMotor Left1 = hardwareMap.dcMotor.get("Left 1");
+        DcMotor Left2 = hardwareMap.dcMotor.get("Left 2");
+        DcMotor Right1 = hardwareMap.dcMotor.get("Right 1");
+        DcMotor Right2 = hardwareMap.dcMotor.get("Right 2");
 
         Left1.setDirection(DcMotor.Direction.REVERSE);
         Left2.setDirection(DcMotor.Direction.REVERSE);
