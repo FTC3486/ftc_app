@@ -67,4 +67,13 @@ public class RangeAutoDriver {
             hw.drivetrain.setPowers(leftSpeed, rightSpeed);
         }
     }
+
+    public void driveForwardsUntilDistance(double distance, double power) {
+        while (hw.frontRangeSensor.getUltrasonicRange() > distance && opMode.opModeIsActive()) {
+            hw.drivetrain.setPowers(power, power);
+        }
+        hw.drivetrain.haltDrive();
+        hw.drivetrain.resetMotorEncoders();
+        opMode.sleep(200);
+    }
 }
