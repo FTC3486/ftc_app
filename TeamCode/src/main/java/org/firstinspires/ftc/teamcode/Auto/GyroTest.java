@@ -1,14 +1,10 @@
 package org.firstinspires.ftc.teamcode.Auto;
 
-import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
-import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.Extension.EncoderAutoDriver;
 import org.firstinspires.ftc.teamcode.Extension.GyroAutoDriver;
@@ -43,7 +39,7 @@ public class GyroTest extends LinearOpMode {
     ColorSensor colorSensor;
     OpticalDistanceSensor left_ods;
     OpticalDistanceSensor right_ods;
-    ModernRoboticsI2cRangeSensor rangeSensor;
+    //ModernRoboticsI2cRangeSensor rangeSensor;
 
     //Auto Drivers
     GyroAutoDriver gyroAutoDriver;
@@ -76,7 +72,7 @@ public class GyroTest extends LinearOpMode {
         pickup = new Pickup("Pickup", hardwareMap);
         troughGate = new TroughGate("Trough Gate", hardwareMap);
         accelerator1 = new ParticleAcclerator("Accelerator 1", hardwareMap);
-        column = new Column("Column 1","Column 2", hardwareMap);
+        column = new Column("Column 1", "Column 2", hardwareMap);
         tuskGate = new TuskGate("Tusk Gate", hardwareMap);
         capballHolder = new CapballHolder("Capball Holder", hardwareMap);
         baconActivator = new BaconActivator("Bacon Activator", hardwareMap);
@@ -93,13 +89,15 @@ public class GyroTest extends LinearOpMode {
         //Initialize Robot Components
         accelerator1.accleratorPower = 0;
         baconActivator.armDown();
-        telemetry.update();
+        //telemetry.update();
         colorSensor.enableLed(false);
         troughGate.closeGate();
 
-        gyroAutoDriver.calibrate();
+
         driveTrain.resetMotorEncoders();
+        gyroAutoDriver.calibrate();
         waitForStart();
+
 
         gyroAutoDriver.driveStraightForwards(5600, 1);
         sleep(200);
@@ -112,29 +110,91 @@ public class GyroTest extends LinearOpMode {
         sleep(200);
         driveTrain.resetMotorEncoders();
 
-        gyroAutoDriver.driveStraightForwards(200, 0.5);
+        gyroAutoDriver.driveStraightForwards(300, 0.5);
         driveTrain.haltDrive();
-        sleep(200)  ;
+        sleep(200);
         driveTrain.resetMotorEncoders();
 
-        gyroAutoDriver.turn(-70);
+        gyroAutoDriver.turn(-75);
 
         baconActivator.sensorScanning();
         sleep(200);
 
-        while (rangeSensor.rawUltrasonic() > 25 && opModeIsActive()) {
+        while (rangeAutoDriver.getFrontUltrasonicRange() > 25 && opModeIsActive()) {
             driveTrain.setPowers(0.3, 0.3);
         }
         driveTrain.haltDrive();
         driveTrain.resetMotorEncoders();
         sleep(200);
 
-        gyroAutoDriver.turn(-90);
-
-        while(opModeIsActive())
-        {
-            telemetry.addData("Side Ultrasonic", rangeAutoDriver.getSideUltrasonicRange());
-            telemetry.addData("Front Ultrasonic", rangeAutoDriver.getFrontUltrasonicRange());
+        if (colorSensor.blue() >= 2) {
+            baconActivator.armUp();
+            sleep(500);
+            driveTrain.setPowers(0.2, 0.2);
+            sleep(600);
+            driveTrain.haltDrive();
+        } else {
+            baconActivator.armPressing();
+            sleep(500);
+            driveTrain.setPowers(0.2, 0.2);
+            sleep(500);
+            driveTrain.haltDrive();
         }
+        driveTrain.resetMotorEncoders();
+
+        gyroAutoDriver.driveStraightBackwards(-200, -0.5);
+        driveTrain.resetMotorEncoders();
+        sleep(100);
+
+        gyroAutoDriver.turn(-85);
+        driveTrain.resetMotorEncoders();
+        sleep(100);
+
+        /*while (left_ods.getLightDetected() < 0.06 && opModeIsActive()) {
+            driveTrain.setPowers(-0.2, 0);
+        }
+        while (right_ods.getLightDetected() < 0.06 && opModeIsActive()) {
+            driveTrain.setPowers(0, -0.2);
+        }*/
+
+        rangeAutoDriver.wallFollowForwards(0.25, rangeAutoDriver.getSideUltrasonicRange(), 3000);
+        driveTrain.haltDrive();
+
+        while (left_ods.getLightDetected() < 0.06 && opModeIsActive()) {
+            driveTrain.setPowers(0.2, 0.2);
+        }
+        driveTrain.haltDrive();
+        sleep(200);
+        driveTrain.resetMotorEncoders();
+
+        gyroAutoDriver.turn(90);
+
+        driveTrain.setPowers(-0.3, -0.3);
+        sleep(200);
+
+        baconActivator.sensorScanning();
+
+        while (rangeAutoDriver.getFrontUltrasonicRange() > 25 && opModeIsActive()) {
+            driveTrain.setPowers(0.3, 0.3);
+        }
+        driveTrain.haltDrive();
+        driveTrain.resetMotorEncoders();
+        sleep(200);
+
+        if (colorSensor.blue() >= 2) {
+            baconActivator.armUp();
+            sleep(500);
+            driveTrain.setPowers(0.2, 0.2);
+            sleep(600);
+            driveTrain.haltDrive();
+        } else {
+            baconActivator.armPressing();
+            sleep(500);
+            driveTrain.setPowers(0.2, 0.2);
+            sleep(500);
+            driveTrain.haltDrive();
+        }
+        driveTrain.resetMotorEncoders();
     }
 }
+
