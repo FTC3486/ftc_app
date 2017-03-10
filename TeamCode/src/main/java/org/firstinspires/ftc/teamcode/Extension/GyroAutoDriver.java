@@ -88,14 +88,7 @@ public class GyroAutoDriver {
         {
             double power = ( (target - gyroHeading) / Math.abs(target)) * (1.0/4.0);
 
-            if(power < 0.05 && power > 0.0)
-            {
-                power = 0.05;
-            }
-            else if(power > -0.05 && power < 0.0)
-            {
-                power = -0.05;
-            }
+            power = Math.signum(power) * Range.clip(Math.abs(power), 0.05, 1.0);
 
             drivetrain.setPowers(power, -power);
             gyroHeading = this.getAdjustedHeading();
