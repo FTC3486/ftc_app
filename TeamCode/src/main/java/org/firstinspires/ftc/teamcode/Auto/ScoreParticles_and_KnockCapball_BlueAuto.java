@@ -22,7 +22,6 @@ public class ScoreParticles_and_KnockCapball_BlueAuto extends LinearOpMode{
     private ElapsedTime     runtime = new ElapsedTime();
 
     ParticleAcclerator accelerator1;
-    ParticleAcclerator accelerator2;
     Pickup pickup;
     TroughGate troughGate;
     Column column;
@@ -59,21 +58,19 @@ public class ScoreParticles_and_KnockCapball_BlueAuto extends LinearOpMode{
         Right2.setDirection(DcMotor.Direction.FORWARD);
 
         driveTrain = new Drivetrain.Builder()
-                .addLeftMotor(Left1)
+                .addLeftMotorWithEncoder(Left1)
                 .addLeftMotorWithEncoder(Left2)
-                .addRightMotor(Right1)
+                .addRightMotorWithEncoder(Right1)
                 .addRightMotorWithEncoder(Right2)
                 .build();
         pickup = new Pickup("Pickup", hardwareMap);
         troughGate = new TroughGate("Trough Gate", hardwareMap);
         accelerator1 = new ParticleAcclerator("Accelerator 1", hardwareMap);
-        accelerator2 = new ParticleAcclerator("Accelerator 2", hardwareMap);
         column = new Column("Column 1", "Column 2", hardwareMap);
         tuskGate = new TuskGate("Tusk Gate", hardwareMap);
         capballHolder = new CapballHolder("Capball Holder", hardwareMap);
         baconActivator = new BaconActivator("Bacon Activator", hardwareMap);
         accelerator1.accleratorPower = 0;
-        accelerator2.accleratorPower = 0;
         baconActivator.armDown();
         telemetry.addData("Status", "Resetting Encoders");    //
         telemetry.update();
@@ -90,20 +87,17 @@ public class ScoreParticles_and_KnockCapball_BlueAuto extends LinearOpMode{
 
         waitForStart();
 
-        while (accelerator1.accleratorPower <1 && accelerator2.accleratorPower <1) {
+        while (accelerator1.accleratorPower <1) {
             accelerator1.rampup();
-            accelerator2.rampup();
         }
         accelerator1.run();
-        accelerator2.run();
         driveTrain.resetMotorEncoders();
-        encoderDrive(DRIVE_SPEED, -33, -33, 3.0);
+        encoderDrive(DRIVE_SPEED, -52, -52, 5.0);
 
         sleep(250);
         troughGate.openGate();
         sleep(2000);
         accelerator1.stop();
-        accelerator2.stop();
         driveTrain.resetMotorEncoders();
         encoderDrive(TURN_SPEED, 8, -8, 3.0);
         sleep(500);

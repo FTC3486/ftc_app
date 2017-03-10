@@ -69,9 +69,9 @@ public class BeaconPressAutoRed extends LinearOpMode {
         Right1.setDirection(DcMotor.Direction.FORWARD);
         Right2.setDirection(DcMotor.Direction.FORWARD);
         driveTrain = new Drivetrain.Builder()
-                .addLeftMotor(Left1)
+                .addLeftMotorWithEncoder(Left1)
                 .addLeftMotorWithEncoder(Left2)
-                .addRightMotor(Right1)
+                .addRightMotorWithEncoder(Right1)
                 .addRightMotorWithEncoder(Right2)
                 .build();
         //autoDriver = new GyroscopicAutoDriver(this, driveTrain, "gyroSensor", hardwareMap);

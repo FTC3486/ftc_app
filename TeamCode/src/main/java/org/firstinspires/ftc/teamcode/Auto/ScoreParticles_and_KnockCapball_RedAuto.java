@@ -56,9 +56,9 @@ public class ScoreParticles_and_KnockCapball_RedAuto extends LinearOpMode{
         Right2.setDirection(DcMotor.Direction.FORWARD);
 
         driveTrain = new Drivetrain.Builder()
-                .addLeftMotor(Left1)
+                .addLeftMotorWithEncoder(Left1)
                 .addLeftMotorWithEncoder(Left2)
-                .addRightMotor(Right1)
+                .addRightMotorWithEncoder(Right1)
                 .addRightMotorWithEncoder(Right2)
                 .build();
 
@@ -91,7 +91,7 @@ public class ScoreParticles_and_KnockCapball_RedAuto extends LinearOpMode{
         }
         accelerator1.run();
         driveTrain.resetMotorEncoders();
-        encoderDrive(DRIVE_SPEED, -33, -33, 3.0);
+        encoderDrive(DRIVE_SPEED, -42, -42, 3.0);
         sleep(250);
         troughGate.openGate();
         sleep(2000);
