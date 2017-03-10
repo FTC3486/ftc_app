@@ -84,6 +84,8 @@ public class GyroAutoDriver {
             gyroHeading = this.getAdjustedHeading();
         }
         hw.drivetrain.haltDrive();
+        opMode.sleep(200);
+        hw.drivetrain.resetMotorEncoders();
     }
 
     private double getAdjustedHeading() {
