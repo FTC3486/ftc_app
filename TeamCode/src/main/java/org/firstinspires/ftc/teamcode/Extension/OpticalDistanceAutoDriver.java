@@ -11,21 +11,19 @@ import org.firstinspires.ftc.teamcode.Extension.HardwareConfiguration;
  */
 
 public class OpticalDistanceAutoDriver {
-    private LinearOpMode opMode;
     private HardwareConfiguration hw;
 
-    public OpticalDistanceAutoDriver(LinearOpMode opMode, HardwareConfiguration hw)
+    public OpticalDistanceAutoDriver(HardwareConfiguration hw)
     {
-        this.opMode = opMode;
         this.hw = hw;
     }
 
     public void driveUntilLine(OpticalDistanceSensor opticalDistanceSensor, double lightValue, double power) {
-        while (opticalDistanceSensor.getLightDetected() < lightValue && opMode.opModeIsActive()) {
+        while (opticalDistanceSensor.getLightDetected() < lightValue && hw.opMode.opModeIsActive()) {
             hw.drivetrain.setPowers(power, power);
         }
         hw.drivetrain.haltDrive();
-        opMode.sleep(200);
+        hw.opMode.sleep(200);
         hw.drivetrain.resetMotorEncoders();
     }
 }

@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Extension;
 
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -15,6 +16,8 @@ import org.firstinspires.ftc.teamcode.Subsystems.TuskGate;
 
 public class HardwareConfiguration
 {
+    LinearOpMode opMode;
+
     //Robot Components
     public Drivetrain drivetrain;
     public ParticleAcclerator accelerator1;
@@ -27,15 +30,20 @@ public class HardwareConfiguration
 
     //Sensors
     public ColorSensor colorSensor;
-    public OpticalDistanceSensor left_ods;
-    public OpticalDistanceSensor right_ods;
+    public OpticalDistanceSensor leftOpticalDistanceSensor;
+    public OpticalDistanceSensor rightOpticalDistanceSensor;
+    public ModernRoboticsI2cGyro gyroSensor;
+    public RangeSensor sideRangeSensor;
+    public RangeSensor frontRangeSensor;
 
     //Auto Drivers
     public GyroAutoDriver gyroAutoDriver;
     public EncoderAutoDriver encoderAutoDriver;
     public RangeAutoDriver rangeAutoDriver;
+    public OpticalDistanceAutoDriver opticalDistanceAutoDriver;
 
-    public HardwareConfiguration(LinearOpMode opMode){
+    HardwareConfiguration(LinearOpMode opMode){
+        this.opMode = opMode;
         //Define robot components
         DcMotor Left1 = opMode.hardwareMap.dcMotor.get("Left 1");
         DcMotor Left2 = opMode.hardwareMap.dcMotor.get("Left 2");
@@ -64,23 +72,30 @@ public class HardwareConfiguration
 
         //Define sensors
         colorSensor = opMode.hardwareMap.colorSensor.get("Beacon Color");
-        left_ods = opMode.hardwareMap.opticalDistanceSensor.get("Left ods");
-        right_ods = opMode.hardwareMap.opticalDistanceSensor.get("Right ods");
+        leftOpticalDistanceSensor = opMode.hardwareMap.opticalDistanceSensor.get("Left ods");
+        rightOpticalDistanceSensor = opMode.hardwareMap.opticalDistanceSensor.get("Right ods");
+        gyroSensor = (ModernRoboticsI2cGyro) opMode.hardwareMap.gyroSensor.get("gyroSensor");
+        frontRangeSensor = new RangeSensor("Range 1", 0x28, opMode.hardwareMap);
+        sideRangeSensor = new RangeSensor("Range 2", 0x2a, opMode.hardwareMap);
 
         //Define auto drivers
-        gyroAutoDriver = new GyroAutoDriver(opMode, "gyroSensor", this.drivetrain);
+        gyroAutoDriver = new GyroAutoDriver(this);
         encoderAutoDriver = new EncoderAutoDriver(opMode, this.drivetrain);
-        rangeAutoDriver = new RangeAutoDriver(opMode, this.drivetrain, "Range 1", "Range 2");
+        rangeAutoDriver = new RangeAutoDriver(this);
+        opticalDistanceAutoDriver = new OpticalDistanceAutoDriver(this);
     }
 
-    public void init() {
+    void init() {
         //Initialize Robot Components
         accelerator1.accleratorPower = 0;
         baconActivator.armDown();
         colorSensor.enableLed(false);
         troughGate.closeGate();
         drivetrain.resetMotorEncoders();
-        gyroAutoDriver.calibrate();
+        gyroSensor.calibrate();
+        while(gyroSensor.isCalibrating()) {
+            //Wait for calibration
+        }
     }
 }
 

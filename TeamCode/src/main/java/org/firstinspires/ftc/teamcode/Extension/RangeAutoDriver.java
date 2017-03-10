@@ -8,12 +8,9 @@ import com.qualcomm.robotcore.util.Range;
  */
 
 public class RangeAutoDriver {
-    private LinearOpMode opMode;
     private HardwareConfiguration hw;
 
-    public RangeAutoDriver(LinearOpMode opMode, HardwareConfiguration hw)
-    {
-        this.opMode = opMode;
+    public RangeAutoDriver(HardwareConfiguration hw) {
         this.hw = hw;
     }
 
@@ -21,7 +18,7 @@ public class RangeAutoDriver {
         double startPositionLeft = hw.drivetrain.getLeftEncoderCount();//Starting position
         double startPositionRight = hw.drivetrain.getRightEncoderCount();
 
-        while(hw.drivetrain.getLeftEncoderCount() < encodercounts + startPositionLeft && hw.drivetrain.getRightEncoderCount()< encodercounts + startPositionRight && opMode.opModeIsActive())  {
+        while(hw.drivetrain.getLeftEncoderCount() < encodercounts + startPositionLeft && hw.drivetrain.getRightEncoderCount() < encodercounts + startPositionRight && hw.opMode.opModeIsActive())  {
             double leftSpeed = power;
             double rightSpeed = power;
 
@@ -41,13 +38,16 @@ public class RangeAutoDriver {
 
             hw.drivetrain.setPowers(leftSpeed, rightSpeed);
         }
+        hw.drivetrain.haltDrive();
+        hw.drivetrain.resetMotorEncoders();
+        hw.opMode.sleep(200);
     }
 
     public void wallFollowBackwards(double power, double RangeCm, int encodercounts){
         double startPositionLeft = hw.drivetrain.getLeftEncoderCount();//Starting position
         double startPositionRight = hw.drivetrain.getRightEncoderCount();
 
-        while(hw.drivetrain.getLeftEncoderCount() > encodercounts + startPositionLeft && hw.drivetrain.getRightEncoderCount() > encodercounts + startPositionRight && opMode.opModeIsActive())  {
+        while(hw.drivetrain.getLeftEncoderCount() > encodercounts + startPositionLeft && hw.drivetrain.getRightEncoderCount() > encodercounts + startPositionRight && hw.opMode.opModeIsActive())  {
             double leftSpeed = power;
             double rightSpeed = power;
 
@@ -66,14 +66,17 @@ public class RangeAutoDriver {
 
             hw.drivetrain.setPowers(leftSpeed, rightSpeed);
         }
+        hw.drivetrain.haltDrive();
+        hw.drivetrain.resetMotorEncoders();
+        hw.opMode.sleep(200);
     }
 
     public void driveForwardsUntilDistance(double distance, double power) {
-        while (hw.frontRangeSensor.getUltrasonicRange() > distance && opMode.opModeIsActive()) {
+        while (hw.frontRangeSensor.getUltrasonicRange() > distance && hw.opMode.opModeIsActive()) {
             hw.drivetrain.setPowers(power, power);
         }
         hw.drivetrain.haltDrive();
         hw.drivetrain.resetMotorEncoders();
-        opMode.sleep(200);
+        hw.opMode.sleep(200);
     }
 }

@@ -9,11 +9,9 @@ import com.qualcomm.robotcore.util.Range;
  */
 
 public class GyroAutoDriver {
-    private LinearOpMode opMode;
     private HardwareConfiguration hw;
 
-    public GyroAutoDriver(LinearOpMode opMode, HardwareConfiguration hw) {
-        this.opMode = opMode;
+    public GyroAutoDriver(HardwareConfiguration hw) {
         this.hw = hw;
     }
 
@@ -27,7 +25,7 @@ public class GyroAutoDriver {
         double startPositionRight = hw.drivetrain.getRightEncoderCount();
 
         while (hw.drivetrain.getLeftEncoderCount() < targetPosition + startPositionLeft
-                && hw.drivetrain.getRightEncoderCount() < targetPosition + startPositionRight && opMode.opModeIsActive()) {
+                && hw.drivetrain.getRightEncoderCount() < targetPosition + startPositionRight && hw.opMode.opModeIsActive()) {
             zAccumulated = hw.gyroSensor.getIntegratedZValue();  //Current direction
 
             leftSpeed = power + (zAccumulated - target) / 20;  //Calculate speed for each side
@@ -39,7 +37,7 @@ public class GyroAutoDriver {
             hw.drivetrain.setPowers(leftSpeed, rightSpeed);
         }
         hw.drivetrain.haltDrive();
-        opMode.sleep(200);
+        hw.opMode.sleep(200);
         hw.drivetrain.resetMotorEncoders();
     }
 
@@ -53,7 +51,7 @@ public class GyroAutoDriver {
         double startPositionRight = hw.drivetrain.getRightEncoderCount();
 
         while (hw.drivetrain.getLeftEncoderCount() > targetPosition + startPositionLeft &&
-                hw.drivetrain.getRightEncoderCount() > targetPosition + startPositionRight && opMode.opModeIsActive())
+                hw.drivetrain.getRightEncoderCount() > targetPosition + startPositionRight && hw.opMode.opModeIsActive())
         {  //While we have not passed out intended distance
             zAccumulated = hw.gyroSensor.getIntegratedZValue();  //Current direction
 
@@ -66,7 +64,7 @@ public class GyroAutoDriver {
             hw.drivetrain.setPowers(leftSpeed, rightSpeed);
         }
         hw.drivetrain.haltDrive();
-        opMode.sleep(200);
+        hw.opMode.sleep(200);
         hw.drivetrain.resetMotorEncoders();
     }
 
@@ -74,7 +72,7 @@ public class GyroAutoDriver {
         hw.gyroSensor.resetZAxisIntegrator();
         double gyroHeading = this.getAdjustedHeading();
 
-        while(gyroHeading  < target - 1 || gyroHeading > target + 1 && opMode.opModeIsActive())
+        while(gyroHeading  < target - 1 || gyroHeading > target + 1 && hw.opMode.opModeIsActive())
         {
             double power = ( (target - gyroHeading) / Math.abs(target)) * (1.0/4.0);
 
@@ -84,7 +82,7 @@ public class GyroAutoDriver {
             gyroHeading = this.getAdjustedHeading();
         }
         hw.drivetrain.haltDrive();
-        opMode.sleep(200);
+        hw.opMode.sleep(200);
         hw.drivetrain.resetMotorEncoders();
     }
 
