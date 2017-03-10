@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
  */
 
 public class BaconActivator {
-    Servo baconActivatorServo;
+    private Servo baconActivatorServo;
 
     private enum baconServoEnum {Up, Down, Scanning, Pressing}
     baconServoEnum baconServoState = baconServoEnum.Down;
