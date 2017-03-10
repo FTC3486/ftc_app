@@ -25,7 +25,7 @@ public class GyroAutoDriver {
 
     public void calibrate()
     {
-        while(gyroSensor.isCalibrating())
+        while(gyroSensor.isCalibrating() && opMode.opModeIsActive())
         {
             //Wait for calibration
         }
