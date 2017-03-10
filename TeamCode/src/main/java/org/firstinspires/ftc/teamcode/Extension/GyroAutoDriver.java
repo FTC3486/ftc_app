@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.Extension;
 
-import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.Range;
 
@@ -11,38 +10,25 @@ import com.qualcomm.robotcore.util.Range;
 
 public class GyroAutoDriver {
     private LinearOpMode opMode;
-    private ModernRoboticsI2cGyro gyroSensor;  //ModernRoboticsI2cGyro allows us to .getIntegratedZValue()
-    private Drivetrain drivetrain;
+    private HardwareConfiguration hw;
 
-    public GyroAutoDriver(LinearOpMode inputOpMode, String gyroSensorName, Drivetrain inputDrivetrain)
-    {
-        opMode = inputOpMode;
-        gyroSensor = (ModernRoboticsI2cGyro) opMode.hardwareMap.gyroSensor.get(gyroSensorName);
-        gyroSensor.calibrate();
-        gyroSensor.resetZAxisIntegrator();
-        drivetrain = inputDrivetrain;
-    }
-
-    public void calibrate()
-    {
-        while(gyroSensor.isCalibrating() && opMode.opModeIsActive())
-        {
-            //Wait for calibration
-        }
+    public GyroAutoDriver(LinearOpMode opMode, HardwareConfiguration hw) {
+        this.opMode = opMode;
+        this.hw = hw;
     }
 
     public void driveStraightForwards(int targetPosition, double power) {
         double leftSpeed; //Power to feed the motors
         double rightSpeed;
 
-        double target = gyroSensor.getIntegratedZValue();  //Starting direction
+        double target = hw.gyroSensor.getIntegratedZValue();  //Starting direction
         double zAccumulated;
-        double startPositionLeft = drivetrain.getLeftEncoderCount();
-        double startPositionRight = drivetrain.getRightEncoderCount();
+        double startPositionLeft = hw.drivetrain.getLeftEncoderCount();
+        double startPositionRight = hw.drivetrain.getRightEncoderCount();
 
-        while (drivetrain.getLeftEncoderCount() < targetPosition + startPositionLeft
-                && drivetrain.getRightEncoderCount() < targetPosition + startPositionRight && opMode.opModeIsActive()) {  //While we have not passed out intended distance
-            zAccumulated = gyroSensor.getIntegratedZValue();  //Current direction
+        while (hw.drivetrain.getLeftEncoderCount() < targetPosition + startPositionLeft
+                && hw.drivetrain.getRightEncoderCount() < targetPosition + startPositionRight && opMode.opModeIsActive()) {
+            zAccumulated = hw.gyroSensor.getIntegratedZValue();  //Current direction
 
             leftSpeed = power + (zAccumulated - target) / 20;  //Calculate speed for each side
             rightSpeed = power - (zAccumulated - target) / 20;  //See Gyro Straight video for detailed explanation
@@ -50,24 +36,26 @@ public class GyroAutoDriver {
             leftSpeed = Range.clip(leftSpeed, -1, 1);
             rightSpeed = Range.clip(rightSpeed, -1, 1);
 
-            drivetrain.setPowers(leftSpeed, rightSpeed);
+            hw.drivetrain.setPowers(leftSpeed, rightSpeed);
         }
-        drivetrain.setPowers(0.0, 0.0);
+        hw.drivetrain.haltDrive();
+        opMode.sleep(200);
+        hw.drivetrain.resetMotorEncoders();
     }
 
     public void driveStraightBackwards(int targetPosition, double power) {
         double leftSpeed; //Power to feed the motors
         double rightSpeed;
 
-        double target = gyroSensor.getIntegratedZValue();  //Starting direction
+        double target = hw.gyroSensor.getIntegratedZValue();  //Starting direction
         double zAccumulated;
-        double startPositionLeft = drivetrain.getLeftEncoderCount();//Starting position
-        double startPositionRight = drivetrain.getRightEncoderCount();
+        double startPositionLeft = hw.drivetrain.getLeftEncoderCount();//Starting position
+        double startPositionRight = hw.drivetrain.getRightEncoderCount();
 
-        while (drivetrain.getLeftEncoderCount() > targetPosition + startPositionLeft &&
-               drivetrain.getRightEncoderCount() > targetPosition + startPositionRight && opMode.opModeIsActive())
+        while (hw.drivetrain.getLeftEncoderCount() > targetPosition + startPositionLeft &&
+                hw.drivetrain.getRightEncoderCount() > targetPosition + startPositionRight && opMode.opModeIsActive())
         {  //While we have not passed out intended distance
-            zAccumulated = gyroSensor.getIntegratedZValue();  //Current direction
+            zAccumulated = hw.gyroSensor.getIntegratedZValue();  //Current direction
 
             leftSpeed = power + (zAccumulated - target) / 20;  //Calculate speed for each side
             rightSpeed = power - (zAccumulated - target) / 20;  //See Gyro Straight video for detailed explanation
@@ -75,13 +63,15 @@ public class GyroAutoDriver {
             leftSpeed = Range.clip(leftSpeed, -1, 1);
             rightSpeed = Range.clip(rightSpeed, -1, 1);
 
-            drivetrain.setPowers(leftSpeed, rightSpeed);
+            hw.drivetrain.setPowers(leftSpeed, rightSpeed);
         }
-        drivetrain.setPowers(0.0, 0.0);
+        hw.drivetrain.haltDrive();
+        opMode.sleep(200);
+        hw.drivetrain.resetMotorEncoders();
     }
 
     public void turn(int target) {
-        gyroSensor.resetZAxisIntegrator();
+        hw.gyroSensor.resetZAxisIntegrator();
         double gyroHeading = this.getAdjustedHeading();
 
         while(gyroHeading  < target - 1 || gyroHeading > target + 1 && opMode.opModeIsActive())
@@ -90,14 +80,14 @@ public class GyroAutoDriver {
 
             power = Math.signum(power) * Range.clip(Math.abs(power), 0.05, 1.0);
 
-            drivetrain.setPowers(power, -power);
+            hw.drivetrain.setPowers(power, -power);
             gyroHeading = this.getAdjustedHeading();
         }
-        drivetrain.haltDrive();
+        hw.drivetrain.haltDrive();
     }
 
     private double getAdjustedHeading() {
-        double sensorValue = gyroSensor.getHeading();
+        double sensorValue = hw.gyroSensor.getHeading();
 
         if(sensorValue > 180)
         {
