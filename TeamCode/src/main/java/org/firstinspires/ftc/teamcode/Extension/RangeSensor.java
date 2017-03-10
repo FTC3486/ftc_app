@@ -20,7 +20,7 @@ public class RangeSensor {
         this.reader.engage();
     }
 
-    public double getSideUltrasonicRange() {
+    public double getUltrasonicRange() {
         //Read 2 bytes at a time, starting at 0x04
         byte[] sideSensorCache = reader.read(0x04, 2);
         //sideSensorCache[0] holds Ultrasonic Values; & 0xFF converts the values to be in the range 0-255;
