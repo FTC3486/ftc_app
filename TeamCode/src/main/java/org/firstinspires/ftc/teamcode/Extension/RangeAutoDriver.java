@@ -14,7 +14,7 @@ public class RangeAutoDriver {
         this.hw = hw;
     }
 
-    public void wallFollowForwards(double power, double RangeCm, int encodercounts){
+    public void wallFollowForwards(double power, double rangeCm, int encodercounts){
         double startPositionLeft = hw.drivetrain.getLeftEncoderCount();//Starting position
         double startPositionRight = hw.drivetrain.getRightEncoderCount();
 
@@ -24,11 +24,11 @@ public class RangeAutoDriver {
 
             double sideUltrasonicRange = hw.sideRangeSensor.getUltrasonicRange();
 
-            if(sideUltrasonicRange > RangeCm)
+            if(sideUltrasonicRange > rangeCm)
             {
                 rightSpeed = power - 0.005;
             }
-            else if(sideUltrasonicRange < RangeCm)
+            else if(sideUltrasonicRange < rangeCm)
             {
                 leftSpeed = power - 0.005;
             }
@@ -43,7 +43,7 @@ public class RangeAutoDriver {
         hw.opMode.sleep(200);
     }
 
-    public void wallFollowBackwards(double power, double RangeCm, int encodercounts){
+    public void wallFollowBackwards(double power, double rangeCm, int encodercounts){
         double startPositionLeft = hw.drivetrain.getLeftEncoderCount();//Starting position
         double startPositionRight = hw.drivetrain.getRightEncoderCount();
 
@@ -52,11 +52,11 @@ public class RangeAutoDriver {
             double rightSpeed = power;
 
             double sideUltrasonicRange = hw.sideRangeSensor.getUltrasonicRange();
-            if(sideUltrasonicRange > RangeCm)
+            if(sideUltrasonicRange > rangeCm)
             {
                 leftSpeed = power - 0.005;
             }
-            else if(sideUltrasonicRange < RangeCm)
+            else if(sideUltrasonicRange < rangeCm)
             {
                 rightSpeed = power - 0.005;
             }
