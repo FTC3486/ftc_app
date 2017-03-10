@@ -58,11 +58,13 @@ public class RangeAutoDriver {
             double leftSpeed = power;
             double rightSpeed = power;
 
-            if(this.getSideUltrasonicRange() > RangeCm)
+            double sideUltrasonicRange = this.getSideUltrasonicRange();
+
+            if(sideUltrasonicRange > RangeCm)
             {
                 rightSpeed = power - 0.005;
             }
-            else if(this.getSideUltrasonicRange() < RangeCm)
+            else if(sideUltrasonicRange < RangeCm)
             {
                 leftSpeed = power - 0.005;
             }
@@ -82,11 +84,12 @@ public class RangeAutoDriver {
             double leftSpeed = power;
             double rightSpeed = power;
 
-            if(this.getSideUltrasonicRange() > RangeCm)
+            double sideUltrasonicRange = this.getSideUltrasonicRange();
+            if(sideUltrasonicRange > RangeCm)
             {
                 leftSpeed = power - 0.005;
             }
-            else if(this.getSideUltrasonicRange() < RangeCm)
+            else if(sideUltrasonicRange < RangeCm)
             {
                 rightSpeed = power - 0.005;
             }
