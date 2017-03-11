@@ -39,6 +39,10 @@ public class Robot {
         hw.rangeAutoDriver.driveForwardsUntilDistance(distance, power);
     }
 
+    public void driveBackwardsUntilDistance(double distance, double power) {
+        hw.rangeAutoDriver.driveBackwardsUntilDistance(distance, power);
+    }
+
     public void wallFollowForward(double power, int encodercounts) {
         hw.rangeAutoDriver.wallFollowForwards(power, hw.sideRangeSensor.getUltrasonicRange(), encodercounts);
     }
@@ -81,7 +85,7 @@ public class Robot {
         // TODO: Change this to odometric-based movement
         hw.drivetrain.setPowers(power, power);
         opMode.sleep(presstime);
-        
+
         hw.drivetrain.haltDrive();
         hw.gyroSensor.resetZAxisIntegrator();
         hw.opMode.sleep(200);
