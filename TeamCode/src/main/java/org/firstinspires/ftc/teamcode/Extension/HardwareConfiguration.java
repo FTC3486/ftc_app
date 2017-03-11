@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import org.firstinspires.ftc.teamcode.Subsystems.BaconActivator;
 import org.firstinspires.ftc.teamcode.Subsystems.CapballHolder;
 import org.firstinspires.ftc.teamcode.Subsystems.Column;
-import org.firstinspires.ftc.teamcode.Subsystems.ParticleAcclerator;
+import org.firstinspires.ftc.teamcode.Subsystems.ParticleAccelerator;
 import org.firstinspires.ftc.teamcode.Subsystems.Pickup;
 import org.firstinspires.ftc.teamcode.Subsystems.TroughGate;
 import org.firstinspires.ftc.teamcode.Subsystems.TuskGate;
@@ -20,7 +20,7 @@ public class HardwareConfiguration
 
     //Robot Components
     public Drivetrain drivetrain;
-    public ParticleAcclerator accelerator1;
+    public ParticleAccelerator accelerator;
     public Pickup pickup;
     public TroughGate troughGate;
     public Column column;
@@ -64,7 +64,7 @@ public class HardwareConfiguration
 
         pickup = new Pickup("Pickup", opMode.hardwareMap);
         troughGate = new TroughGate("Trough Gate", opMode.hardwareMap);
-        accelerator1 = new ParticleAcclerator("Accelerator 1", opMode.hardwareMap);
+        accelerator = new ParticleAccelerator("Accelerator 1", opMode.hardwareMap);
         column = new Column("Column 1", "Column 2", opMode.hardwareMap);
         tuskGate = new TuskGate("Tusk Gate", opMode.hardwareMap);
         capballHolder = new CapballHolder("Capball Holder", opMode.hardwareMap);
@@ -87,7 +87,7 @@ public class HardwareConfiguration
 
     void init() {
         //Initialize Robot Components
-        accelerator1.accleratorPower = 0;
+        accelerator.acceleratorPower = 0;
         baconActivator.armDown();
         colorSensor.enableLed(false);
         troughGate.closeGate();

@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.CapballHolder;
 import org.firstinspires.ftc.teamcode.Subsystems.Column;
 import org.firstinspires.ftc.teamcode.Extension.Drivetrain;
 import org.firstinspires.ftc.teamcode.Extension.GamepadWrapper;
-import org.firstinspires.ftc.teamcode.Subsystems.ParticleAcclerator;
+import org.firstinspires.ftc.teamcode.Subsystems.ParticleAccelerator;
 import org.firstinspires.ftc.teamcode.Subsystems.Pickup;
 import org.firstinspires.ftc.teamcode.Extension.TeleopDriver;
 import org.firstinspires.ftc.teamcode.Subsystems.TroughGate;
@@ -23,7 +23,7 @@ public class Teleop_DrivetrainBuilder extends OpMode{
     GamepadWrapper joy1;
     GamepadWrapper joy2;
     Drivetrain driveTrain;
-    ParticleAcclerator accelerator;
+    ParticleAccelerator accelerator;
     Pickup pickup;
     TroughGate troughGate;
     Column column;
@@ -60,14 +60,14 @@ public class Teleop_DrivetrainBuilder extends OpMode{
         teleopDriver = new TeleopDriver(this, driveTrain);
         pickup = new Pickup("Pickup", hardwareMap);
         troughGate = new TroughGate("Trough Gate", hardwareMap);
-        accelerator = new ParticleAcclerator("Accelerator 1", hardwareMap);
+        accelerator = new ParticleAccelerator("Accelerator 1", hardwareMap);
         column = new Column("Column 1","Column 2", hardwareMap);
         tuskGate = new TuskGate("Tusk Gate", hardwareMap);
         joy1 = new GamepadWrapper();
         joy2 = new GamepadWrapper();
         capballHolder = new CapballHolder("Capball Holder", hardwareMap);
         baconActivator = new BaconActivator("Bacon Activator", hardwareMap);
-        accelerator.accleratorPower = 0;
+        accelerator.acceleratorPower = 0;
 
         baconActivator.armUp();
     }
@@ -119,7 +119,7 @@ public class Teleop_DrivetrainBuilder extends OpMode{
         else {
             accelerator.stop();
 
-            //accelerator.accleratorPower = 0;
+            //accelerator.acceleratorPower = 0;
 
         }
 
