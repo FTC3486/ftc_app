@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.BaconActivator;
 import org.firstinspires.ftc.teamcode.Subsystems.CapballHolder;
 import org.firstinspires.ftc.teamcode.Subsystems.Column;
 import org.firstinspires.ftc.teamcode.Extension.Drivetrain;
-import org.firstinspires.ftc.teamcode.Subsystems.ParticleAcclerator;
+import org.firstinspires.ftc.teamcode.Subsystems.ParticleAccelerator;
 import org.firstinspires.ftc.teamcode.Subsystems.Pickup;
 import org.firstinspires.ftc.teamcode.Subsystems.TroughGate;
 import org.firstinspires.ftc.teamcode.Subsystems.TuskGate;
@@ -21,7 +21,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.TuskGate;
 public class ScoreParticles_and_KnockCapball_RedAuto extends LinearOpMode{
     private ElapsedTime     runtime = new ElapsedTime();
     Drivetrain driveTrain;
-    ParticleAcclerator accelerator1;
+    ParticleAccelerator accelerator1;
     Pickup pickup;
     TroughGate troughGate;
     Column column;
@@ -64,12 +64,12 @@ public class ScoreParticles_and_KnockCapball_RedAuto extends LinearOpMode{
 
         pickup = new Pickup("Pickup", hardwareMap);
         troughGate = new TroughGate("Trough Gate", hardwareMap);
-        accelerator1 = new ParticleAcclerator("Accelerator 1", hardwareMap);
+        accelerator1 = new ParticleAccelerator("Accelerator 1", hardwareMap);
         column = new Column("Column 1", "Column 2", hardwareMap);
         tuskGate = new TuskGate("Tusk Gate", hardwareMap);
         capballHolder = new CapballHolder("Capball Holder", hardwareMap);
         baconActivator = new BaconActivator("Bacon Activator", hardwareMap);
-        accelerator1.accleratorPower = 0;
+        accelerator1.acceleratorPower = 0;
         baconActivator.armDown();
         telemetry.addData("Status", "Resetting Encoders");    //
         telemetry.update();
@@ -86,7 +86,7 @@ public class ScoreParticles_and_KnockCapball_RedAuto extends LinearOpMode{
 
         waitForStart();
 
-        while (accelerator1.accleratorPower <1) {
+        while (accelerator1.acceleratorPower <1) {
             accelerator1.rampup();
         }
         accelerator1.run();

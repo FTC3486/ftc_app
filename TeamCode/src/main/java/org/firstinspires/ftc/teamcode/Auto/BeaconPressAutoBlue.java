@@ -33,11 +33,11 @@ public class BeaconPressAutoBlue extends LinearOpMode {
         /*encoderAutoDriver.driveToTarget(0.5, -32, -32, 10);
         driveTrain.haltDrive();
         driveTrain.resetMotorEncoders();*/
-        while (mammut.hw.accelerator1.accleratorPower < 1 && opModeIsActive()) {
-            mammut.hw.accelerator1.rampup();
+        while (mammut.hw.accelerator.acceleratorPower < 1 && opModeIsActive()) {
+            mammut.hw.accelerator.rampup();
         }
 
-        mammut.hw.accelerator1.run();
+        mammut.hw.accelerator.run();
         sleep(100);
 
         mammut.hw.troughGate.openGate();

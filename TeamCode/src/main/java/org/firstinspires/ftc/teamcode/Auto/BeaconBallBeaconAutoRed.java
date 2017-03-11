@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.BaconActivator;
 import org.firstinspires.ftc.teamcode.Subsystems.CapballHolder;
 import org.firstinspires.ftc.teamcode.Subsystems.Column;
 import org.firstinspires.ftc.teamcode.Extension.Drivetrain;
-import org.firstinspires.ftc.teamcode.Subsystems.ParticleAcclerator;
+import org.firstinspires.ftc.teamcode.Subsystems.ParticleAccelerator;
 import org.firstinspires.ftc.teamcode.Subsystems.Pickup;
 import org.firstinspires.ftc.teamcode.Subsystems.TroughGate;
 import org.firstinspires.ftc.teamcode.Subsystems.TuskGate;
@@ -30,7 +30,7 @@ public class BeaconBallBeaconAutoRed extends LinearOpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
     Drivetrain driveTrain;
-    ParticleAcclerator accelerator1;
+    ParticleAccelerator accelerator1;
     Pickup pickup;
     TroughGate troughGate;
     Column column;
@@ -75,7 +75,7 @@ public class BeaconBallBeaconAutoRed extends LinearOpMode {
         //autoDriver = new GyroscopicAutoDriver(this, driveTrain, "gyroSensor", hardwareMap);
         pickup = new Pickup("Pickup", hardwareMap);
         troughGate = new TroughGate("Trough Gate", hardwareMap);
-        accelerator1 = new ParticleAcclerator("Accelerator 1", hardwareMap);
+        accelerator1 = new ParticleAccelerator("Accelerator 1", hardwareMap);
         column = new Column("Column 1", "Column 2", hardwareMap);
         tuskGate = new TuskGate("Tusk Gate", hardwareMap);
         capballHolder = new CapballHolder("Capball Holder", hardwareMap);
@@ -85,7 +85,7 @@ public class BeaconBallBeaconAutoRed extends LinearOpMode {
         left_ods = hardwareMap.opticalDistanceSensor.get("Left ods");
         right_ods = hardwareMap.opticalDistanceSensor.get("Right ods");
         //gyroAutoDriver = new GyroAutoDriver("GyroAuto", hardwareMap);
-        accelerator1.accleratorPower = 0;
+        accelerator1.acceleratorPower = 0;
         baconActivator.armDown();
         telemetry.update();
         sensorGyro = hardwareMap.gyroSensor.get("gyroSensor");  //Point to the gyroSensor in the configuration file
@@ -146,11 +146,11 @@ public class BeaconBallBeaconAutoRed extends LinearOpMode {
         encoderDrive(0.5, -30, -30, 10);
         driveTrain.haltDrive();
 
-            while (accelerator1.accleratorPower < 1 && accelerator2.accleratorPower < 1) {
-                accelerator1.rampup();
+            while (accelerator.acceleratorPower < 1 && accelerator2.acceleratorPower < 1) {
+                accelerator.rampup();
                 accelerator2.rampup();
             }
-            accelerator1.run();
+            accelerator.run();
             accelerator2.run();
 
             troughGate.openGate();
