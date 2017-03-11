@@ -54,11 +54,11 @@ public class RangeAutoDriver {
             double sideUltrasonicRange = hw.sideRangeSensor.getUltrasonicRange();
             if(sideUltrasonicRange > rangeCm)
             {
-                leftSpeed = power - 0.005;
+                rightSpeed = power + 0.005;
             }
             else if(sideUltrasonicRange < rangeCm)
             {
-                rightSpeed = power - 0.005;
+                leftSpeed = power + 0.005;
             }
 
             leftSpeed = Range.clip(leftSpeed, -1, 1);
