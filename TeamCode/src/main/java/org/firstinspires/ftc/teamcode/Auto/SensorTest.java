@@ -20,7 +20,9 @@ public class SensorTest extends LinearOpMode {
 
     @Override
     public void runOpMode() {
+        mammut.init();
         waitForStart();
+        mammut.hw.baconActivator.sensorScanning();
 
         while (opModeIsActive()) {
             telemetry.addData("Blue ", mammut.hw.colorSensor.blue());
