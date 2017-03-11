@@ -50,8 +50,9 @@ public class EncoderAutoDriver {
                 && drivetrain.isBusy()) {
             //Wait for completion
         }
-
-        drivetrain.setPowers(0.0,0.0);
+        drivetrain.haltDrive();
+        opMode.sleep(200);
+        drivetrain.resetMotorEncoders();
 
         // Turn off RUN_TO_POSITION
         drivetrain.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
