@@ -21,7 +21,7 @@ public class ScoreParticles_and_KnockCapball_RedAuto extends LinearOpMode{
             mammut.hw.accelerator.rampup();
         }
         mammut.hw.accelerator.run();
-        mammut.hw.encoderAutoDriver.driveToTarget(0.5, -52, -52, 5.0);
+        mammut.hw.encoderAutoDriver.driveToTarget(0.5, -42, -42, 5.0);
 
         mammut.hw.troughGate.openGate();
         sleep(2000);
