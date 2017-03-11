@@ -73,6 +73,7 @@ public class Robot {
         hw.opMode.sleep(200);
         hw.drivetrain.resetMotorEncoders();
     }
+
     public void pressBlueSideBeacon(double power, int presstime) {
         if (hw.colorSensor.blue() >= 2) {
             hw.baconActivator.armPressing();

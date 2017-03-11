@@ -16,27 +16,30 @@ public class TwoBeaconsRed extends LinearOpMode {
 
         mammut.driveForward(2800, 1);
         mammut.driveUntilLineUsingLeftODS(0.06, 0.2);
-        mammut.driveForward(300, 0.5);
+        mammut.driveForward(250, 0.5);
         mammut.turn(-63);
 
         mammut.hw.baconActivator.sensorScanning();
-        sleep(200);
+        sleep(500);
 
         mammut.driveForwardsUntilDistance(25, 0.3);
-        mammut.pressRedSideBeacon(0.2, 500);
-        mammut.driveBackward(-200, -0.5);
-        mammut.turn(-85);
-        /*mammut.wallFollowBackward(-0.25, -3000);
-        mammut.driveUntilLineUsingLeftODS(0.06, 0.2);
-        mammut.turn(90);
+        mammut.pressRedSideBeacon(0.2, 700);
 
-        // TODO: Change this to odometric-based movement
-        mammut.hw.drivetrain.setPowers(-0.3, -0.3);
-        sleep(200);
+        mammut.driveBackward(-300, -0.5);
+        mammut.turn(-87);
+        //mammut.wallFollowBackward(-0.25, -3000);
+        mammut.driveBackward(-2500, -0.75);
+        mammut.driveUntilLineUsingLeftODS(0.06, -0.2);
+        mammut.driveForward(100, 0.5);
+        mammut.turn(83);
+        mammut.driveBackwardsUntilDistance(25, -0.3);
 
         mammut.hw.baconActivator.sensorScanning();
+        sleep(500);
+
         mammut.driveForwardsUntilDistance(25, 0.3);
-        mammut.pressRedSideBeacon(0.2,700);*/
+        mammut.pressRedSideBeacon(0.2, 700);
+        mammut.driveBackward(-3000, -0.5);
     }
 }
 
