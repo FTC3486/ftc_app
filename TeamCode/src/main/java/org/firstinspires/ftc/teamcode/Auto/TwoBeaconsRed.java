@@ -2,10 +2,11 @@ package org.firstinspires.ftc.teamcode.Auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+
 import org.firstinspires.ftc.teamcode.Extension.Robot;
 
-@Autonomous(name = "GyroTest", group = "BlueAutonomus")
-public class GyroTest extends LinearOpMode {
+@Autonomous(name = "Two Beacons Red", group = "RedAutonomus")
+public class TwoBeaconsRed extends LinearOpMode {
     private Robot mammut = new Robot(this);
 
     @Override
@@ -13,11 +14,10 @@ public class GyroTest extends LinearOpMode {
         mammut.init();
         waitForStart();
 
-        mammut.driveForward(5600, 1);
-        sleep(4000);
+        mammut.driveForward(2800, 1);
         mammut.driveUntilLineUsingLeftODS(0.06, 0.2);
         mammut.driveForward(300, 0.5);
-        mammut.turn(-75);
+        mammut.turn(-63);
 
         mammut.hw.baconActivator.sensorScanning();
         sleep(200);
@@ -25,8 +25,8 @@ public class GyroTest extends LinearOpMode {
         mammut.driveForwardsUntilDistance(25, 0.3);
         mammut.pressRedSideBeacon(0.2, 500);
         mammut.driveBackward(-200, -0.5);
-        mammut.turn(-85);
-        mammut.wallFollowForward(0.25, 3000);
+        mammut.turn(85);
+        /*mammut.wallFollowBackward(-0.25, -3000);
         mammut.driveUntilLineUsingLeftODS(0.06, 0.2);
         mammut.turn(90);
 
@@ -36,7 +36,7 @@ public class GyroTest extends LinearOpMode {
 
         mammut.hw.baconActivator.sensorScanning();
         mammut.driveForwardsUntilDistance(25, 0.3);
-        mammut.pressRedSideBeacon(0.2,700);
+        mammut.pressRedSideBeacon(0.2,700);*/
     }
 }
 

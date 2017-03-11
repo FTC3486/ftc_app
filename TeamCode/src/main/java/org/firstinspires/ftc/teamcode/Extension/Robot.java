@@ -43,26 +43,43 @@ public class Robot {
         hw.rangeAutoDriver.wallFollowForwards(power, hw.sideRangeSensor.getUltrasonicRange(), encodercounts);
     }
 
-    public void wallFollowBackward(double power, double rangeCm, int encodercounts) {
-        hw.rangeAutoDriver.wallFollowBackwards(power, rangeCm, encodercounts);
+    public void wallFollowBackward(double power, int encodercounts) {
+        hw.rangeAutoDriver.wallFollowBackwards(power, hw.sideRangeSensor.getUltrasonicRange(), encodercounts);
     }
 
     public void turn(int target) {
         hw.gyroAutoDriver.turn(target);
     }
 
-    public void pressBeacon(double colorValue, double power) {
-        if (hw.colorSensor.blue() >= colorValue) {
+    public void pressRedSideBeacon(double power, int presstime) {
+        if (hw.colorSensor.blue() >= 2) {
             hw.baconActivator.armUp();
-            opMode.sleep(500);
+            opMode.sleep(200);
         } else {
             hw.baconActivator.armPressing();
-            opMode.sleep(500);
+            opMode.sleep(200);
         }
 
         // TODO: Change this to odometric-based movement
         hw.drivetrain.setPowers(power, power);
-        opMode.sleep(500);
+        opMode.sleep(presstime);
+        hw.drivetrain.haltDrive();
+
+        opMode.sleep(200);
+        hw.drivetrain.resetMotorEncoders();
+    }
+    public void pressBlueSideBeacon(double power, int presstime) {
+        if (hw.colorSensor.blue() >= 2) {
+            hw.baconActivator.armPressing();
+            opMode.sleep(200);
+        } else {
+            hw.baconActivator.armUp();
+            opMode.sleep(200);
+        }
+
+        // TODO: Change this to odometric-based movement
+        hw.drivetrain.setPowers(power, power);
+        opMode.sleep(presstime);
         hw.drivetrain.haltDrive();
 
         opMode.sleep(200);
