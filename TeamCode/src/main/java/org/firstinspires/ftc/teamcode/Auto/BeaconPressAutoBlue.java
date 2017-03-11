@@ -18,21 +18,19 @@ public class BeaconPressAutoBlue extends LinearOpMode {
         mammut.init();
         waitForStart();
 
+
         mammut.driveForward(2800, 0.5);
-        mammut.driveUntilLineUsingLeftODS(0.06, 0.2);
+        mammut.driveUntilLineUsingRightODS(0.06, 0.2);
         mammut.driveBackward(-100, -0.5);
-        mammut.turn(75);
+        mammut.turn(65);
 
         mammut.hw.baconActivator.sensorScanning();
         sleep(200);
 
         mammut.driveForwardsUntilDistance(25, 0.3);
-        mammut.pressBlueSideBeacon(0.2, 500);
-        mammut.driveBackward(-2100, -0.5);
-        //driveStraightBackwards(-2100, -0.5);
-        /*encoderAutoDriver.driveToTarget(0.5, -32, -32, 10);
-        driveTrain.haltDrive();
-        driveTrain.resetMotorEncoders();*/
+        mammut.pressBlueSideBeacon(0.2, 700);
+        mammut.driveBackward(-2350, -0.5);
+
         while (mammut.hw.accelerator.acceleratorPower < 1 && opModeIsActive()) {
             mammut.hw.accelerator.rampup();
         }

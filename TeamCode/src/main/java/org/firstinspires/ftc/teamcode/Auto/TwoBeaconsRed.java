@@ -27,7 +27,6 @@ public class TwoBeaconsRed extends LinearOpMode {
 
         mammut.driveBackward(-300, -0.5);
         mammut.turn(-87);
-        //mammut.wallFollowBackward(-0.25, -3000);
         mammut.driveBackward(-2500, -0.75);
         mammut.driveUntilLineUsingLeftODS(0.06, -0.2);
         mammut.driveForward(100, 0.5);

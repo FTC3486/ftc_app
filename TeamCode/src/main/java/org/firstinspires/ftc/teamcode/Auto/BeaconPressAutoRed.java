@@ -19,17 +19,17 @@ public class BeaconPressAutoRed extends LinearOpMode {
 
         mammut.driveForward(2800, 1);
         mammut.driveUntilLineUsingLeftODS(0.06, 0.2);
-        mammut.driveForward(300, 0.5);
+        mammut.driveForward(250, 0.5);
         mammut.turn(-63);
 
         mammut.hw.baconActivator.sensorScanning();
-        sleep(200);
+        sleep(500);
 
         mammut.driveForwardsUntilDistance(25, 0.3);
-        mammut.pressRedSideBeacon(0.2, 500);
-        mammut.driveBackward(-200, -0.5);
+        mammut.pressRedSideBeacon(0.2, 700);
+        mammut.driveBackward(-2350, -0.5);
 
-        while (mammut.hw.accelerator.acceleratorPower < 1) {
+        while (mammut.hw.accelerator.acceleratorPower < 1 && opModeIsActive()) {
             mammut.hw.accelerator.rampup();
         }
         mammut.hw.accelerator.run();

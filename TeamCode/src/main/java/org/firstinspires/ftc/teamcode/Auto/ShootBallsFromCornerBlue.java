@@ -10,7 +10,6 @@ import org.firstinspires.ftc.teamcode.Extension.Robot;
  */
 @Autonomous(name = "Score balls From Corner Blue", group = "BlueAutonomus")
 
-@Disabled
 public class ShootBallsFromCornerBlue extends LinearOpMode {
     Robot mammut = new Robot(this);
 
@@ -19,18 +18,19 @@ public class ShootBallsFromCornerBlue extends LinearOpMode {
         mammut.init();
         waitForStart();
 
-        mammut.driveBackward(-3400, -0.5);
+        sleep(15000);
+        mammut.driveBackward(-3000, -0.5);
 
-        while (mammut.hw.accelerator.acceleratorPower < 1) {
+        while (mammut.hw.accelerator.acceleratorPower < 1 && opModeIsActive()) {
             mammut.hw.accelerator.rampup();
         }
         mammut.hw.accelerator.run();
 
         mammut.hw.troughGate.openGate();
-        sleep(2000);
+        sleep(3000);
         mammut.hw.troughGate.closeGate();
-        sleep(2000);
-        mammut.hw.encoderAutoDriver.driveToTarget(0.5, -22, -22, 3);
+        mammut.hw.accelerator.stop();
+        mammut.driveBackward(-500, -0.5);
         mammut.hw.baconActivator.armUp();
     }
 }
