@@ -39,8 +39,9 @@ public class RangeAutoDriver {
             hw.drivetrain.setPowers(leftSpeed, rightSpeed);
         }
         hw.drivetrain.haltDrive();
-        hw.drivetrain.resetMotorEncoders();
+        hw.gyroSensor.resetZAxisIntegrator();
         hw.opMode.sleep(200);
+        hw.drivetrain.resetMotorEncoders();
     }
 
     public void wallFollowBackwards(double power, double rangeCm, int encodercounts){
@@ -54,11 +55,11 @@ public class RangeAutoDriver {
             double sideUltrasonicRange = hw.sideRangeSensor.getUltrasonicRange();
             if(sideUltrasonicRange > rangeCm)
             {
-                rightSpeed = power + 0.005;
+                rightSpeed = power + 0.007;
             }
             else if(sideUltrasonicRange < rangeCm)
             {
-                leftSpeed = power + 0.005;
+                leftSpeed = power + 0.007;
             }
 
             leftSpeed = Range.clip(leftSpeed, -1, 1);
@@ -67,8 +68,9 @@ public class RangeAutoDriver {
             hw.drivetrain.setPowers(leftSpeed, rightSpeed);
         }
         hw.drivetrain.haltDrive();
-        hw.drivetrain.resetMotorEncoders();
+        hw.gyroSensor.resetZAxisIntegrator();
         hw.opMode.sleep(200);
+        hw.drivetrain.resetMotorEncoders();
     }
 
     public void driveForwardsUntilDistance(double distance, double power) {
@@ -76,7 +78,9 @@ public class RangeAutoDriver {
             hw.drivetrain.setPowers(power, power);
         }
         hw.drivetrain.haltDrive();
-        hw.drivetrain.resetMotorEncoders();
+        hw.gyroSensor.resetZAxisIntegrator();
         hw.opMode.sleep(200);
+        hw.drivetrain.resetMotorEncoders();
+
     }
 }

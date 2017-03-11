@@ -37,6 +37,7 @@ public class GyroAutoDriver {
             hw.drivetrain.setPowers(leftSpeed, rightSpeed);
         }
         hw.drivetrain.haltDrive();
+        hw.gyroSensor.resetZAxisIntegrator();
         hw.opMode.sleep(200);
         hw.drivetrain.resetMotorEncoders();
     }
@@ -64,6 +65,7 @@ public class GyroAutoDriver {
             hw.drivetrain.setPowers(leftSpeed, rightSpeed);
         }
         hw.drivetrain.haltDrive();
+        hw.gyroSensor.resetZAxisIntegrator();
         hw.opMode.sleep(200);
         hw.drivetrain.resetMotorEncoders();
     }
@@ -82,6 +84,7 @@ public class GyroAutoDriver {
             gyroHeading = this.getAdjustedHeading();
         }
         hw.drivetrain.haltDrive();
+        hw.gyroSensor.resetZAxisIntegrator();
         hw.opMode.sleep(200);
         hw.drivetrain.resetMotorEncoders();
     }

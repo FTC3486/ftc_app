@@ -63,9 +63,10 @@ public class Robot {
         // TODO: Change this to odometric-based movement
         hw.drivetrain.setPowers(power, power);
         opMode.sleep(presstime);
-        hw.drivetrain.haltDrive();
 
-        opMode.sleep(200);
+        hw.drivetrain.haltDrive();
+        hw.gyroSensor.resetZAxisIntegrator();
+        hw.opMode.sleep(200);
         hw.drivetrain.resetMotorEncoders();
     }
     public void pressBlueSideBeacon(double power, int presstime) {
@@ -80,9 +81,10 @@ public class Robot {
         // TODO: Change this to odometric-based movement
         hw.drivetrain.setPowers(power, power);
         opMode.sleep(presstime);
+        
         hw.drivetrain.haltDrive();
-
-        opMode.sleep(200);
+        hw.gyroSensor.resetZAxisIntegrator();
+        hw.opMode.sleep(200);
         hw.drivetrain.resetMotorEncoders();
     }
 }

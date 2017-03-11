@@ -23,6 +23,7 @@ public class OpticalDistanceAutoDriver {
             hw.drivetrain.setPowers(power, power);
         }
         hw.drivetrain.haltDrive();
+        hw.gyroSensor.resetZAxisIntegrator();
         hw.opMode.sleep(200);
         hw.drivetrain.resetMotorEncoders();
     }
