@@ -1,6 +1,8 @@
-package org.firstinspires.ftc.teamcode.Extension;
+package org.firstinspires.ftc.teamcode.Subsystems;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+
+import org.firstinspires.ftc.teamcode.Subsystems.HardwareConfiguration;
 
 /**
  * Created by Matthew on 3/10/2017.
@@ -65,13 +67,13 @@ public class Robot {
         }
 
         // TODO: Change this to odometric-based movement
-        hw.drivetrain.setPowers(power, power);
+        hw.driveTrain.setPowers(power, power);
         opMode.sleep(presstime);
 
-        hw.drivetrain.haltDrive();
+        hw.driveTrain.haltDrive();
         hw.gyroSensor.resetZAxisIntegrator();
         hw.opMode.sleep(200);
-        hw.drivetrain.resetMotorEncoders();
+        hw.driveTrain.resetMotorEncoders();
     }
 
     public void pressBlueSideBeacon(double power, int presstime) {
@@ -84,12 +86,12 @@ public class Robot {
         }
 
         // TODO: Change this to odometric-based movement
-        hw.drivetrain.setPowers(power, power);
+        hw.driveTrain.setPowers(power, power);
         opMode.sleep(presstime);
 
-        hw.drivetrain.haltDrive();
+        hw.driveTrain.haltDrive();
         hw.gyroSensor.resetZAxisIntegrator();
         hw.opMode.sleep(200);
-        hw.drivetrain.resetMotorEncoders();
+        hw.driveTrain.resetMotorEncoders();
     }
 }

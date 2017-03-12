@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Extension;
+package org.firstinspires.ftc.teamcode.Subsystems;
 
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -6,20 +6,19 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 
-import org.firstinspires.ftc.teamcode.Subsystems.BaconActivator;
-import org.firstinspires.ftc.teamcode.Subsystems.CapballHolder;
-import org.firstinspires.ftc.teamcode.Subsystems.Column;
-import org.firstinspires.ftc.teamcode.Subsystems.ParticleAccelerator;
-import org.firstinspires.ftc.teamcode.Subsystems.Pickup;
-import org.firstinspires.ftc.teamcode.Subsystems.TroughGate;
-import org.firstinspires.ftc.teamcode.Subsystems.TuskGate;
+import org.firstinspires.ftc.teamcode.FTCRC_Extensions.OpticalDistanceAutoDriver;
+import org.firstinspires.ftc.teamcode.FTCRC_Extensions.RangeAutoDriver;
+import org.firstinspires.ftc.teamcode.FTCRC_Extensions.RangeSensor;
+import org.firstinspires.ftc.teamcode.FTCRC_Extensions.DriveTrain;
+import org.firstinspires.ftc.teamcode.FTCRC_Extensions.GyroAutoDriver;
+import org.firstinspires.ftc.teamcode.FTCRC_Extensions.TargetPositionAutoDriver;
 
 public class HardwareConfiguration
 {
-    LinearOpMode opMode;
+    public LinearOpMode opMode;
 
     //Robot Components
-    public Drivetrain drivetrain;
+    public DriveTrain driveTrain;
     public ParticleAccelerator accelerator;
     public Pickup pickup;
     public TroughGate troughGate;
@@ -38,7 +37,7 @@ public class HardwareConfiguration
 
     //Auto Drivers
     public GyroAutoDriver gyroAutoDriver;
-    public EncoderAutoDriver encoderAutoDriver;
+    public TargetPositionAutoDriver targetPositionAutoDriver;
     public RangeAutoDriver rangeAutoDriver;
     public OpticalDistanceAutoDriver opticalDistanceAutoDriver;
 
@@ -55,7 +54,7 @@ public class HardwareConfiguration
         Right1.setDirection(DcMotor.Direction.FORWARD);
         Right2.setDirection(DcMotor.Direction.FORWARD);
 
-        drivetrain = new Drivetrain.Builder()
+        driveTrain = new DriveTrain.Builder()
                 .addLeftMotorWithEncoder(Left1)
                 .addLeftMotorWithEncoder(Left2)
                 .addRightMotorWithEncoder(Right1)
@@ -80,7 +79,7 @@ public class HardwareConfiguration
 
         //Define auto drivers
         gyroAutoDriver = new GyroAutoDriver(this);
-        encoderAutoDriver = new EncoderAutoDriver(opMode, this.drivetrain);
+        targetPositionAutoDriver = new TargetPositionAutoDriver(opMode, this.driveTrain);
         rangeAutoDriver = new RangeAutoDriver(this);
         opticalDistanceAutoDriver = new OpticalDistanceAutoDriver(this);
     }
@@ -91,7 +90,7 @@ public class HardwareConfiguration
         baconActivator.armDown();
         colorSensor.enableLed(false);
         troughGate.closeGate();
-        drivetrain.resetMotorEncoders();
+        driveTrain.resetMotorEncoders();
         gyroSensor.calibrate();
         while(gyroSensor.isCalibrating()) {
             //Wait for calibration
