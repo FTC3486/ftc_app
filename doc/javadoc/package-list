@@ -5,3 +5,6 @@ com.qualcomm.robotcore.exception
 com.qualcomm.robotcore.hardware
 com.qualcomm.robotcore.robocol
 com.qualcomm.robotcore.util
+org.firstinspires.ftc.robotcore.external
+org.firstinspires.ftc.robotcore.external.matrices
+org.firstinspires.ftc.robotcore.external.navigation
