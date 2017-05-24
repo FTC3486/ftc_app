@@ -6,12 +6,12 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 
-import org.firstinspires.ftc.teamcode.FTCRC_Extensions.OpticalDistanceAutoDriver;
-import org.firstinspires.ftc.teamcode.FTCRC_Extensions.RangeAutoDriver;
-import org.firstinspires.ftc.teamcode.FTCRC_Extensions.RangeSensor;
-import org.firstinspires.ftc.teamcode.FTCRC_Extensions.DriveTrain;
-import org.firstinspires.ftc.teamcode.FTCRC_Extensions.GyroAutoDriver;
-import org.firstinspires.ftc.teamcode.FTCRC_Extensions.TargetPositionAutoDriver;
+import org.firstinspires.ftc.teamcode.RobotCoreExtensions.OpticalDistanceAutoDriver;
+import org.firstinspires.ftc.teamcode.RobotCoreExtensions.RangeAutoDriver;
+import org.firstinspires.ftc.teamcode.RobotCoreExtensions.RangeSensor;
+import org.firstinspires.ftc.teamcode.RobotCoreExtensions.DriveTrain;
+import org.firstinspires.ftc.teamcode.RobotCoreExtensions.GyroAutoDriver;
+import org.firstinspires.ftc.teamcode.RobotCoreExtensions.TargetPositionAutoDriver;
 
 public class HardwareConfiguration
 {
