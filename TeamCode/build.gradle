@@ -10,11 +10,3 @@
 // Custom definitions may go here
 // Include common definitions from above.
 apply from: '../build.common.gradle'
-android {
-    buildToolsVersion '25.0.2'
-    compileSdkVersion 23
-}
-
-dependencies {
-    compile 'org.twitter4j:twitter4j-core:4.0.6'
-}

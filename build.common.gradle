@@ -17,6 +17,7 @@
 
 import java.util.regex.Pattern
 
+apply plugin: 'idea'
 apply plugin: 'com.android.application'
 
 android {
