@@ -1,9 +1,9 @@
-[submodule "FTCRC_Extensions"]
-	path = TeamCode/src/main/java/org/firstinspires/ftc/teamcode/FTCRC_Extensions
-	url = https://github.com/FTC3486/FTCRC_Extensions.git
-[submodule "Subsystems"]
-	path = TeamCode/src/main/java/org/firstinspires/ftc/teamcode/Subsystems
-	url = https://github.com/FTC3486/Subsystems.git
 [submodule "OpModes"]
 	path = TeamCode/src/main/java/org/firstinspires/ftc/teamcode/OpModes
 	url = https://github.com/FTC3486/OpModes.git
+[submodule "RobotCoreExtensions"]
+	path = TeamCode/src/main/java/org/firstinspires/ftc/teamcode/RobotCoreExtensions
+	url = https://github.com/FTC3486/RobotCoreExtensions.git
+[submodule "Subsystems"]
+	path = TeamCode/src/main/java/org/firstinspires/ftc/teamcode/Subsystems
+	url = https://github.com/FTC3486/Subsystems.git
