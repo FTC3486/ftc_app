@@ -19,7 +19,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.TuskGate;
  */
 @TeleOp(name="Teleop version 1.0", group="Teleop2016")
 @Disabled
-public class Teleop_Iteration_1 extends OpMode{
+public class Mammut_Teleop extends OpMode{
     GamepadWrapper joy1;
     GamepadWrapper joy2;
     PulseDrive pulseDrive = new PulseDrive();

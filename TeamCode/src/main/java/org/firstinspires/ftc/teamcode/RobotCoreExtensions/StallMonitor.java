@@ -71,13 +71,13 @@ class StallMonitor {
 
             // Left side previous counts - left current counts  compared to left threshold
 
-            if (Math.abs(previousLeftCounts - autoDriver.hw.drivetrain.getLeftEncoderCount()) <= getLeftThreshold()) {
+            if (Math.abs(previousLeftCounts - autoDriver.robot.hw.drivetrain.getLeftEncoderCount()) <= getLeftThreshold()) {
                 isStallDetected = true;
             }
 
             // Right side previous counts - right current counts  compared to right threshold
 
-            if (Math.abs(previousRightCounts - autoDriver.hw.drivetrain.getRightEncoderCount()) <= getRightThreshold()) {
+            if (Math.abs(previousRightCounts - autoDriver.robot.hw.drivetrain.getRightEncoderCount()) <= getRightThreshold()) {
                 isStallDetected = true;
             }
 
@@ -92,8 +92,8 @@ class StallMonitor {
             if (isStallDetected()) {
                 autoDriver.eStop();
             } else {
-                previousLeftCounts = (int) autoDriver.hw.drivetrain.getLeftEncoderCount();
-                previousRightCounts = (int) autoDriver.hw.drivetrain.getRightEncoderCount();
+                previousLeftCounts = (int) autoDriver.robot.hw.drivetrain.getLeftEncoderCount();
+                previousRightCounts = (int) autoDriver.robot.hw.drivetrain.getRightEncoderCount();
             }
         }
     }

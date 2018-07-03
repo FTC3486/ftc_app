@@ -9,7 +9,6 @@ import org.firstinspires.ftc.teamcode.Subsystems.JewelArm;
 import org.firstinspires.ftc.teamcode.Subsystems.RelicArm;
 import org.firstinspires.ftc.teamcode.Subsystems.RelicClaw;
 import org.firstinspires.ftc.teamcode.Subsystems.RelicLift;
-import org.w3c.dom.ranges.Range;
 
 public class HardwareConfiguration
 {
@@ -40,7 +39,6 @@ public class HardwareConfiguration
         left2.setDirection(DcMotor.Direction.REVERSE);
         right1.setDirection(DcMotor.Direction.FORWARD);
         right2.setDirection(DcMotor.Direction.FORWARD);
-
 
         drivetrain = new Drivetrain.Builder()
                 .addLeftMotor(left1)
