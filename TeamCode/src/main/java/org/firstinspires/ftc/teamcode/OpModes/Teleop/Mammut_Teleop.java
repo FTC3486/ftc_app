@@ -31,8 +31,6 @@ public class Teleop_Iteration_1 extends OpMode{
     CapballHolder capballHolder;
     BaconActivator baconActivator;
 
-
-
     @Override
     public void init() {
         pulseDrive.init(hardwareMap);

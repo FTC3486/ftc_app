@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.RobotCoreExtensions;
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+
 /**
  * Filename: RangeAutoDriver.java
  *
@@ -26,17 +28,19 @@ package org.firstinspires.ftc.teamcode.RobotCoreExtensions;
 
 public class RangeAutoDriver extends AutoDriver
 {
-    public RangeAutoDriver(HardwareConfiguration hw)
+    EncoderAutoDriver encoderAutoDriver;
+    public RangeAutoDriver(Robot robot, LinearOpMode linearOpMode)
     {
-        super(hw);
+        super(robot,linearOpMode);
+        encoderAutoDriver = new EncoderAutoDriver(robot, linearOpMode);
     }
-    
+
     public void squareUpToWall(double distance, double power)
     {
         setupMotion("Squaring up to a wall.");
 
-        int initialLeftReading = hw.leftRangeSensor.getUltrasonicRange();
-        int initialRightReading = hw.rightRangeSensor.getUltrasonicRange();
+        int initialLeftReading = robot.hw.leftRangeSensor.getUltrasonicRange();
+        int initialRightReading = robot.hw.rightRangeSensor.getUltrasonicRange();
         int distanceToDrive = 0;
         double correctionFactor = 20;
 
@@ -46,24 +50,24 @@ public class RangeAutoDriver extends AutoDriver
         if(initialLeftReading > initialRightReading)
         {
             // Divides by 2.54 to convert range sensor centimeter readings to inches.
-            hw.encoderAutoDriver.driveLeftSideToDistance((initialLeftReading - initialRightReading)/2.54);
+            encoderAutoDriver.driveLeftSideToDistance((initialLeftReading - initialRightReading)/2.54);
 
             // distanceToDrive is how far the robot is from the wall.
-            distanceToDrive = hw.rightRangeSensor.getUltrasonicRange();
+            distanceToDrive = robot.hw.rightRangeSensor.getUltrasonicRange();
         }
         else if(initialRightReading > initialLeftReading)
         {
             // Divides by 2.54 to convert range sensor centimeter readings to inches.
-            hw.encoderAutoDriver.driveRightSideToDistance( 1.0 * (initialRightReading - initialLeftReading)/2.54);
+            encoderAutoDriver.driveRightSideToDistance( 1.0 * (initialRightReading - initialLeftReading)/2.54);
 
             // distanceToDrive is how far the robot is from the wall.
-            distanceToDrive = hw.leftRangeSensor.getUltrasonicRange();
+            distanceToDrive = robot.hw.leftRangeSensor.getUltrasonicRange();
         }
-        hw.opMode.sleep(5000);
+        opMode.sleep(5000);
 
         // correctionFactor is subtracted from the distanceToDrive so the robot doesn't run into the wall.
         // Divides by 2.54 to convert range sensor centimeter readings to inches.
-        hw.encoderAutoDriver.driveToDistance((distanceToDrive - correctionFactor)/2.54);
+        encoderAutoDriver.driveToDistanceForwards((distanceToDrive - correctionFactor)/2.54);
         endMotion();
     }
 }

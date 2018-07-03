@@ -1,4 +1,5 @@
 package org.firstinspires.ftc.teamcode.RobotCoreExtensions;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 /**
 
@@ -23,17 +24,19 @@ package org.firstinspires.ftc.teamcode.RobotCoreExtensions;
  *     -Edited file description and documentation 7/24/17
  *
  */
-public abstract class TWAAutoDriver {
-    AutoTWAHardwareConfiguration hw;
-    private TWAStallMonitor stallMonitor = new TWAStallMonitor(this);
+public abstract class AutoDriver {
+    Robot robot;
+    LinearOpMode opMode;
+    private StallMonitor stallMonitor = new StallMonitor(this);
     protected double power = 1.0D;
     private int wait_time_ms = 500;
     protected boolean eStop = false;
 
 
-    public TWAAutoDriver(AutoTWAHardwareConfiguration hw)
+    public AutoDriver(Robot robot, LinearOpMode opMode)
     {
-        this.hw = hw;
+        this.robot = robot;
+        this.opMode = opMode;
     }
 
     public void setWaitTimeBetweenMovements(int milliseconds)
@@ -46,9 +49,9 @@ public abstract class TWAAutoDriver {
     protected void setupMotion(String motion_description)
     {
         eStop = false;
-        hw.opMode.telemetry.addData("AutoDriver", motion_description);
-        hw.opMode.telemetry.update();
-        hw.drivetrain.resetMotorEncoders();
+        robot.hw.opMode.telemetry.addData("AutoDriver", motion_description);
+        robot.hw.opMode.telemetry.update();
+        robot.hw.drivetrain.resetMotorEncoders();
         stallMonitor.startMonitoring();
     }
 
@@ -56,10 +59,10 @@ public abstract class TWAAutoDriver {
 
     protected void endMotion()
     {
-        hw.drivetrain.haltDrive();
+        robot.hw.drivetrain.haltDrive();
         stallMonitor.stopMonitoring();
-        hw.opMode.telemetry.addData("AutoDriver", "Halting");
-        hw.opMode.telemetry.update();
+        robot.hw.opMode.telemetry.addData("AutoDriver", "Halting");
+        robot.hw.opMode.telemetry.update();
        // hw.opMode.sleep(wait_time_ms);
     }
 

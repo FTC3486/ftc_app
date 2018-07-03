@@ -4,26 +4,26 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.RobotCoreExtensions.GamepadWrapper;
-import org.firstinspires.ftc.teamcode.RobotCoreExtensions.TWA;
+import org.firstinspires.ftc.teamcode.RobotCoreExtensions.Robot;
 import org.firstinspires.ftc.teamcode.RobotCoreExtensions.TeleopDriver;
 
 /**
  * Created by 3486 on 7/15/2017.
  */
 
-@TeleOp(name = "TWA Teleop", group = "Teleop2017")
+@TeleOp(name = "Robot Teleop", group = "Teleop2017")
 
 public class TWATeleop extends OpMode {
     //Declare parts of the robot that will be used by this Teleop
-    private TWA twaRobot = new TWA(this);
+    private Robot robotRobot = new Robot(this);
     private GamepadWrapper joy1;
     private TeleopDriver teleopDriver;
     private int spinnerPos;
 
     @Override
     public void init() {
-        twaRobot.init();
-        teleopDriver = new TeleopDriver(this, twaRobot.hw.drivetrain);
+        robotRobot.init();
+        teleopDriver = new TeleopDriver(this, robotRobot.hw.drivetrain);
         teleopDriver.setMaxSpeed(1f);
         joy1 = new GamepadWrapper();
 
@@ -31,8 +31,8 @@ public class TWATeleop extends OpMode {
 
         spinnerPos = 0;
 
-        twaRobot.hw.jewelArm.up();
-        twaRobot.hw.relicClaw.openClaw();
+        robotRobot.hw.jewelArm.up();
+        robotRobot.hw.relicClaw.openClaw();
     }
 
 
@@ -41,15 +41,11 @@ public class TWATeleop extends OpMode {
     }
 
     @Override
-    public void init_loop() {
-        telemetry.addData("GlyphGrabber",twaRobot.hw.glyphGrabber);
-        telemetry.addData("GlyphSpinner", twaRobot.hw.glyphSpinner);
-        telemetry.addData("GlyphLift", twaRobot.hw.glyphLift);
-    }
+    public void init_loop() { }
 
     @Override
     public void loop() {
-        twaRobot.hw.jewelArm.up();
+        robotRobot.hw.jewelArm.up();
         joy1.update(gamepad1);
 
         //Toggle Half Speed on the drivetrain
@@ -69,64 +65,41 @@ public class TWATeleop extends OpMode {
             }
         }
 
-        //Spin Glyph grabber and Swap Glyph Grabber buttons so button orientation stays the same
-        if (joy1.onPress.y || twaRobot.hw.glyphSpinner.isFlipping()) {
-            twaRobot.hw.glyphSpinner.flip();
-        }
-
-        //Lift Glyph Grabber while button is held
-        if (gamepad1.left_trigger > 0.2 || twaRobot.hw.glyphSpinner.isFlipping()) {
-            twaRobot.hw.glyphLift.lift();
-        }//Lower Glyph Grabber while button is held unless touch sensor detects that the lift is bottomed out
-        else if (gamepad1.right_trigger > 0.2) {
-            twaRobot.hw.glyphLift.retract();
-        } else {
-            //Stop all Glyph Lift motion while nothing is pressed
-            twaRobot.hw.glyphLift.stop();
-        }
-
-        twaRobot.hw.glyphGrabber.gripTop(joy1.toggle.left_bumper, twaRobot.hw.glyphSpinner.isFlipped());
-        twaRobot.hw.glyphGrabber.gripBottom(joy1.toggle.right_bumper, twaRobot.hw.glyphSpinner.isFlipped());
-
         //Runs Relic Lift down while button is head
         if (gamepad2.dpad_down) {
-            twaRobot.hw.relicLift.retract();
+            robotRobot.hw.relicLift.retract();
         }//Runs Relic Lift up while button is held
         else if (gamepad2.dpad_up) {
-            twaRobot.hw.relicLift.lift();
+            robotRobot.hw.relicLift.lift();
         }//Stop all Relic Lift motion while nothing is pressed
         else {
-            twaRobot.hw.relicLift.stop();
+            robotRobot.hw.relicLift.stop();
         }
         //Extends Relic Arm while button is held
         if (gamepad2.dpad_right) {
-            twaRobot.hw.relicArm.extend();
+            robotRobot.hw.relicArm.extend();
         }//Retracts Relic Arm while button is held
         else if (gamepad2.dpad_left) {
-            twaRobot.hw.relicArm.retract();
+            robotRobot.hw.relicArm.retract();
         }//Stop all Relic Arm motion while nothing is pressed
         else {
-            twaRobot.hw.relicArm.stop();
+            robotRobot.hw.relicArm.stop();
         }
         //Open Relic Claw
         if (gamepad2.a) {
-            twaRobot.hw.relicClaw.releaseRelic();
+            robotRobot.hw.relicClaw.releaseRelic();
         }//Close Relic Claw
         else if (gamepad2.b) {
-            twaRobot.hw.relicClaw.grabRelic();
-            //twaRobot.hw.relicClaw.closeClaw();
+            robotRobot.hw.relicClaw.grabRelic();
+            //robotRobot.hw.relicClaw.closeClaw();
         }
         //Set Relic CLaw Pivot to Position 1
         if (gamepad2.x) {
-            twaRobot.hw.relicClaw.pivotPosition1();
+            robotRobot.hw.relicClaw.pivotPosition1();
         }//Set Relic CLaw Pivot to Position 2
         else if (gamepad2.y) {
-            twaRobot.hw.relicClaw.pivotPosition2();
+            robotRobot.hw.relicClaw.pivotPosition2();
         }
-
-        telemetry.addData("GlyphGrabber",twaRobot.hw.glyphGrabber);
-        telemetry.addData("GlyphSpinner", twaRobot.hw.glyphSpinner);
-        telemetry.addData("GlyphLift", twaRobot.hw.glyphLift);
     }
 
     @Override

@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.RobotCoreExtensions;
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+
 /**
  * Filename: EncoderAutoDriver.java
  *
@@ -24,42 +26,37 @@ package org.firstinspires.ftc.teamcode.RobotCoreExtensions;
  *     -Edited file description and documentation 7/22/17
  */
 
-public class EncoderAutoDriver2017 extends TWAAutoDriver
+public class EncoderAutoDriver extends AutoDriver
 {
-    public EncoderAutoDriver2017(AutoTWAHardwareConfiguration hw)
+    public EncoderAutoDriver(Robot robot, LinearOpMode opMode)
     {
-        super(hw);
+        super(robot, opMode);
     }
 
     public void driveLeftSideToDistance(double distance)
     {
         setupMotion("Driving to set distance.");
-        
-        hw.drivetrain.setPowers(0.3, 0.0);
+        robot.hw.drivetrain.setPowers(0.3, 0.0);
 
         // Drives the left side converting our inches input to counts while the OpMode is active
 
-        while(hw.drivetrain.getLeftEncoderCount() < hw.drivetrain.convertInchesToEncoderCounts(distance)
-                /*&& opMode.opModeIsActive()*/)
+        while(robot.hw.drivetrain.getLeftEncoderCount() < robot.hw.drivetrain.convertInchesToEncoderCounts(distance)
+                && opMode.opModeIsActive())
         {}
-        hw.drivetrain.haltDrive();
-
+        robot.hw.drivetrain.haltDrive();
         endMotion();
     }
 
     public void driveRightSideToDistance(double distance)
     {
         setupMotion("Driving to set distance.");
-
-        hw.drivetrain.setPowers(0.0, 0.3);
+        robot.hw.drivetrain.setPowers(0.0, 0.3);
 
         // Drives the Right side converting our inches input to counts while the OpMode is active
 
-        while(hw.drivetrain.getRightEncoderCount() < hw.drivetrain.convertInchesToEncoderCounts(distance)
-                /*&& hw.opMode.opModeIsActive()*/)
-        {}
-        hw.drivetrain.haltDrive();
-
+        while(robot.hw.drivetrain.getRightEncoderCount() < robot.hw.drivetrain.convertInchesToEncoderCounts(distance)
+                && opMode.opModeIsActive()) {}
+        robot.hw.drivetrain.haltDrive();
         endMotion();
     }
 
@@ -67,58 +64,49 @@ public class EncoderAutoDriver2017 extends TWAAutoDriver
     {
         setupMotion("Driving to set distance.");
 
-
-
         // Drives the both sides converting our inches input to counts while the OpMode is active
 
-        while(hw.drivetrain.getLeftEncoderCount() < hw.drivetrain.convertInchesToEncoderCounts(distance)
-                && hw.drivetrain.getRightEncoderCount() < hw.drivetrain.convertInchesToEncoderCounts(distance)
-                && hw.opMode.opModeIsActive()
+        while(robot.hw.drivetrain.getLeftEncoderCount() < robot.hw.drivetrain.convertInchesToEncoderCounts(distance)
+                && robot.hw.drivetrain.getRightEncoderCount() < robot.hw.drivetrain.convertInchesToEncoderCounts(distance)
+                && opMode.opModeIsActive()
                 ){
-            hw.drivetrain.setPowers(0.3, 0.3);
-            hw.opMode.telemetry.addData("Right Encoder", hw.drivetrain.getRightEncoderCount());
-            hw.opMode.telemetry.addData("Left Encoder", hw.drivetrain.getLeftEncoderCount());
-            hw.opMode.telemetry.update();
-
+            robot.hw.drivetrain.setPowers(0.3, 0.3);
+            opMode.telemetry.addData("Right Encoder", robot.hw.drivetrain.getRightEncoderCount());
+            opMode.telemetry.addData("Left Encoder", robot.hw.drivetrain.getLeftEncoderCount());
+            opMode.telemetry.update();
         }
-
         endMotion();
-
-
-
     }
 
     public void driveToDistanceBackwards(double distance)
     {
         setupMotion("Driving to set distance.");
-
-        hw.drivetrain.setPowers(-0.3, -0.3);
+        robot.hw.drivetrain.setPowers(-0.3, -0.3);
 
         // Drives the both sides converting our inches input to counts while the OpMode is active
 
-        while(hw.drivetrain.getLeftEncoderCount() > hw.drivetrain.convertInchesToEncoderCounts(distance)
-                && hw.drivetrain.getRightEncoderCount() > hw.drivetrain.convertInchesToEncoderCounts(distance)
-                /*&& hw.opMode.opModeIsActive()*/) {}
-
+        while(robot.hw.drivetrain.getLeftEncoderCount() > robot.hw.drivetrain.convertInchesToEncoderCounts(distance)
+                && robot.hw.drivetrain.getRightEncoderCount() > robot.hw.drivetrain.convertInchesToEncoderCounts(distance)
+                && opMode.opModeIsActive()) {}
         endMotion();
     }
 
     public void spinRight(double leftInches, double rightInches){
      setupMotion("Spinning set amount");
-         hw.drivetrain.setPowers(0.3, -0.3);
+        robot.hw.drivetrain.setPowers(0.3, -0.3);
 
-        while (hw.drivetrain.getLeftEncoderCount() < hw.drivetrain.convertInchesToEncoderCounts(leftInches) && hw.drivetrain.getRightEncoderCount() > hw.drivetrain.convertInchesToEncoderCounts(rightInches) );{}
-
+        while (robot.hw.drivetrain.getLeftEncoderCount() < robot.hw.drivetrain.convertInchesToEncoderCounts(leftInches)
+                && robot.hw.drivetrain.getRightEncoderCount() > robot.hw.drivetrain.convertInchesToEncoderCounts(rightInches) );{}
         endMotion();
     }
 
 
     public void spinLeft(double leftInches, double rightInches){
         setupMotion("Spinning set amount");
-        hw.drivetrain.setPowers(-0.3, 0.3);
+        robot.hw.drivetrain.setPowers(-0.3, 0.3);
 
-        while (hw.drivetrain.getLeftEncoderCount() > hw.drivetrain.convertInchesToEncoderCounts(leftInches) && hw.drivetrain.getRightEncoderCount()< hw.drivetrain.convertInchesToEncoderCounts(rightInches) );{}
-
+        while (robot.hw.drivetrain.getLeftEncoderCount() > robot.hw.drivetrain.convertInchesToEncoderCounts(leftInches)
+                && robot.hw.drivetrain.getRightEncoderCount()< robot.hw.drivetrain.convertInchesToEncoderCounts(rightInches) );{}
         endMotion();
     }
 }

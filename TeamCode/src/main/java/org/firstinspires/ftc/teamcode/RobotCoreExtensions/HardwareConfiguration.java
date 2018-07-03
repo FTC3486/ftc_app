@@ -5,39 +5,29 @@ import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-
-import org.firstinspires.ftc.teamcode.Subsystems.GlyphGrabber;
-import org.firstinspires.ftc.teamcode.Subsystems.GlyphLift;
-import org.firstinspires.ftc.teamcode.Subsystems.GlyphSpinner;
 import org.firstinspires.ftc.teamcode.Subsystems.JewelArm;
 import org.firstinspires.ftc.teamcode.Subsystems.RelicArm;
 import org.firstinspires.ftc.teamcode.Subsystems.RelicClaw;
 import org.firstinspires.ftc.teamcode.Subsystems.RelicLift;
+import org.w3c.dom.ranges.Range;
 
-public class TWAHardwareConfiguration
+public class HardwareConfiguration
 {
     OpMode opMode;
     LinearOpMode linearOpMode;
     //Robot Components
     public Drivetrain drivetrain;
-    public GlyphSpinner glyphSpinner;
-    public GlyphLift glyphLift;
-    public GlyphGrabber glyphGrabber;
     public RelicLift relicLift;
     public RelicArm relicArm;
     public RelicClaw relicClaw;
     public JewelArm jewelArm;
+
     //Sensors
     public BNO055IMU adafruitIMU;
+    RangeSensor leftRangeSensor;
+    RangeSensor rightRangeSensor;
 
-
-    //Auto Drivers
-    public GyroAutoDriver2017 gyroAutoDriver;
-    public EncoderAutoDriver2017 encoderAutoDriver;
-    public RangeAutoDriver rangeAutoDriver;
-    public OpticalDistanceAutoDriver opticalDistanceAutoDriver;
-
-    TWAHardwareConfiguration(OpMode opMode)
+    HardwareConfiguration(OpMode opMode)
     {
         this.opMode = opMode;
 
@@ -59,9 +49,6 @@ public class TWAHardwareConfiguration
                 .addRightMotorWithEncoder(right2)
                 .build();
 
-        glyphGrabber = new GlyphGrabber("leftservo1","leftservo2","rightservo1","rightservo2", opMode.hardwareMap);
-        glyphSpinner = new GlyphSpinner("spinner", "SpinnerTouch1", "SpinnerTouch2", opMode.hardwareMap);
-        glyphLift = new GlyphLift("GlyphLift", "LiftTouch", opMode.hardwareMap);
         relicLift = new RelicLift("RelicLift", opMode.hardwareMap);
         relicArm = new RelicArm("RelicArm", opMode.hardwareMap);
         relicClaw = new RelicClaw("ClawServo1","ClawServo2", "Pivot", opMode.hardwareMap);
@@ -78,14 +65,12 @@ public class TWAHardwareConfiguration
         adafruitIMU = opMode.hardwareMap.get(BNO055IMU.class, "imu");
         adafruitIMU.initialize(parameters);
 
-        //Define auto drivers
-
-
+        leftRangeSensor = new RangeSensor("LeftRangeSensor",  0x28, opMode.hardwareMap);
+        rightRangeSensor = new RangeSensor("RightRangeSensor",  0x2a, opMode.hardwareMap);
     }
 
     void init()
     {
-
         // :) oh happy day, there is nothing here. :)
     }
 }

@@ -1,11 +1,10 @@
 package org.firstinspires.ftc.teamcode.OpModes.Teleop;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.RobotCoreExtensions.GamepadWrapper;
-import org.firstinspires.ftc.teamcode.RobotCoreExtensions.TWA;
+import org.firstinspires.ftc.teamcode.RobotCoreExtensions.Robot;
 
 /**
  * Created by 3486 on 7/15/2017.
@@ -16,12 +15,12 @@ import org.firstinspires.ftc.teamcode.RobotCoreExtensions.TWA;
 public class JewelTest extends OpMode
 {
     GamepadWrapper joy1;
-    TWA twaRobot = new TWA(this);
+    Robot robotRobot = new Robot(this);
 
     @Override
     public void init() {
         joy1 = new GamepadWrapper();
-        twaRobot.init();
+        robotRobot.init();
 
     }
 
@@ -39,18 +38,18 @@ public class JewelTest extends OpMode
     {
         joy1.update(gamepad1);
         if (gamepad1.left_bumper){
-            twaRobot.hw.jewelArm.down();
+            robotRobot.hw.jewelArm.down();
         } else if(gamepad1.right_bumper){
-            twaRobot.hw.jewelArm.up();
+            robotRobot.hw.jewelArm.up();
         } else if(gamepad1.a && gamepad1.b){
 
         }
-        telemetry.addData("Green Value",twaRobot.hw.jewelArm.jewelColor.green());
-        telemetry.addData("Blue Value", twaRobot.hw.jewelArm.jewelColor.blue());
-        telemetry.addData("Red Value",twaRobot.hw.jewelArm.jewelColor.red());
-        telemetry.addData("Alpha Value", twaRobot.hw.jewelArm.jewelColor.alpha());
-        telemetry.addData("ARGB Value", twaRobot.hw.jewelArm.jewelColor.argb());
-        telemetry.addData("JewelServo", twaRobot.hw.jewelArm.armServo.getPosition());
+        telemetry.addData("Green Value", robotRobot.hw.jewelArm.jewelColor.green());
+        telemetry.addData("Blue Value", robotRobot.hw.jewelArm.jewelColor.blue());
+        telemetry.addData("Red Value", robotRobot.hw.jewelArm.jewelColor.red());
+        telemetry.addData("Alpha Value", robotRobot.hw.jewelArm.jewelColor.alpha());
+        telemetry.addData("ARGB Value", robotRobot.hw.jewelArm.jewelColor.argb());
+        telemetry.addData("JewelServo", robotRobot.hw.jewelArm.armServo.getPosition());
         telemetry.update();
 
     }
