@@ -34,8 +34,8 @@ import java.util.TimerTask;
 
  */
 
-class StallMonitor {
-    AutoDriver autoDriver;
+class TWAStallMonitor {
+    TWAAutoDriver autoDriver;
     Timer stallTimer = new Timer();
     StallMonitorTask task;
 
@@ -48,7 +48,7 @@ class StallMonitor {
 
     private int taskDelay = 1000;
 
-    protected StallMonitor(AutoDriver autoDriver) {
+    protected TWAStallMonitor(TWAAutoDriver autoDriver) {
         this.autoDriver = autoDriver;
     }
 

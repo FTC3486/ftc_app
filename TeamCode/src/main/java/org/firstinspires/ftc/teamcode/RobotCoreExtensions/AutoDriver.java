@@ -23,15 +23,15 @@ package org.firstinspires.ftc.teamcode.RobotCoreExtensions;
  *     -Edited file description and documentation 7/24/17
  *
  */
-public abstract class AutoDriver {
-    HardwareConfiguration hw;
-    private StallMonitor stallMonitor = new StallMonitor(this);
+public abstract class TWAAutoDriver {
+    AutoTWAHardwareConfiguration hw;
+    private TWAStallMonitor stallMonitor = new TWAStallMonitor(this);
     protected double power = 1.0D;
     private int wait_time_ms = 500;
     protected boolean eStop = false;
 
 
-    public AutoDriver(HardwareConfiguration hw)
+    public TWAAutoDriver(AutoTWAHardwareConfiguration hw)
     {
         this.hw = hw;
     }
@@ -60,7 +60,7 @@ public abstract class AutoDriver {
         stallMonitor.stopMonitoring();
         hw.opMode.telemetry.addData("AutoDriver", "Halting");
         hw.opMode.telemetry.update();
-        hw.opMode.sleep(wait_time_ms);
+       // hw.opMode.sleep(wait_time_ms);
     }
 
     // Creates the eStop method to halt program.
