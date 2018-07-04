@@ -25,7 +25,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
  *
  */
 public abstract class AutoDriver {
-    Robot robot;
+    Rover rover;
     LinearOpMode opMode;
     private StallMonitor stallMonitor = new StallMonitor(this);
     protected double power = 1.0D;
@@ -33,9 +33,9 @@ public abstract class AutoDriver {
     protected boolean eStop = false;
 
 
-    public AutoDriver(Robot robot, LinearOpMode opMode)
+    public AutoDriver(Rover rover, LinearOpMode opMode)
     {
-        this.robot = robot;
+        this.rover = rover;
         this.opMode = opMode;
     }
 
@@ -44,25 +44,25 @@ public abstract class AutoDriver {
         if (milliseconds < 0) throw new IllegalArgumentException("the wait time should always be positive");
         this.wait_time_ms = milliseconds;
     }
-    // Creates setupMotion method - Resets encoders and then starts monitoring the robot for stalling.
+    // Creates setupMotion method - Resets encoders and then starts monitoring the rover for stalling.
 
     protected void setupMotion(String motion_description)
     {
         eStop = false;
-        robot.hw.opMode.telemetry.addData("AutoDriver", motion_description);
-        robot.hw.opMode.telemetry.update();
-        robot.hw.drivetrain.resetMotorEncoders();
+        rover.hw.opMode.telemetry.addData("AutoDriver", motion_description);
+        rover.hw.opMode.telemetry.update();
+        rover.hw.drivetrain.resetMotorEncoders();
         stallMonitor.startMonitoring();
     }
 
-    // Creates endMotion method - Stops monitoring the robot for stalling.
+    // Creates endMotion method - Stops monitoring the rover for stalling.
 
     protected void endMotion()
     {
-        robot.hw.drivetrain.haltDrive();
+        rover.hw.drivetrain.haltDrive();
         stallMonitor.stopMonitoring();
-        robot.hw.opMode.telemetry.addData("AutoDriver", "Halting");
-        robot.hw.opMode.telemetry.update();
+        rover.hw.opMode.telemetry.addData("AutoDriver", "Halting");
+        rover.hw.opMode.telemetry.update();
        // hw.opMode.sleep(wait_time_ms);
     }
 

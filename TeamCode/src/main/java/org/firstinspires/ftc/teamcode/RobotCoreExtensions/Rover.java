@@ -5,14 +5,14 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 /**
  * Created by carrotnation on 3/10/2017.
  *
- * Robot robot is the drivetrain product.
+ *
  */
 
-public class Robot {
+public class Rover {
     public HardwareConfiguration hw;
     private OpMode opMode;
 
-    public Robot(OpMode opMode) {
+    public Rover(OpMode opMode) {
         this.opMode = opMode;
     }
 

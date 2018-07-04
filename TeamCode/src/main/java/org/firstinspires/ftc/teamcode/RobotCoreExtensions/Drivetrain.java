@@ -20,7 +20,7 @@
  *  *
  * Example:
  *
- * robot.hardwareConfiguration.drivetrain.getLeftEncoderCount();
+ * rover.hardwareConfiguration.drivetrain.getLeftEncoderCount();
  *
  * Requirements:
  *     - Drive motors with encoders
@@ -131,7 +131,7 @@ public class Drivetrain {
         }
     }
 
-    // Stops the robot by setting all drive train motors to 0 power.
+    // Stops the rover by setting all drive train motors to 0 power.
 
     public void haltDrive() {
         setPowers(0.0, 0.0);

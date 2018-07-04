@@ -374,7 +374,7 @@ extends <a href="../../../com/qualcomm/ftccommon/FtcEventLoopBase.html" title="c
 <dd><code>eventLoopManager</code> - event loop manager that is responsible for this event loop</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../com/qualcomm/robotcore/exception/RobotCoreException.html" title="class in com.qualcomm.robotcore.exception">RobotCoreException</a></code> - if a RobotCoreException is thrown, it will be handled
-         by the event loop manager. The manager will report that the robot failed
+         by the event loop manager. The manager will report that the rover failed
          to start.</dd>
 <dd><code>java.lang.InterruptedException</code></dd>
 </dl>
@@ -397,7 +397,7 @@ extends <a href="../../../com/qualcomm/ftccommon/FtcEventLoopBase.html" title="c
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../com/qualcomm/robotcore/exception/RobotCoreException.html" title="class in com.qualcomm.robotcore.exception">RobotCoreException</a></code> - if a RobotCoreException is thrown, it will be handled
          by the event loop manager. The manager may decide to either stop processing
-         this iteration of the loop, or it may decide to shut down the robot.</dd>
+         this iteration of the loop, or it may decide to shut down the rover.</dd>
 <dd><code>java.lang.InterruptedException</code></dd>
 </dl>
 </li>
@@ -430,9 +430,9 @@ extends <a href="../../../com/qualcomm/ftccommon/FtcEventLoopBase.html" title="c
               throws <a href="../../../com/qualcomm/robotcore/exception/RobotCoreException.html" title="class in com.qualcomm.robotcore.exception">RobotCoreException</a>,
                      java.lang.InterruptedException</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/qualcomm/robotcore/eventloop/EventLoop.html#teardown--">EventLoop</a></code></span></div>
-<div class="block">Teardown method, this will be called after the last call to loop. You should place your robot
+<div class="block">Teardown method, this will be called after the last call to loop. You should place your rover
  into a safe state before this method exits, since there will be no more changes to communicate
- with your robot.
+ with your rover.
 
  Threading: called on the EventLoopRunnable.run() thread.</div>
 <dl>
@@ -442,7 +442,7 @@ extends <a href="../../../com/qualcomm/ftccommon/FtcEventLoopBase.html" title="c
 <dd><code><a href="../../../com/qualcomm/ftccommon/FtcEventLoopBase.html#teardown--">teardown</a></code>&nbsp;in class&nbsp;<code><a href="../../../com/qualcomm/ftccommon/FtcEventLoopBase.html" title="class in com.qualcomm.ftccommon">FtcEventLoopBase</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../com/qualcomm/robotcore/exception/RobotCoreException.html" title="class in com.qualcomm.robotcore.exception">RobotCoreException</a></code> - if a RobotCoreException is thrown, it will be handled by the event
-         loop manager. The manager will then attempt to shut down the robot without the benefit
+         loop manager. The manager will then attempt to shut down the rover without the benefit
          of the teardown method.</dd>
 <dd><code>java.lang.InterruptedException</code></dd>
 </dl>

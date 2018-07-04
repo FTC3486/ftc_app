@@ -2,7 +2,7 @@
 FTC Android Studio project to create FTC Robot Controller app.
 
 ## Welcome!
-This GitHub repository contains the source code that is used to build an Android app to control a *FIRST* Tech Challenge competition robot.  To use this SDK, download/clone the entire project to your local computer.
+This GitHub repository contains the source code that is used to build an Android app to control a *FIRST* Tech Challenge competition rover.  To use this SDK, download/clone the entire project to your local computer.
 
 If you are new to the *FIRST* Tech Challenge software and control system, you should visit the online wiki to learn how to install, configure, and use the software and control system:
 
@@ -25,7 +25,7 @@ Once you have downloaded and uncompressed (if needed) your folder, you can use A
 
 ## Getting Help
 ### User Documentation and Tutorials
-*FIRST* maintains an online wiki with information and tutorials on how to use the *FIRST* Tech Challenge software and robot control system.  You can access the wiki at the following address:
+*FIRST* maintains an online wiki with information and tutorials on how to use the *FIRST* Tech Challenge software and rover control system.  You can access the wiki at the following address:
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;https://github.com/ftctechnh/ftc_app/wiki
 
@@ -178,7 +178,7 @@ Version 3.10 (built on 17.05.09)
 
 This version of the software provides support for the REV Robotics Expansion Hub.  This version also includes improvements in the USB communication layer in an effort to enhance system resiliency.  If you were using a 2.x version of the software previously, updating to version 3.1 requires that you also update your Driver Station software in addition to updating the Robot Controller software.
 
-Also note that in version 3.10 software, the setMaxSpeed and getMaxSpeed methods are no longer available (not deprecated, they have been removed from the SDK). Also note that the the new 3.x software incorporates motor profiles that a user can select as he/she configures the robot.
+Also note that in version 3.10 software, the setMaxSpeed and getMaxSpeed methods are no longer available (not deprecated, they have been removed from the SDK). Also note that the the new 3.x software incorporates motor profiles that a user can select as he/she configures the rover.
 
 Changes include:
  * Blocks changes
@@ -194,8 +194,8 @@ Additional Notes Regarding Version 3.00 (built on 17.04.13)
 
 In addition to the release changes listed below (see section labeled "Version 3.00 (built on 17.04.013)"), version 3.00 has the following important changes:
 
-1. Version 3.00 software uses a new version of the FTC Robocol (robot protocol).  If you upgrade to v3.0 on the Robot Controller and/or Android Studio side, you must also upgrade the Driver Station software to match the new Robocol.
-2. Version 3.00 software removes the setMaxSpeed and getMaxSpeed methods from the DcMotor class.  If you have an op mode that formerly used these methods, you will need to remove the references/calls to these methods.  Instead, v3.0 provides the max speed information through the use of motor profiles that are selected by the user during robot configuration.
+1. Version 3.00 software uses a new version of the FTC Robocol (rover protocol).  If you upgrade to v3.0 on the Robot Controller and/or Android Studio side, you must also upgrade the Driver Station software to match the new Robocol.
+2. Version 3.00 software removes the setMaxSpeed and getMaxSpeed methods from the DcMotor class.  If you have an op mode that formerly used these methods, you will need to remove the references/calls to these methods.  Instead, v3.0 provides the max speed information through the use of motor profiles that are selected by the user during rover configuration.
 3. Version 3.00 software currently does not have a mechanism to disable extra i2c sensors.  We hope to re-introduce this function with a release in the near future.
 
 **************************************************************************************
@@ -336,7 +336,7 @@ Version 2.4 (released on 16.11.13)
      - Added support for OpMode flavor (“Autonomous” or “TeleOp”) and group.
   * Changes to Samples to prevent tutorial issues.
   * Incorporated suggested changes from public pull 216 (“Replace .. paths”).
-  * Remove Servo Glitches when robot stopped.
+  * Remove Servo Glitches when rover stopped.
   * if user hits “Cancels” when editing a configuration file, clears the unsaved changes and reverts to original unmodified configuration.
   * Added log info to help diagnose why the Robot Controller app was terminated (for example, by watch dog function).
   * Added ability to transfer log from the controller.
@@ -407,7 +407,7 @@ Version 2.10 (released on 16.09.03)
     - support for LED.
     - support for color sensor.
     - support for CRServo
-    - prompt user to configure robot before using programming mode.
+    - prompt user to configure rover before using programming mode.
  * Provides ability to disable audio cues.
  * various bug fixes and improvements.
 
@@ -427,17 +427,17 @@ Version 2.00 (released on 16.08.19)
  * Some changes have been made (new methods added) on how a user can access items from the hardware map.
  * Users can now set the zero power behavior for a DC motor so that the motor will brake or float when power is zero.
  * Prototype Blockly Programming Mode has been added to FTC Robot Controller.  Users can place the Robot Controller into this mode, and then use a device (such as a laptop) that has a Javascript enabled browser to write Blockly-based Op Modes directly onto the Robot Controller.
- * Users can now configure the robot remotely through the FTC Driver Station app.
+ * Users can now configure the rover remotely through the FTC Driver Station app.
  * Android Studio project supports Android Studio 2.1.x and compile SDK Version 23 (Marshmallow).
  * Vuforia Computer Vision SDK integrated into FTC SDK.  Users can use sample vision targets to get localization information on a standard FTC field.
  * Project structure has been reorganized so that there is now a TeamCode package that users can use to place their local/custom Op Modes into this package.
  * Inspection function has been integrated into the FTC Robot Controller and Driver Station Apps (Thanks Team HazMat… 9277 & 10650!).
  * Audio cues have been incorporated into FTC SDK.
- * Swap mechanism added to FTC Robot Controller configuration activity.  For example, if you have two motor controllers on a robot, and you misidentified them in your configuration file, you can use the Swap button to swap the devices within the configuration file (so you do not have to manually re-enter in the configuration info for the two devices).
- * Fix mechanism added to all user to replace an electronic module easily.  For example, suppose a servo controller dies on your robot. You replace the broken module with a new module, which has a different serial number from the original servo controller.  You can use the Fix button to automatically reconfigure your configuration file to use the serial number of the new module.
+ * Swap mechanism added to FTC Robot Controller configuration activity.  For example, if you have two motor controllers on a rover, and you misidentified them in your configuration file, you can use the Swap button to swap the devices within the configuration file (so you do not have to manually re-enter in the configuration info for the two devices).
+ * Fix mechanism added to all user to replace an electronic module easily.  For example, suppose a servo controller dies on your rover. You replace the broken module with a new module, which has a different serial number from the original servo controller.  You can use the Fix button to automatically reconfigure your configuration file to use the serial number of the new module.
  * Improvements made to fix resiliency and responsiveness of the system.
  * For LinearOpMode the user now must for a telemetry.update() to update the telemetry data on the driver station.  This update() mechanism ensures that the driver station gets the updated data properly and at the same time.
- * The Auto Configure function of the Robot Controller is now template based.  If there is a commonly used robot configuration, a template can be created so that the Auto Configure mechanism can be used to quickly configure a robot of this type.
+ * The Auto Configure function of the Robot Controller is now template based.  If there is a commonly used rover configuration, a template can be created so that the Auto Configure mechanism can be used to quickly configure a rover of this type.
  * The logic to detect a runaway op mode (both in the LinearOpMode and OpMode types) and to abort the run, then auto recover has been improved/implemented.
  * Fix has been incorporated so that Logitech F310 gamepad mappings will be correct for Marshmallow users.
 
@@ -471,7 +471,7 @@ Release 16.03.09
     - For legacy module (NXT compatible), user no longer has to toggle between read and write modes when reading from or writing to a legacy device.
  * Changes made to enhance reliability/robustness during ESD event.
  * Changes made to make code thread safe.
- * Debug keystore added so that user-generated robot controller APKs will all use the same signed key (to avoid conflicts if a team has multiple developer laptops for example).
+ * Debug keystore added so that user-generated rover controller APKs will all use the same signed key (to avoid conflicts if a team has multiple developer laptops for example).
  * Firmware version information for Modern Robotics modules are now logged.
  * Changes made to improve USB comm reliability and robustness.
  * Added support for voltage indicator for legacy (NXT-compatible) motor controllers.
@@ -481,7 +481,7 @@ Release 16.03.09
  * Driver Station UI modified to display lowest measured voltage below current voltage (12V battery).
  * Driver Station UI modified to have color background for current voltage (green=good, yellow=caution, red=danger, extremely low voltage).
  * javadoc improved (edits and additional classes).
- * Added app build time to About activity for driver station and robot controller apps.
+ * Added app build time to About activity for driver station and rover controller apps.
  * Display local IP addresses on Driver Station About activity.
  * Added I2cDeviceSynchImpl.
  * Added I2cDeviceSync interface.
@@ -499,7 +499,7 @@ Release 16.02.09
  * Improved battery checker feature so that voltage values get refreshed regularly (every 250 msec) on Driver Station (DS) user interface.
  * Improved software so that Robot Controller (RC) is much more resilient and “self-healing” to USB disconnects:
     - If user attempts to start/restart RC with one or more module missing, it will display a warning but still start up.
-    - When running an op mode, if one or more modules gets disconnected, the RC & DS will display warnings,and robot will keep on working in spite of the missing module(s).
+    - When running an op mode, if one or more modules gets disconnected, the RC & DS will display warnings,and rover will keep on working in spite of the missing module(s).
     - If a disconnected module gets physically reconnected the RC will auto detect the module and the user will regain control of the recently connected module.
     - Warning messages are more helpful (identifies the type of module that’s missing plus its USB serial number).
  * Code changes to fix the null gamepad reference when users try to reference the gamepads in the init() portion of their op mode.
@@ -529,7 +529,7 @@ Release 16.01.04
  * added formatting variants to DbgLog and RobotLog APIs
  * code modified to allow for a long list of op mode names.
  * changes to improve thread safety of RobocolDatagramSocket
- * Fix for "missing hardware leaves robot controller disconnected from driver station" error
+ * Fix for "missing hardware leaves rover controller disconnected from driver station" error
  * fix for "fast tapping of Init/Start causes problems" (toast is now only instantiated on UI thread).
  * added some log statements for thread life cycle.
  * moved gamepad reset logic inside of initActiveOpMode() for robustness
@@ -597,7 +597,7 @@ Release 15.10.06.002
 
  * Added support for Legacy Matrix 9.6V motor/servo controller.
  * Cleaned up build.gradle file.
- * Minor UI and bug fixes for driver station and robot controller apps.
+ * Minor UI and bug fixes for driver station and rover controller apps.
  * Throws error if Ultrasonic sensor (NXT) is not configured for legacy module port 4 or 5.
 
 T. Eng

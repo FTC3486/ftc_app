@@ -3,7 +3,7 @@
 Welcome!
 
 This module, TeamCode, is the place where you will write/paste the code for your team's
-robot controller App. This module is currently empty (a clean slate) but the
+rover controller App. This module is currently empty (a clean slate) but the
 process for adding OpModes is straightforward.
 
 ## Creating your own OpModes
@@ -26,13 +26,13 @@ The prefix of the name will be one of the following:
 * Basic:    This is a minimally functional OpMode used to illustrate the skeleton/structure
             of a particular style of OpMode.  These are bare bones examples.
 * Sensor:   This is a Sample OpMode that shows how to use a specific sensor.
-            It is not intended as a functioning robot, it is simply showing the minimal code
+            It is not intended as a functioning rover, it is simply showing the minimal code
             required to read and display the sensor values.
 * Hardware: This is not an actual OpMode, but a helper class that is used to describe
-            one particular robot's hardware devices: eg: for a Pushbot.  Look at any
+            one particular rover's hardware devices: eg: for a Pushbot.  Look at any
             Pushbot sample to see how this can be used in an OpMode.
-            Teams can copy one of these to create their own robot definition.
-* Pushbot:  This is a Sample OpMode that uses the Pushbot robot structure as a base.
+            Teams can copy one of these to create their own rover definition.
+* Pushbot:  This is a Sample OpMode that uses the Pushbot rover structure as a base.
 * Concept:	This is a sample OpMode that illustrates performing a specific function or concept.
             These may be complex, but their operation should be explained clearly in the comments,
             or the header should reference an external doc, guide or tutorial.
@@ -41,7 +41,7 @@ The prefix of the name will be one of the following:
             by an OpMode to provide some stand-alone capability.
 
 Once you are familiar with the range of samples available, you can choose one to be the
-basis for your own robot.  In all cases, the desired sample(s) needs to be copied into
+basis for your own rover.  In all cases, the desired sample(s) needs to be copied into
 your TeamCode module to be used.
 
 This is done inside Android Studio directly, using the following steps:
@@ -58,7 +58,7 @@ This is done inside Android Studio directly, using the following steps:
     Choose something meaningful based on the purpose of this class.
     Start with a capital letter, and remember that there may be more similar classes later.
 
-Once your copy has been created, you should prepare it for use on your robot.
+Once your copy has been created, you should prepare it for use on your rover.
 This is done by adjusting the OpMode's name, and enabling it to be displayed on the
 Driver Station's OpMode list.
 

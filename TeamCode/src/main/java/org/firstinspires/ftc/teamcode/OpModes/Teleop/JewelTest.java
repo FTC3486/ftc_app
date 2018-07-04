@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.RobotCoreExtensions.GamepadWrapper;
-import org.firstinspires.ftc.teamcode.RobotCoreExtensions.Robot;
+import org.firstinspires.ftc.teamcode.RobotCoreExtensions.Rover;
 
 /**
  * Created by 3486 on 7/15/2017.
@@ -15,12 +15,12 @@ import org.firstinspires.ftc.teamcode.RobotCoreExtensions.Robot;
 public class JewelTest extends OpMode
 {
     GamepadWrapper joy1;
-    Robot robotRobot = new Robot(this);
+    Rover robotRover = new Rover(this);
 
     @Override
     public void init() {
         joy1 = new GamepadWrapper();
-        robotRobot.init();
+        robotRover.init();
 
     }
 
@@ -38,18 +38,18 @@ public class JewelTest extends OpMode
     {
         joy1.update(gamepad1);
         if (gamepad1.left_bumper){
-            robotRobot.hw.jewelArm.down();
+            robotRover.hw.jewelArm.down();
         } else if(gamepad1.right_bumper){
-            robotRobot.hw.jewelArm.up();
+            robotRover.hw.jewelArm.up();
         } else if(gamepad1.a && gamepad1.b){
 
         }
-        telemetry.addData("Green Value", robotRobot.hw.jewelArm.jewelColor.green());
-        telemetry.addData("Blue Value", robotRobot.hw.jewelArm.jewelColor.blue());
-        telemetry.addData("Red Value", robotRobot.hw.jewelArm.jewelColor.red());
-        telemetry.addData("Alpha Value", robotRobot.hw.jewelArm.jewelColor.alpha());
-        telemetry.addData("ARGB Value", robotRobot.hw.jewelArm.jewelColor.argb());
-        telemetry.addData("JewelServo", robotRobot.hw.jewelArm.armServo.getPosition());
+        telemetry.addData("Green Value", robotRover.hw.jewelArm.jewelColor.green());
+        telemetry.addData("Blue Value", robotRover.hw.jewelArm.jewelColor.blue());
+        telemetry.addData("Red Value", robotRover.hw.jewelArm.jewelColor.red());
+        telemetry.addData("Alpha Value", robotRover.hw.jewelArm.jewelColor.alpha());
+        telemetry.addData("ARGB Value", robotRover.hw.jewelArm.jewelColor.argb());
+        telemetry.addData("JewelServo", robotRover.hw.jewelArm.armServo.getPosition());
         telemetry.update();
 
     }

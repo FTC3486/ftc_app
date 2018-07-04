@@ -21,15 +21,15 @@ Basic:  	This is a minimally functional OpMode used to illustrate the skeleton/s
             of a particular style of OpMode.  These are bare bones examples.
 
 Sensor:    	This is a Sample OpMode that shows how to use a specific sensor.
-            It is not intended to drive a functioning robot, it is simply showing the minimal code
+            It is not intended to drive a functioning rover, it is simply showing the minimal code
             required to read and display the sensor values.
 
 Hardware:	This is NOT an OpMode, but a helper class that is used to describe
-            one particular robot's hardware configuration:   eg: For the K9 or Pushbot.
+            one particular rover's hardware configuration:   eg: For the K9 or Pushbot.
             Look at any Pushbot sample to see how this can be used in an OpMode.
-            Teams can copy one of these to their team folder to create their own robot definition.
+            Teams can copy one of these to their team folder to create their own rover definition.
 
-Pushbot:	This is a Sample OpMode that uses the Pushbot robot hardware as a base.
+Pushbot:	This is a Sample OpMode that uses the Pushbot rover hardware as a base.
             It may be used to provide some standard baseline Pushbot OpModes, or
             to demonstrate how a particular sensor or concept can be used directly on the
             Pushbot chassis.
@@ -38,7 +38,7 @@ Concept:	This is a sample OpMode that illustrates performing a specific function
             These may be complex, but their operation should be explained clearly in the comments,
             or the comments should reference an external doc, guide or tutorial.
             Each OpMode should try to only demonstrate a single concept so they are easy to
-            locate based on their name.  These OpModes may not produce a drivable robot. 
+            locate based on their name.  These OpModes may not produce a drivable rover.
 
 Library:    This is a class, or set of classes used to implement some strategy.
             These will typically NOT implement a full OpMode.  Instead they will be included

@@ -323,7 +323,7 @@ implements <a href="../../../com/qualcomm/robotcore/eventloop/EventLoop.html" ti
 <tr id="i17" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/qualcomm/ftccommon/FtcEventLoopBase.html#handleCommandRequestInspectionReport--">handleCommandRequestInspectionReport</a></span>()</code>
-<div class="block">Return an inspection report of this (robot controller) device back to the caller</div>
+<div class="block">Return an inspection report of this (rover controller) device back to the caller</div>
 </td>
 </tr>
 <tr id="i18" class="altColor">
@@ -363,13 +363,13 @@ implements <a href="../../../com/qualcomm/robotcore/eventloop/EventLoop.html" ti
 <tr id="i26" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/qualcomm/ftccommon/FtcEventLoopBase.html#handleCommandStartProgrammingMode--">handleCommandStartProgrammingMode</a></span>()</code>
-<div class="block">Starts programming mode on the robot controller, as requested by driver station.</div>
+<div class="block">Starts programming mode on the rover controller, as requested by driver station.</div>
 </td>
 </tr>
 <tr id="i27" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/qualcomm/ftccommon/FtcEventLoopBase.html#handleCommandStopProgrammingMode--">handleCommandStopProgrammingMode</a></span>()</code>
-<div class="block">Stops programming mode on the robot controller, as requested by driver station.</div>
+<div class="block">Stops programming mode on the rover controller, as requested by driver station.</div>
 </td>
 </tr>
 <tr id="i28" class="altColor">
@@ -583,9 +583,9 @@ implements <a href="../../../com/qualcomm/robotcore/eventloop/EventLoop.html" ti
               throws <a href="../../../com/qualcomm/robotcore/exception/RobotCoreException.html" title="class in com.qualcomm.robotcore.exception">RobotCoreException</a>,
                      java.lang.InterruptedException</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../com/qualcomm/robotcore/eventloop/EventLoop.html#teardown--">EventLoop</a></code></span></div>
-<div class="block">Teardown method, this will be called after the last call to loop. You should place your robot
+<div class="block">Teardown method, this will be called after the last call to loop. You should place your rover
  into a safe state before this method exits, since there will be no more changes to communicate
- with your robot.
+ with your rover.
 
  Threading: called on the EventLoopRunnable.run() thread.</div>
 <dl>
@@ -593,7 +593,7 @@ implements <a href="../../../com/qualcomm/robotcore/eventloop/EventLoop.html" ti
 <dd><code><a href="../../../com/qualcomm/robotcore/eventloop/EventLoop.html#teardown--">teardown</a></code>&nbsp;in interface&nbsp;<code><a href="../../../com/qualcomm/robotcore/eventloop/EventLoop.html" title="interface in com.qualcomm.robotcore.eventloop">EventLoop</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../com/qualcomm/robotcore/exception/RobotCoreException.html" title="class in com.qualcomm.robotcore.exception">RobotCoreException</a></code> - if a RobotCoreException is thrown, it will be handled by the event
-         loop manager. The manager will then attempt to shut down the robot without the benefit
+         loop manager. The manager will then attempt to shut down the rover without the benefit
          of the teardown method.</dd>
 <dd><code>java.lang.InterruptedException</code></dd>
 </dl>
@@ -673,7 +673,7 @@ implements <a href="../../../com/qualcomm/robotcore/eventloop/EventLoop.html" ti
 <dd><code>eventLoopManager</code> - event loop manager that is responsible for this event loop</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../com/qualcomm/robotcore/exception/RobotCoreException.html" title="class in com.qualcomm.robotcore.exception">RobotCoreException</a></code> - if a RobotCoreException is thrown, it will be handled
-         by the event loop manager. The manager will report that the robot failed
+         by the event loop manager. The manager will report that the rover failed
          to start.</dd>
 <dd><code>java.lang.InterruptedException</code></dd>
 </dl>
@@ -846,7 +846,7 @@ implements <a href="../../../com/qualcomm/robotcore/eventloop/EventLoop.html" ti
 <li class="blockList">
 <h4>handleCommandStartProgrammingMode</h4>
 <pre>protected&nbsp;void&nbsp;handleCommandStartProgrammingMode()</pre>
-<div class="block">Starts programming mode on the robot controller, as requested by driver station.</div>
+<div class="block">Starts programming mode on the rover controller, as requested by driver station.</div>
 </li>
 </ul>
 <a name="handleCommandStartDriverStationProgramAndManage--">
@@ -865,7 +865,7 @@ implements <a href="../../../com/qualcomm/robotcore/eventloop/EventLoop.html" ti
 <li class="blockList">
 <h4>handleCommandStopProgrammingMode</h4>
 <pre>protected&nbsp;void&nbsp;handleCommandStopProgrammingMode()</pre>
-<div class="block">Stops programming mode on the robot controller, as requested by driver station.</div>
+<div class="block">Stops programming mode on the rover controller, as requested by driver station.</div>
 </li>
 </ul>
 <a name="handleCommandShowDialog-Command-">
@@ -929,7 +929,7 @@ implements <a href="../../../com/qualcomm/robotcore/eventloop/EventLoop.html" ti
 <li class="blockList">
 <h4>handleCommandRequestInspectionReport</h4>
 <pre>protected&nbsp;void&nbsp;handleCommandRequestInspectionReport()</pre>
-<div class="block">Return an inspection report of this (robot controller) device back to the caller</div>
+<div class="block">Return an inspection report of this (rover controller) device back to the caller</div>
 </li>
 </ul>
 <a name="handleCommandDisconnectWifiDirect--">

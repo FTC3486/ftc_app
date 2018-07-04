@@ -14,7 +14,7 @@ public class HardwareConfiguration
 {
     OpMode opMode;
     LinearOpMode linearOpMode;
-    //Robot Components
+    //Rover Components
     public Drivetrain drivetrain;
     public RelicLift relicLift;
     public RelicArm relicArm;
@@ -30,7 +30,7 @@ public class HardwareConfiguration
     {
         this.opMode = opMode;
 
-        //Define robot components
+        //Define rover components
         DcMotor left1 = opMode.hardwareMap.dcMotor.get("left1");
         DcMotor left2 = opMode.hardwareMap.dcMotor.get("left2");
         DcMotor right1 = opMode.hardwareMap.dcMotor.get("right1");

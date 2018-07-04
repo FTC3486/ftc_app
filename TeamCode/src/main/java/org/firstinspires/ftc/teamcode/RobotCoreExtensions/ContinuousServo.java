@@ -24,7 +24,7 @@ import com.qualcomm.robotcore.hardware.Servo;
  *      ContinuousServo
  *      setPower - 0 to 1 signals the servo to go forward. 0 to -1 signals the servo to go backwards.
  *
- * Example: Robot.hardwareConfiguration.continuousServo.setPower(0.5);
+ * Example: Rover.hardwareConfiguration.continuousServo.setPower(0.5);
 
  *
  * Requirements:

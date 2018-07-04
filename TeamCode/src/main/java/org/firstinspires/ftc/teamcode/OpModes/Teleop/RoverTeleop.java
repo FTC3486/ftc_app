@@ -4,26 +4,26 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.RobotCoreExtensions.GamepadWrapper;
-import org.firstinspires.ftc.teamcode.RobotCoreExtensions.Robot;
+import org.firstinspires.ftc.teamcode.RobotCoreExtensions.Rover;
 import org.firstinspires.ftc.teamcode.RobotCoreExtensions.TeleopDriver;
 
 /**
  * Created by 3486 on 7/15/2017.
  */
 
-@TeleOp(name = "Robot Teleop", group = "Teleop2017")
+@TeleOp(name = "Rover Teleop", group = "Teleop2017")
 
-public class TWATeleop extends OpMode {
+public class RoverTeleop extends OpMode {
     //Declare parts of the robot that will be used by this Teleop
-    private Robot robotRobot = new Robot(this);
+    private Rover robotRover = new Rover(this);
     private GamepadWrapper joy1;
     private TeleopDriver teleopDriver;
     private int spinnerPos;
 
     @Override
     public void init() {
-        robotRobot.init();
-        teleopDriver = new TeleopDriver(this, robotRobot.hw.drivetrain);
+        robotRover.init();
+        teleopDriver = new TeleopDriver(this, robotRover.hw.drivetrain);
         teleopDriver.setMaxSpeed(1f);
         joy1 = new GamepadWrapper();
 
@@ -31,8 +31,8 @@ public class TWATeleop extends OpMode {
 
         spinnerPos = 0;
 
-        robotRobot.hw.jewelArm.up();
-        robotRobot.hw.relicClaw.openClaw();
+        robotRover.hw.jewelArm.up();
+        robotRover.hw.relicClaw.openClaw();
     }
 
 
@@ -45,7 +45,7 @@ public class TWATeleop extends OpMode {
 
     @Override
     public void loop() {
-        robotRobot.hw.jewelArm.up();
+        robotRover.hw.jewelArm.up();
         joy1.update(gamepad1);
 
         //Toggle Half Speed on the drivetrain
@@ -67,38 +67,38 @@ public class TWATeleop extends OpMode {
 
         //Runs Relic Lift down while button is head
         if (gamepad2.dpad_down) {
-            robotRobot.hw.relicLift.retract();
+            robotRover.hw.relicLift.retract();
         }//Runs Relic Lift up while button is held
         else if (gamepad2.dpad_up) {
-            robotRobot.hw.relicLift.lift();
+            robotRover.hw.relicLift.lift();
         }//Stop all Relic Lift motion while nothing is pressed
         else {
-            robotRobot.hw.relicLift.stop();
+            robotRover.hw.relicLift.stop();
         }
         //Extends Relic Arm while button is held
         if (gamepad2.dpad_right) {
-            robotRobot.hw.relicArm.extend();
+            robotRover.hw.relicArm.extend();
         }//Retracts Relic Arm while button is held
         else if (gamepad2.dpad_left) {
-            robotRobot.hw.relicArm.retract();
+            robotRover.hw.relicArm.retract();
         }//Stop all Relic Arm motion while nothing is pressed
         else {
-            robotRobot.hw.relicArm.stop();
+            robotRover.hw.relicArm.stop();
         }
         //Open Relic Claw
         if (gamepad2.a) {
-            robotRobot.hw.relicClaw.releaseRelic();
+            robotRover.hw.relicClaw.releaseRelic();
         }//Close Relic Claw
         else if (gamepad2.b) {
-            robotRobot.hw.relicClaw.grabRelic();
-            //robotRobot.hw.relicClaw.closeClaw();
+            robotRover.hw.relicClaw.grabRelic();
+            //robotRover.hw.relicClaw.closeClaw();
         }
         //Set Relic CLaw Pivot to Position 1
         if (gamepad2.x) {
-            robotRobot.hw.relicClaw.pivotPosition1();
+            robotRover.hw.relicClaw.pivotPosition1();
         }//Set Relic CLaw Pivot to Position 2
         else if (gamepad2.y) {
-            robotRobot.hw.relicClaw.pivotPosition2();
+            robotRover.hw.relicClaw.pivotPosition2();
         }
     }
 
