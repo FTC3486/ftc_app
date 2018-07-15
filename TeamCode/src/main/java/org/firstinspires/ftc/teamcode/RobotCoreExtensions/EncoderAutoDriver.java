@@ -4,109 +4,106 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 /**
  * Filename: EncoderAutoDriver.java
- *
+ * <p>
  * Description:
- *     This class contains the methods that use the encoders for predefined autonomous movements.
- *
+ * This class contains the methods that use the encoders for predefined autonomous movements.
+ * <p>
  * Methods:
- *      driveLeftSideToDistance - Drives the left side a specified distance using motor encoders
- *      driveRightSideToDistance - Drives the right side a specified distance using motor encoders
- *      driveToDistance - Drives both sides a specified distance using motor encoders
- *
+ * driveLeftSideToDistance - Drives the left side a specified distance using motor encoders
+ * driveRightSideToDistance - Drives the right side a specified distance using motor encoders
+ * driveToDistance - Drives both sides a specified distance using motor encoders
+ * <p>
  * Example: hw.hardwareConfiguration.encoderAutoDriver.driveLeftSideToDistance(double distance)
  * Distances in inches.
- *
+ * <p>
  * Requirements:
- *     - Drive motors with encoders
- *     - An encoder auto driver is created in a hardware configuration and accessed
- *       in an autonomous program for use.
- *
+ * - Drive motors with encoders
+ * - An encoder auto driver is created in a hardware configuration and accessed
+ * in an autonomous program for use.
+ * <p>
  * Changelog:
- *     -Edited and tested by Team 3486 on 7/8/2017.
- *     -Edited file description and documentation 7/22/17
+ * -Edited and tested by Team 3486 on 7/8/2017.
+ * -Edited file description and documentation 7/22/17
  */
 
-public class EncoderAutoDriver extends AutoDriver
-{
-    public EncoderAutoDriver(HardwareConfiguration hw, LinearOpMode opMode)
-    {
+public class EncoderAutoDriver extends AutoDriver {
+    private final Drivetrain drivetrain;
+
+    public EncoderAutoDriver(Drivable hw, LinearOpMode opMode) {
         super(hw, opMode);
+        drivetrain = hw.getDrivetrain();
     }
 
-    public void driveLeftSideToDistance(double distance)
-    {
+    public void driveLeftSideToDistance(double distance) {
         setupMotion("Driving to set distance.");
-        hw.drivetrain.setPowers(0.3, 0.0);
+        hw.getDrivetrain().setPowers(power, 0.0);
 
         // Drives the left side converting our inches input to counts while the OpMode is active
 
-        while(hw.drivetrain.getLeftEncoderCount() < hw.drivetrain.convertInchesToEncoderCounts(distance)
-                && opMode.opModeIsActive())
-        {}
-        hw.drivetrain.haltDrive();
+        while (drivetrain.getLeftEncoderCount() < drivetrain.convertInchesToEncoderCounts(distance)
+                && opMode.opModeIsActive()) {
+        }
+        drivetrain.haltDrive();
         endMotion();
     }
 
-    public void driveRightSideToDistance(double distance)
-    {
+    public void driveRightSideToDistance(double distance) {
         setupMotion("Driving to set distance.");
-        hw.drivetrain.setPowers(0.0, 0.3);
+        drivetrain.setPowers(0.0, power);
 
         // Drives the Right side converting our inches input to counts while the OpMode is active
 
-        while(hw.drivetrain.getRightEncoderCount() < hw.drivetrain.convertInchesToEncoderCounts(distance)
-                && opMode.opModeIsActive()) {}
-        hw.drivetrain.haltDrive();
-        endMotion();
-    }
-
-    public void driveToDistanceForwards(double distance)
-    {
-        setupMotion("Driving to set distance.");
-
-        // Drives the both sides converting our inches input to counts while the OpMode is active
-
-        while(hw.drivetrain.getLeftEncoderCount() < hw.drivetrain.convertInchesToEncoderCounts(distance)
-                && hw.drivetrain.getRightEncoderCount() < hw.drivetrain.convertInchesToEncoderCounts(distance)
-                && opMode.opModeIsActive()
-                ){
-            hw.drivetrain.setPowers(0.3, 0.3);
-            opMode.telemetry.addData("Right Encoder", hw.drivetrain.getRightEncoderCount());
-            opMode.telemetry.addData("Left Encoder", hw.drivetrain.getLeftEncoderCount());
-            opMode.telemetry.update();
+        while (drivetrain.getRightEncoderCount() < drivetrain.convertInchesToEncoderCounts(distance)
+                && opMode.opModeIsActive()) {
         }
         endMotion();
     }
 
-    public void driveToDistanceBackwards(double distance)
-    {
+    public void driveToDistanceForwards(double distance) {
         setupMotion("Driving to set distance.");
-        hw.drivetrain.setPowers(-0.3, -0.3);
+        drivetrain.setPowers(power, power);
 
         // Drives the both sides converting our inches input to counts while the OpMode is active
 
-        while(hw.drivetrain.getLeftEncoderCount() > hw.drivetrain.convertInchesToEncoderCounts(distance)
-                && hw.drivetrain.getRightEncoderCount() > hw.drivetrain.convertInchesToEncoderCounts(distance)
-                && opMode.opModeIsActive()) {}
+        while (drivetrain.getLeftEncoderCount() < drivetrain.convertInchesToEncoderCounts(distance)
+                && drivetrain.getRightEncoderCount() < drivetrain.convertInchesToEncoderCounts(distance)
+                && opMode.opModeIsActive()
+                ) {
+        }
         endMotion();
     }
 
-    public void spinRight(double leftInches, double rightInches){
-     setupMotion("Spinning set amount");
-        hw.drivetrain.setPowers(0.3, -0.3);
+    public void driveToDistanceBackwards(double distance) {
+        setupMotion("Driving to set distance.");
+        drivetrain.setPowers(-power, -power);
 
-        while (hw.drivetrain.getLeftEncoderCount() < hw.drivetrain.convertInchesToEncoderCounts(leftInches)
-                && hw.drivetrain.getRightEncoderCount() > hw.drivetrain.convertInchesToEncoderCounts(rightInches) );{}
+        // Drives the both sides converting our inches input to counts while the OpMode is active
+
+        while (drivetrain.getLeftEncoderCount() > drivetrain.convertInchesToEncoderCounts(distance)
+                && drivetrain.getRightEncoderCount() > drivetrain.convertInchesToEncoderCounts(distance)
+                && opMode.opModeIsActive()) {
+        }
         endMotion();
     }
 
-
-    public void spinLeft(double leftInches, double rightInches){
+    public void spinRight(double leftInches, double rightInches) {
         setupMotion("Spinning set amount");
-        hw.drivetrain.setPowers(-0.3, 0.3);
+        drivetrain.setPowers(power, -power);
 
-        while (hw.drivetrain.getLeftEncoderCount() > hw.drivetrain.convertInchesToEncoderCounts(leftInches)
-                && hw.drivetrain.getRightEncoderCount()< hw.drivetrain.convertInchesToEncoderCounts(rightInches) );{}
+        while (drivetrain.getLeftEncoderCount() < drivetrain.convertInchesToEncoderCounts(leftInches)
+                && drivetrain.getRightEncoderCount() > drivetrain.convertInchesToEncoderCounts(rightInches)) {
+        }
+        endMotion();
+    }
+
+
+    public void spinLeft(double leftInches, double rightInches) {
+        setupMotion("Spinning set amount");
+        drivetrain.setPowers(-power, power);
+
+        while (drivetrain.getLeftEncoderCount() > drivetrain.convertInchesToEncoderCounts(leftInches)
+                && drivetrain.getRightEncoderCount() < drivetrain.convertInchesToEncoderCounts(rightInches)) {
+        }
         endMotion();
     }
 }

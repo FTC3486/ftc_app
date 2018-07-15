@@ -14,7 +14,7 @@ import java.util.TimerTask;
     could occur when the robot collides with another object, and it protects our drive motors from
     possible damage from autonomous collisions.
 
-    If a stall is detected the program performs a eStop and terminates the autonomous program.
+    If a stall is detected the program performs an eStop and terminates the autonomous program.
     Some thought was given to just terminate the current instruction but if the last instruction was
     not performed successfully why perform more instructions.
 
@@ -31,81 +31,26 @@ import java.util.TimerTask;
  * Changelog:
  *     -Created by Jacob on 4/6/16.
  *     -Edited file description and documentation 7/25/17
+ *     -Cleaned up by Jacob on 7/14/18
 
  */
 
 class StallMonitor {
-    AutoDriver autoDriver;
-    Timer stallTimer = new Timer();
-    StallMonitorTask task;
-
-    // taskFrequency - is how long it waits to check again after the initial check.
+    private final EmergencyStoppable eStoppable;
+    private final Drivetrain drivetrain;
+    private final Timer stallTimer = new Timer();
+    private StallMonitorTask task;
 
     private int taskFrequency = 1000;
-
-    // taskDelay - Is the initial delay that happens when stall monitor first starts monitoring. This is only
-    //              executed the first time for each movement
-
     private int taskDelay = 1000;
 
-    protected StallMonitor(AutoDriver autoDriver) {
-        this.autoDriver = autoDriver;
+    protected StallMonitor(EmergencyStoppable eStoppable, Drivetrain drivetrain) {
+        this.eStoppable = eStoppable;
+        this.drivetrain = drivetrain;
     }
 
-    protected class StallMonitorTask extends TimerTask {
-        private int previousLeftCounts;
-        private int previousRightCounts;
-        int leftThresholdConstant = 125;
-        int rightThresholdConstant = 125;
-
-        int getLeftThreshold() {
-            return leftThresholdConstant;
-        }
-
-        int getRightThreshold() {
-            return rightThresholdConstant;
-        }
-
-        private boolean isStallDetected() {
-            boolean isStallDetected = false;
-
-            // Left side previous counts - left current counts  compared to left threshold
-
-            if (Math.abs(previousLeftCounts - autoDriver.robot.hw.drivetrain.getLeftEncoderCount()) <= getLeftThreshold()) {
-                isStallDetected = true;
-            }
-
-            // Right side previous counts - right current counts  compared to right threshold
-
-            if (Math.abs(previousRightCounts - autoDriver.robot.hw.drivetrain.getRightEncoderCount()) <= getRightThreshold()) {
-                isStallDetected = true;
-            }
-
-            return isStallDetected;
-        }
-
-        @Override
-        public void run() {
-
-            // If stall detected perform eStop else update previous counts with current counts
-
-            if (isStallDetected()) {
-                autoDriver.eStop();
-            } else {
-                previousLeftCounts = (int) autoDriver.robot.hw.drivetrain.getLeftEncoderCount();
-                previousRightCounts = (int) autoDriver.robot.hw.drivetrain.getRightEncoderCount();
-            }
-        }
-    }
-
-    protected void setTaskFrequency(int taskFrequency) {
-        if (taskFrequency < 0) throw new IllegalArgumentException("The frequency must be >0");
-        this.taskFrequency = taskFrequency;
-    }
-
-    protected void setTaskDelay(int taskDelay) {
-        if (taskDelay < 0) throw new IllegalArgumentException("The delay must be >0");
-        this.taskDelay = taskDelay;
+    protected interface EmergencyStoppable {
+        void eStop();
     }
 
     protected void startMonitoring() {
@@ -114,7 +59,61 @@ class StallMonitor {
     }
 
     protected void stopMonitoring() {
-        task.cancel();
-        stallTimer.purge();
+        try {
+            task.cancel();
+            stallTimer.purge();
+        } catch (RuntimeException ignored) {
+            // Ignore all errors on this, especially NPE from uninstantiated tasks.
+        }
+    }
+
+    protected class StallMonitorTask extends TimerTask {
+        private int previousLeftCounts;
+        private int previousRightCounts;
+        private int leftThreshold = 125;
+        private int rightThreshold = 125;
+
+        private boolean isStallDetected() {
+            return (Math.abs(previousLeftCounts - drivetrain.getLeftEncoderCount()) <= leftThreshold) ||
+                    (Math.abs(previousRightCounts - drivetrain.getRightEncoderCount()) <= rightThreshold);
+        }
+
+        /**
+         * If stall detected perform isMovementTerminated else update previous counts with current counts
+         */
+        @Override
+        public void run() {
+            if (isStallDetected()) {
+                eStoppable.eStop();
+            } else {
+                previousLeftCounts = (int) drivetrain.getLeftEncoderCount();
+                previousRightCounts = (int) drivetrain.getRightEncoderCount();
+            }
+        }
+    }
+
+    /**
+     * Task Frequency is how long Stall Monitor waits to check again after the initial check.
+     *
+     * @param taskFrequency
+     */
+    protected void setTaskFrequency(int taskFrequency) {
+        if (taskFrequency < 0) {
+            throw new IllegalArgumentException("The frequency must be greater than 0");
+        }
+        this.taskFrequency = taskFrequency;
+    }
+
+    /**
+     * Task Delay is the initial delay that happens when Stall Monitor first starts monitoring.
+     * This is only executed the first time for each movement.
+     *
+     * @param taskDelay
+     */
+    protected void setTaskDelay(int taskDelay) {
+        if (taskDelay < 0) {
+            throw new IllegalArgumentException("The delay must be greater than 0");
+        }
+        this.taskDelay = taskDelay;
     }
 }

@@ -16,26 +16,28 @@ public class CapballHolder {
     capballHolderServoEnum capballHolderServoState = capballHolderServoEnum.Colapsed;
 
 
-    public CapballHolder(String capballHolderServo, HardwareMap hardwareMap){
+    public CapballHolder(String capballHolderServo, HardwareMap hardwareMap) {
         this.capballHolderServo = hardwareMap.servo.get(capballHolderServo);
         this.colapsed();
     }
-    public void released(){
+
+    public void released() {
         capballHolderServo.setPosition(0);
         isBallCaptured = false;
     }
 
-    public void captured(){
+    public void captured() {
         capballHolderServo.setPosition(0.3);
         isBallCaptured = true;
     }
 
-    public void colapsed(){
+    public void colapsed() {
         capballHolderServo.setPosition(0.95);
     }
+
     @Override
-    public String toString(){
-        switch (capballHolderServoState){
+    public String toString() {
+        switch (capballHolderServoState) {
             case Released:
                 return "Ball Released";
             case Captured:

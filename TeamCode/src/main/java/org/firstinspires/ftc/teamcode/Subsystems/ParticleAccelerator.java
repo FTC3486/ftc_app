@@ -13,6 +13,7 @@ public class ParticleAccelerator {
     public double acceleratorPower = 0;
 
     private enum acceleratorEnum {Run, Rampup, Rampdown, Stop}
+
     private acceleratorEnum AcceleratorState = acceleratorEnum.Stop;
 
 
@@ -26,13 +27,13 @@ public class ParticleAccelerator {
         AcceleratorState = acceleratorEnum.Run;
     }
 
-    public void rampup(){
+    public void rampup() {
         acceleratorPower = acceleratorPower + 0.001;
         Accelerator.setPower(acceleratorPower);
 
     }
 
-    public void rampdown(){
+    public void rampdown() {
         AcceleratorState = acceleratorEnum.Rampdown;
 
     }
@@ -44,7 +45,7 @@ public class ParticleAccelerator {
 
     @Override
     public String toString() {
-        switch (AcceleratorState){
+        switch (AcceleratorState) {
             case Run:
                 return "Running";
 

@@ -49,4 +49,5 @@ public class ContinuousServo {
     public void setPower(double power) {
         servo.setPosition(power/2 + 0.5);
     }
+
 }

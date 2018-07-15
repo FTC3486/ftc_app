@@ -42,14 +42,13 @@ public class Drivetrain {
     private double wheelDiameter;
     private double gearRatio;
     private int encoderCountsPerDriverGearRotation;
-    private List<DcMotor> allMotors;
     private List<DcMotor> allMotorsWithEncoders;
     private List<DcMotor> leftMotors;
     private List<DcMotor> rightMotors;
     private List<DcMotor> leftMotorsWithEncoders;
     private List<DcMotor> rightMotorsWithEncoders;
-    private double leftSpeed;
-    private double rightSpeed;
+    private double leftPower;
+    private double rightPower;
 
     private Drivetrain(Builder builder) {
         this.wheelDiameter = builder.wheelDiameter;
@@ -64,11 +63,12 @@ public class Drivetrain {
         this.allMotorsWithEncoders = new LinkedList<>();
         this.allMotorsWithEncoders.addAll(builder.leftMotorsWithEncoders);
         this.allMotorsWithEncoders.addAll(builder.rightMotorsWithEncoders);
-        this.allMotors = new LinkedList<>();
-        this.allMotors.addAll(this.leftMotors);
-        this.allMotors.addAll(this.rightMotors);
 
-        for (DcMotor motor : allMotors) {
+        for (DcMotor motor : this.leftMotors) {
+            motor.setZeroPowerBehavior(builder.zeroPowerBehavior);
+        }
+
+        for (DcMotor motor : this.rightMotors) {
             motor.setZeroPowerBehavior(builder.zeroPowerBehavior);
         }
     }
@@ -159,16 +159,16 @@ public class Drivetrain {
 
     // Sets Power for left and right sides of the drive train.
 
-    public void setPowers(double leftSpeed, double rightSpeed) {
-        this.leftSpeed = leftSpeed;
-        this.rightSpeed = rightSpeed;
+    public void setPowers(double leftPower, double rightPower) {
+        this.leftPower = leftPower;
+        this.rightPower = rightPower;
 
         for (DcMotor motor : leftMotors) {
-            motor.setPower(leftSpeed);
+            motor.setPower(leftPower);
         }
 
         for (DcMotor motor : rightMotors) {
-            motor.setPower(rightSpeed);
+            motor.setPower(rightPower);
         }
     }
 
@@ -218,7 +218,7 @@ public class Drivetrain {
 
     @Override
     public String toString() {
-        return "left pwr: " + String.format("%.2f", leftSpeed) +
-                "\nright pwr: " + String.format("%.2f", rightSpeed);
+        return "left pwr: " + String.format("%.2f", leftPower) +
+                "\nright pwr: " + String.format("%.2f", rightPower);
     }
 }

@@ -9,11 +9,12 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  */
 
 public class Column {
-    public DcMotor Column1 = null;
-    public DcMotor Column2 = null;
+    private DcMotor Column1;
+    private DcMotor Column2;
 
     private enum columnEnum {Extend, Retract, Stop}
-    private columnEnum ColumnState =columnEnum.Stop;
+
+    private columnEnum ColumnState = columnEnum.Stop;
 
 
     public Column(String Column1, String Column2, HardwareMap hardwareMap) {
@@ -21,24 +22,24 @@ public class Column {
         this.Column2 = hardwareMap.dcMotor.get(Column2);
     }
 
-    public void extend(){
+    public void extend() {
         Column1.setPower(-1.0);
         Column2.setPower(1.0);
     }
 
-    public void retract(){
+    public void retract() {
         Column1.setPower(1.0);
         Column2.setPower(-1.0);
     }
 
-    public void stop(){
+    public void stop() {
         Column1.setPower(0);
         Column2.setPower(0);
     }
 
     @Override
     public String toString() {
-        switch (ColumnState){
+        switch (ColumnState) {
             case Extend:
                 return "Extending";
 

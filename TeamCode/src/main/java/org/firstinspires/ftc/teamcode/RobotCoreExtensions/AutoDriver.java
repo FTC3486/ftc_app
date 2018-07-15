@@ -1,76 +1,103 @@
 package org.firstinspires.ftc.teamcode.RobotCoreExtensions;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 /**
-
  * Filename: AutoDriver.java
- *
+ * <p>
  * Description:
- *     This extension is the parent for all other Autodrivers called by all autonomous movements.
- *     This class defines the beginning and end of each movement.
- *
+ * This extension is the parent for all other Autodrivers called by all autonomous movements.
+ * This class defines the beginning and end of each movement.
+ * <p>
  * Methods:
- *     setWaitTimeBetweenMovements(int milliseconds)
- *     setupMotion(String motion_description)
- *     endMotion()
- *     eStop()
- *
- *
+ * setWaitTimeBetweenMovements(int milliseconds)
+ * setupMotion(String motion_description)
+ * endMotion()
+ * isMovementTerminated()
+ * <p>
+ * <p>
  * Requirements:
- *     - Hardware configuration
- *
+ * - Hardware configuration
+ * <p>
  * Changelog:
- *     -Created by Jacob on 2/24/16
- *     -Edited file description and documentation 7/24/17
- *
+ * -Created by Jacob on 2/24/16
+ * -Edited file description and documentation 7/24/17
  */
-public abstract class AutoDriver {
-    HardwareConfiguration hw;
-    LinearOpMode opMode;
-    private StallMonitor stallMonitor = new StallMonitor(this);
-    protected double power = 1.0D;
-    private int wait_time_ms = 500;
-    protected boolean eStop = false;
+public abstract class AutoDriver implements StallMonitor.EmergencyStoppable {
+    protected final Drivable hw;
+    protected final LinearOpMode opMode;
+    private final StallMonitor stallMonitor;
+    private int timeBetweenMovements = 500;
+    private boolean isStallMonitoringEnabled = true;
+    private boolean isMovementTerminated = false;
+    protected double power;
 
-
-    public AutoDriver(HardwareConfiguration hw, LinearOpMode opMode)
-    {
+    AutoDriver(Drivable hw, LinearOpMode opMode) {
         this.hw = hw;
         this.opMode = opMode;
+        this.stallMonitor = new StallMonitor(this, hw.getDrivetrain());
     }
 
-    public void setWaitTimeBetweenMovements(int milliseconds)
-    {
-        if (milliseconds < 0) throw new IllegalArgumentException("the wait time should always be positive");
-        this.wait_time_ms = milliseconds;
+    protected void setWaitTimeBetweenMovements(int milliseconds) {
+        if (milliseconds < 0) {
+            throw new IllegalArgumentException("Wait time between movements should always be positive");
+        }
+        this.timeBetweenMovements = milliseconds;
     }
-    // Creates setupMotion method - Resets encoders and then starts monitoring the robot for stalling.
 
-    protected void setupMotion(String motion_description)
-    {
-        eStop = false;
+    /**
+     * Reset encoders and then start monitoring the robot for stalling.
+     */
+    protected void setupMotion(String motion_description) {
+        isMovementTerminated = false;
         opMode.telemetry.addData("AutoDriver", motion_description);
         opMode.telemetry.update();
-        hw.drivetrain.resetMotorEncoders();
-        stallMonitor.startMonitoring();
+        hw.getDrivetrain().resetMotorEncoders();
+        if (isStallMonitoringEnabled) {
+            stallMonitor.startMonitoring();
+        }
     }
 
-    // Creates endMotion method - Stops monitoring the robot for stalling.
-
-    protected void endMotion()
-    {
-        hw.drivetrain.haltDrive();
+    /**
+     * Stop monitoring the robot for stalling.
+     */
+    protected void endMotion() {
+        hw.getDrivetrain().haltDrive();
         stallMonitor.stopMonitoring();
         opMode.telemetry.addData("AutoDriver", "Halting");
         opMode.telemetry.update();
-       // hw.opMode.sleep(wait_time_ms);
+        opMode.sleep(timeBetweenMovements);
     }
 
-    // Creates the eStop method to halt program.
+    /**
+     * Stop the robot
+     */
+    @Override
+    public void eStop() {
+        isMovementTerminated = true;
+    }
 
-    protected void eStop()
-    {
-        eStop = true;
-        endMotion();
+    public boolean isMovementTerminated() {
+        return isMovementTerminated;
+    }
+
+    public boolean isStallMonitoringEnabled() {
+        return isStallMonitoringEnabled;
+    }
+
+    public void enableStallMonitoring() {
+        isStallMonitoringEnabled = true;
+    }
+
+    public void disableStallMonitoring() {
+        isStallMonitoringEnabled = false;
+    }
+
+    public double getPower() {
+        return power;
+    }
+
+    public void setPower(double power) {
+        this.power = power;
     }
 }

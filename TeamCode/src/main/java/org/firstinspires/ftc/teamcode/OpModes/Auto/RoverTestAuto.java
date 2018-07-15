@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.OpModes.Auto;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.RobotConfiguration.RelicRecovery.Rover;
+import org.firstinspires.ftc.teamcode.RobotConfiguration.RelicRecovery.RelicRecoveryRobot;
 import org.firstinspires.ftc.teamcode.RobotCoreExtensions.EncoderAutoDriver;
 
 /*
@@ -28,15 +28,15 @@ import org.firstinspires.ftc.teamcode.RobotCoreExtensions.EncoderAutoDriver;
 
  */
 
-@Autonomous (name = "RoverTestAuto", group = "BlueAuto")
+@Autonomous (group = "Blue")
 public class RoverTestAuto extends LinearOpMode {
-    Rover rover = new Rover(this);
-    EncoderAutoDriver encoderAutoDriver = new EncoderAutoDriver(rover, this);
+    RelicRecoveryRobot relicRecoveryRobot = new RelicRecoveryRobot(hardwareMap);
+    EncoderAutoDriver encoderAutoDriver = new EncoderAutoDriver(relicRecoveryRobot, this);
     //RangeAutoDriver rangeAutoDriver = new RangeAutoDriver(rover, this);
 
     @Override
     public void runOpMode() {
-        rover.initialize();
+        relicRecoveryRobot.initialize();
 
         waitForStart();
         encoderAutoDriver.driveToDistanceForwards(1000);
