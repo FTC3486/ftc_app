@@ -7,11 +7,11 @@ import java.util.TimerTask;
     Filename: StallMonitor.java
 
     Description:
-        Stall Monitor forms a crucial piece of the autonomous code for rover movement each season.
+        Stall Monitor forms a crucial piece of the autonomous code for robot movement each season.
     Stall Monitor monitors the motor encoders of each drive motor during movements, and it stops the
-    motors if the rover is trying to drive but not moving far enough. The rover checks its encoder
-    counts over a time increment and stops the rover if the change in encoder counts is too low. This
-    could occur when the rover collides with another object, and it protects our drive motors from
+    motors if the robot is trying to drive but not moving far enough. The robot checks its encoder
+    counts over a time increment and stops the robot if the change in encoder counts is too low. This
+    could occur when the robot collides with another object, and it protects our drive motors from
     possible damage from autonomous collisions.
 
     If a stall is detected the program performs a eStop and terminates the autonomous program.
@@ -59,11 +59,11 @@ class StallMonitor {
         int rightThresholdConstant = 125;
 
         int getLeftThreshold() {
-            return (int) (leftThresholdConstant);
+            return leftThresholdConstant;
         }
 
         int getRightThreshold() {
-            return (int) (rightThresholdConstant);
+            return rightThresholdConstant;
         }
 
         private boolean isStallDetected() {
@@ -71,13 +71,13 @@ class StallMonitor {
 
             // Left side previous counts - left current counts  compared to left threshold
 
-            if (Math.abs(previousLeftCounts - autoDriver.rover.hw.drivetrain.getLeftEncoderCount()) <= getLeftThreshold()) {
+            if (Math.abs(previousLeftCounts - autoDriver.robot.hw.drivetrain.getLeftEncoderCount()) <= getLeftThreshold()) {
                 isStallDetected = true;
             }
 
             // Right side previous counts - right current counts  compared to right threshold
 
-            if (Math.abs(previousRightCounts - autoDriver.rover.hw.drivetrain.getRightEncoderCount()) <= getRightThreshold()) {
+            if (Math.abs(previousRightCounts - autoDriver.robot.hw.drivetrain.getRightEncoderCount()) <= getRightThreshold()) {
                 isStallDetected = true;
             }
 
@@ -92,8 +92,8 @@ class StallMonitor {
             if (isStallDetected()) {
                 autoDriver.eStop();
             } else {
-                previousLeftCounts = (int) autoDriver.rover.hw.drivetrain.getLeftEncoderCount();
-                previousRightCounts = (int) autoDriver.rover.hw.drivetrain.getRightEncoderCount();
+                previousLeftCounts = (int) autoDriver.robot.hw.drivetrain.getLeftEncoderCount();
+                previousRightCounts = (int) autoDriver.robot.hw.drivetrain.getRightEncoderCount();
             }
         }
     }

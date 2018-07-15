@@ -3,9 +3,8 @@ package org.firstinspires.ftc.teamcode.OpModes.Auto;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.teamcode.RobotConfiguration.RelicRecovery.Rover;
 import org.firstinspires.ftc.teamcode.RobotCoreExtensions.EncoderAutoDriver;
-import org.firstinspires.ftc.teamcode.RobotCoreExtensions.RangeAutoDriver;
-import org.firstinspires.ftc.teamcode.RobotCoreExtensions.Rover;
 
 /*
     Filename: RoverTestAuto.java
@@ -36,17 +35,14 @@ public class RoverTestAuto extends LinearOpMode {
     //RangeAutoDriver rangeAutoDriver = new RangeAutoDriver(rover, this);
 
     @Override
-    public void runOpMode() throws InterruptedException {
-        rover.init();
-        rover.hw.jewelArm.autoInit();
+    public void runOpMode() {
+        rover.initialize();
 
         waitForStart();
-        rover.hw.drivetrain.resetMotorEncoders();
         encoderAutoDriver.driveToDistanceForwards(1000);
         encoderAutoDriver.driveLeftSideToDistance(-9);
         encoderAutoDriver.driveRightSideToDistance(9);
         encoderAutoDriver.spinLeft(9,9);
         //rangeAutoDriver.
-
     }
 }

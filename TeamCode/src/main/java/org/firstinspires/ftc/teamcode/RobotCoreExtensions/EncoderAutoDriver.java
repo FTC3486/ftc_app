@@ -13,7 +13,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
  *      driveRightSideToDistance - Drives the right side a specified distance using motor encoders
  *      driveToDistance - Drives both sides a specified distance using motor encoders
  *
- * Example: rover.hardwareConfiguration.encoderAutoDriver.driveLeftSideToDistance(double distance)
+ * Example: hw.hardwareConfiguration.encoderAutoDriver.driveLeftSideToDistance(double distance)
  * Distances in inches.
  *
  * Requirements:
@@ -28,35 +28,35 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 public class EncoderAutoDriver extends AutoDriver
 {
-    public EncoderAutoDriver(Rover rover, LinearOpMode opMode)
+    public EncoderAutoDriver(HardwareConfiguration hw, LinearOpMode opMode)
     {
-        super(rover, opMode);
+        super(hw, opMode);
     }
 
     public void driveLeftSideToDistance(double distance)
     {
         setupMotion("Driving to set distance.");
-        rover.hw.drivetrain.setPowers(0.3, 0.0);
+        hw.drivetrain.setPowers(0.3, 0.0);
 
         // Drives the left side converting our inches input to counts while the OpMode is active
 
-        while(rover.hw.drivetrain.getLeftEncoderCount() < rover.hw.drivetrain.convertInchesToEncoderCounts(distance)
+        while(hw.drivetrain.getLeftEncoderCount() < hw.drivetrain.convertInchesToEncoderCounts(distance)
                 && opMode.opModeIsActive())
         {}
-        rover.hw.drivetrain.haltDrive();
+        hw.drivetrain.haltDrive();
         endMotion();
     }
 
     public void driveRightSideToDistance(double distance)
     {
         setupMotion("Driving to set distance.");
-        rover.hw.drivetrain.setPowers(0.0, 0.3);
+        hw.drivetrain.setPowers(0.0, 0.3);
 
         // Drives the Right side converting our inches input to counts while the OpMode is active
 
-        while(rover.hw.drivetrain.getRightEncoderCount() < rover.hw.drivetrain.convertInchesToEncoderCounts(distance)
+        while(hw.drivetrain.getRightEncoderCount() < hw.drivetrain.convertInchesToEncoderCounts(distance)
                 && opMode.opModeIsActive()) {}
-        rover.hw.drivetrain.haltDrive();
+        hw.drivetrain.haltDrive();
         endMotion();
     }
 
@@ -66,13 +66,13 @@ public class EncoderAutoDriver extends AutoDriver
 
         // Drives the both sides converting our inches input to counts while the OpMode is active
 
-        while(rover.hw.drivetrain.getLeftEncoderCount() < rover.hw.drivetrain.convertInchesToEncoderCounts(distance)
-                && rover.hw.drivetrain.getRightEncoderCount() < rover.hw.drivetrain.convertInchesToEncoderCounts(distance)
+        while(hw.drivetrain.getLeftEncoderCount() < hw.drivetrain.convertInchesToEncoderCounts(distance)
+                && hw.drivetrain.getRightEncoderCount() < hw.drivetrain.convertInchesToEncoderCounts(distance)
                 && opMode.opModeIsActive()
                 ){
-            rover.hw.drivetrain.setPowers(0.3, 0.3);
-            opMode.telemetry.addData("Right Encoder", rover.hw.drivetrain.getRightEncoderCount());
-            opMode.telemetry.addData("Left Encoder", rover.hw.drivetrain.getLeftEncoderCount());
+            hw.drivetrain.setPowers(0.3, 0.3);
+            opMode.telemetry.addData("Right Encoder", hw.drivetrain.getRightEncoderCount());
+            opMode.telemetry.addData("Left Encoder", hw.drivetrain.getLeftEncoderCount());
             opMode.telemetry.update();
         }
         endMotion();
@@ -81,32 +81,32 @@ public class EncoderAutoDriver extends AutoDriver
     public void driveToDistanceBackwards(double distance)
     {
         setupMotion("Driving to set distance.");
-        rover.hw.drivetrain.setPowers(-0.3, -0.3);
+        hw.drivetrain.setPowers(-0.3, -0.3);
 
         // Drives the both sides converting our inches input to counts while the OpMode is active
 
-        while(rover.hw.drivetrain.getLeftEncoderCount() > rover.hw.drivetrain.convertInchesToEncoderCounts(distance)
-                && rover.hw.drivetrain.getRightEncoderCount() > rover.hw.drivetrain.convertInchesToEncoderCounts(distance)
+        while(hw.drivetrain.getLeftEncoderCount() > hw.drivetrain.convertInchesToEncoderCounts(distance)
+                && hw.drivetrain.getRightEncoderCount() > hw.drivetrain.convertInchesToEncoderCounts(distance)
                 && opMode.opModeIsActive()) {}
         endMotion();
     }
 
     public void spinRight(double leftInches, double rightInches){
      setupMotion("Spinning set amount");
-        rover.hw.drivetrain.setPowers(0.3, -0.3);
+        hw.drivetrain.setPowers(0.3, -0.3);
 
-        while (rover.hw.drivetrain.getLeftEncoderCount() < rover.hw.drivetrain.convertInchesToEncoderCounts(leftInches)
-                && rover.hw.drivetrain.getRightEncoderCount() > rover.hw.drivetrain.convertInchesToEncoderCounts(rightInches) );{}
+        while (hw.drivetrain.getLeftEncoderCount() < hw.drivetrain.convertInchesToEncoderCounts(leftInches)
+                && hw.drivetrain.getRightEncoderCount() > hw.drivetrain.convertInchesToEncoderCounts(rightInches) );{}
         endMotion();
     }
 
 
     public void spinLeft(double leftInches, double rightInches){
         setupMotion("Spinning set amount");
-        rover.hw.drivetrain.setPowers(-0.3, 0.3);
+        hw.drivetrain.setPowers(-0.3, 0.3);
 
-        while (rover.hw.drivetrain.getLeftEncoderCount() > rover.hw.drivetrain.convertInchesToEncoderCounts(leftInches)
-                && rover.hw.drivetrain.getRightEncoderCount()< rover.hw.drivetrain.convertInchesToEncoderCounts(rightInches) );{}
+        while (hw.drivetrain.getLeftEncoderCount() > hw.drivetrain.convertInchesToEncoderCounts(leftInches)
+                && hw.drivetrain.getRightEncoderCount()< hw.drivetrain.convertInchesToEncoderCounts(rightInches) );{}
         endMotion();
     }
 }
