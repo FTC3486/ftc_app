@@ -7,15 +7,33 @@ import org.firstinspires.ftc.teamcode.RobotCoreExtensions.EncoderAutoDriver;
 import org.firstinspires.ftc.teamcode.RobotCoreExtensions.RangeAutoDriver;
 import org.firstinspires.ftc.teamcode.RobotCoreExtensions.Rover;
 
-/**
- * Created by Matthew on 7/1/2017.
+/*
+    Filename: RoverTestAuto.java
+
+    Description:
+        Test Autonomous program using encoders to drive Rover.
+
+    Use:
+        Test program to test encoderAutoDriver, JewelArm and RangeAutoDriver.  Test Stall monitor.
+
+    Requirements:
+ *     - AutoDrive configured for stall monitor
+ *     - Drive motors with encoders
+ *     - Two Range sensors
+ *     - one color sensor
+ *     -Jewel arm
+ * *
+ * Changelog:
+ *     -Created by 3486 on 7/5/18.
+ *     -
+
  */
 
-@Autonomous(name = "Blue Left Auto", group = "BlueAuto")
-public class BlueAutoLeft extends LinearOpMode {
+@Autonomous (name = "RoverTestAuto", group = "BlueAuto")
+public class RoverTestAuto extends LinearOpMode {
     Rover rover = new Rover(this);
     EncoderAutoDriver encoderAutoDriver = new EncoderAutoDriver(rover, this);
-    RangeAutoDriver rangeAutoDriver = new RangeAutoDriver(rover, this);
+    //RangeAutoDriver rangeAutoDriver = new RangeAutoDriver(rover, this);
 
     @Override
     public void runOpMode() throws InterruptedException {

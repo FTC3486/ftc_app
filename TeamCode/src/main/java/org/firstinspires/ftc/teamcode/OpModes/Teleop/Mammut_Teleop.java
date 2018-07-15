@@ -17,7 +17,9 @@ import org.firstinspires.ftc.teamcode.Subsystems.TuskGate;
 /**
  * Created by John Paul Ashour on 11/5/2016.
  */
-@TeleOp(name="Teleop version 1.0", group="Teleop2016")
+@TeleOp
+        //(name="Mammut_Teleop ")
+        //, group="Teleop2016")
 @Disabled
 public class Mammut_Teleop extends OpMode{
     GamepadWrapper joy1;

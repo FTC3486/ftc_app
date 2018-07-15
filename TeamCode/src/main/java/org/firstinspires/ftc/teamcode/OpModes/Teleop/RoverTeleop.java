@@ -11,7 +11,9 @@ import org.firstinspires.ftc.teamcode.RobotCoreExtensions.TeleopDriver;
  * Created by 3486 on 7/15/2017.
  */
 
-@TeleOp(name = "Rover Teleop", group = "Teleop2017")
+@TeleOp
+//(name = "Rover Teleop")
+        //, group = "Teleop2017")
 
 public class RoverTeleop extends OpMode {
     //Declare parts of the robot that will be used by this Teleop
@@ -32,7 +34,7 @@ public class RoverTeleop extends OpMode {
         spinnerPos = 0;
 
         robotRover.hw.jewelArm.up();
-        robotRover.hw.relicClaw.openClaw();
+        //robotRover.hw.relicClaw.openClaw();
     }
 
 
@@ -64,7 +66,7 @@ public class RoverTeleop extends OpMode {
                 teleopDriver.half_speed_tank_drive(gamepad1, TeleopDriver.Direction.FORWARD);
             }
         }
-
+/*
         //Runs Relic Lift down while button is head
         if (gamepad2.dpad_down) {
             robotRover.hw.relicLift.retract();
@@ -100,6 +102,7 @@ public class RoverTeleop extends OpMode {
         else if (gamepad2.y) {
             robotRover.hw.relicClaw.pivotPosition2();
         }
+        */
     }
 
     @Override

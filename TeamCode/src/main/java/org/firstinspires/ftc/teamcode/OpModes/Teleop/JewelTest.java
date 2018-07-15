@@ -10,7 +10,9 @@ import org.firstinspires.ftc.teamcode.RobotCoreExtensions.Rover;
  * Created by 3486 on 7/15/2017.
  */
 
-@TeleOp(name="Jewel Test", group="Teleop2016")
+@TeleOp
+        //(name="Jewel Test")
+//, group="Teleop2016")
 //@Disabled
 public class JewelTest extends OpMode
 {
