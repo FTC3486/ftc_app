@@ -14,12 +14,14 @@ import org.firstinspires.ftc.teamcode.RobotCoreExtensions.TeleopDriver;
 @TeleOp(name = "Rover Teleop", group = "Teleop2017")
 public class RoverTeleop extends OpMode {
     //Declare parts of the robot that will be used by this Teleop
-    private RelicRecoveryRobot robotRelicRecoveryRobot = new RelicRecoveryRobot(hardwareMap);
+    private RelicRecoveryRobot robotRelicRecoveryRobot;
     private GamepadWrapper joy1 = new GamepadWrapper();
-    private TeleopDriver teleopDriver = new TeleopDriver(robotRelicRecoveryRobot);
+    private TeleopDriver teleopDriver;
 
     @Override
     public void init() {
+        robotRelicRecoveryRobot=new RelicRecoveryRobot(this.hardwareMap);
+        teleopDriver=new TeleopDriver(robotRelicRecoveryRobot);
         robotRelicRecoveryRobot.initialize();
 
         robotRelicRecoveryRobot.jewelArm.fullyExtend();

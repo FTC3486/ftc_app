@@ -30,19 +30,20 @@ import org.firstinspires.ftc.teamcode.RobotCoreExtensions.EncoderAutoDriver;
 
 @Autonomous (group = "Blue")
 public class RoverTestAuto extends LinearOpMode {
-    RelicRecoveryRobot relicRecoveryRobot = new RelicRecoveryRobot(hardwareMap);
-    EncoderAutoDriver encoderAutoDriver = new EncoderAutoDriver(relicRecoveryRobot, this);
-    //RangeAutoDriver rangeAutoDriver = new RangeAutoDriver(rover, this);
 
     @Override
     public void runOpMode() {
+        RelicRecoveryRobot relicRecoveryRobot = new RelicRecoveryRobot(this.hardwareMap);
+        EncoderAutoDriver encoderAutoDriver = new EncoderAutoDriver(relicRecoveryRobot, this);
+        //RangeAutoDriver rangeAutoDriver = new RangeAutoDriver(rover, this);
         relicRecoveryRobot.initialize();
 
         waitForStart();
-        encoderAutoDriver.driveToDistanceForwards(1000);
-        encoderAutoDriver.driveLeftSideToDistance(-9);
-        encoderAutoDriver.driveRightSideToDistance(9);
-        encoderAutoDriver.spinLeft(9,9);
+        encoderAutoDriver.setPower(.5);
+        encoderAutoDriver.driveToDistanceForwards(10);
+       // encoderAutoDriver.driveLeftSideToDistance(-9);
+        //encoderAutoDriver.driveRightSideToDistance(9);
+        //encoderAutoDriver.spinLeft(9,9);
         //rangeAutoDriver.
     }
 }
