@@ -73,7 +73,7 @@ public class RangeAutoDriver extends AutoDriver {
 
         // correctionFactor is subtracted from the distanceToDrive so the robot doesn't run into the wall.
         // Divides by 2.54 to convert range sensor centimeter readings to inches.
-        encoderAutoDriver.driveToDistanceForwards((distanceToDrive - correctionFactor) / 2.54);
+        encoderAutoDriver.driveToDistance((distanceToDrive - correctionFactor) / 2.54);
         endMotion();
     }
 }
