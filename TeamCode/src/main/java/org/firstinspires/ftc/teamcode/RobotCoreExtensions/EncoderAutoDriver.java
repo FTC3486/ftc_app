@@ -56,12 +56,18 @@ public class EncoderAutoDriver extends AutoDriver {
 
            while (drivetrain.getLeftEncoderCount() < drivetrain.convertInchesToEncoderCounts(distance)
                    && opMode.opModeIsActive()) {
+               opMode.telemetry.addData("LeftEncoderCount: ", drivetrain.getLeftEncoderCount());
+               opMode.telemetry.addData("RightEncoderCount: ", drivetrain.getRightEncoderCount());
+               opMode.telemetry.update();
            }
        }else {
            hw.getDrivetrain().setPowers(-power, 0.0);
 
            while (drivetrain.getLeftEncoderCount() > drivetrain.convertInchesToEncoderCounts(distance)
                        && opMode.opModeIsActive()) {
+               opMode.telemetry.addData("LeftEncoderCount: ", drivetrain.getLeftEncoderCount());
+               opMode.telemetry.addData("RightEncoderCount: ", drivetrain.getRightEncoderCount());
+               opMode.telemetry.update();
                }
            }
             endMotion();
@@ -83,6 +89,9 @@ public class EncoderAutoDriver extends AutoDriver {
 
             while (drivetrain.getRightEncoderCount() < drivetrain.convertInchesToEncoderCounts(distance)
                     && opMode.opModeIsActive()) {
+                opMode.telemetry.addData("LeftEncoderCount: ", drivetrain.getLeftEncoderCount());
+                opMode.telemetry.addData("RightEncoderCount: ", drivetrain.getRightEncoderCount());
+                opMode.telemetry.update();
             }
 
         }else {
@@ -91,6 +100,9 @@ public class EncoderAutoDriver extends AutoDriver {
 
             while (drivetrain.getRightEncoderCount() > drivetrain.convertInchesToEncoderCounts(distance)
                     && opMode.opModeIsActive()) {
+                opMode.telemetry.addData("LeftEncoderCount: ", drivetrain.getLeftEncoderCount());
+                opMode.telemetry.addData("RightEncoderCount: ", drivetrain.getRightEncoderCount());
+                opMode.telemetry.update();
             }
         }
         endMotion();
@@ -111,14 +123,20 @@ public class EncoderAutoDriver extends AutoDriver {
         if (distance > 0) {
             drivetrain.setPowers(power, power);
             while (drivetrain.getLeftEncoderCount() < drivetrain.convertInchesToEncoderCounts(distance)
-                    && drivetrain.getRightEncoderCount() < drivetrain.convertInchesToEncoderCounts(distance)
+                    //&& drivetrain.getRightEncoderCount() < drivetrain.convertInchesToEncoderCounts(distance)
                     && opMode.opModeIsActive()) {
+                opMode.telemetry.addData("LeftEncoderCount: ", drivetrain.getLeftEncoderCount());
+                opMode.telemetry.addData("RightEncoderCount: ", drivetrain.getRightEncoderCount());
+                opMode.telemetry.update();
             }
         } else {
             drivetrain.setPowers(-power, -power);
             while (drivetrain.getLeftEncoderCount() > drivetrain.convertInchesToEncoderCounts(distance)
-                    && drivetrain.getRightEncoderCount() > drivetrain.convertInchesToEncoderCounts(distance)
+                    //&& drivetrain.getRightEncoderCount() > drivetrain.convertInchesToEncoderCounts(distance)
                     && opMode.opModeIsActive()) {
+                opMode.telemetry.addData("LeftEncoderCount: ", drivetrain.getLeftEncoderCount());
+                opMode.telemetry.addData("RightEncoderCount: ", drivetrain.getRightEncoderCount());
+                opMode.telemetry.update();
             }
         }
         endMotion();
@@ -141,6 +159,9 @@ public class EncoderAutoDriver extends AutoDriver {
         while (drivetrain.getLeftEncoderCount() < drivetrain.convertInchesToEncoderCounts(leftInches)
                 && drivetrain.getRightEncoderCount() > drivetrain.convertInchesToEncoderCounts(rightInches)
                 && opMode.opModeIsActive()){
+            opMode.telemetry.addData("LeftEncoderCount: ", drivetrain.getLeftEncoderCount());
+            opMode.telemetry.addData("RightEncoderCount: ", drivetrain.getRightEncoderCount());
+            opMode.telemetry.update();
         }
         endMotion();
     }
@@ -161,6 +182,9 @@ public class EncoderAutoDriver extends AutoDriver {
         while (drivetrain.getLeftEncoderCount() > drivetrain.convertInchesToEncoderCounts(leftInches)
                 && drivetrain.getRightEncoderCount() < drivetrain.convertInchesToEncoderCounts(rightInches)
                 && opMode.opModeIsActive()) {
+            opMode.telemetry.addData("LeftEncoderCount: ", drivetrain.getLeftEncoderCount());
+            opMode.telemetry.addData("RightEncoderCount: ", drivetrain.getRightEncoderCount());
+            opMode.telemetry.update();
         }
         endMotion();
     }

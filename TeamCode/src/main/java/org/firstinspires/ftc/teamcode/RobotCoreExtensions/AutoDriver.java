@@ -55,7 +55,7 @@ public abstract class AutoDriver implements StallMonitor.EmergencyStoppable {
         hw.getDrivetrain().resetMotorEncoders();
         if (isStallMonitoringEnabled) {
             stallMonitor.startMonitoring();
-        }
+       }
     }
 
     /**

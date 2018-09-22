@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.RobotConfiguration.RelicRecovery.RelicRecoveryRobot;
+import org.firstinspires.ftc.teamcode.RobotConfiguration.RoverRuckus.RoverRuckusRobot;
 import org.firstinspires.ftc.teamcode.RobotCoreExtensions.GamepadWrapper;
 import org.firstinspires.ftc.teamcode.RobotCoreExtensions.TeleopDriver;
 
@@ -14,28 +15,27 @@ import org.firstinspires.ftc.teamcode.RobotCoreExtensions.TeleopDriver;
 @TeleOp(name = "Rover Teleop", group = "Teleop2017")
 public class RoverTeleop extends OpMode {
     //Declare parts of the robot that will be used by this Teleop
-    private RelicRecoveryRobot robotRelicRecoveryRobot;
+    private RoverRuckusRobot roverRuckusRobot;
     private GamepadWrapper joy1 = new GamepadWrapper();
     private TeleopDriver teleopDriver;
 
     @Override
     public void init() {
-        robotRelicRecoveryRobot=new RelicRecoveryRobot(this.hardwareMap);
-        teleopDriver=new TeleopDriver(robotRelicRecoveryRobot);
-        robotRelicRecoveryRobot.initialize();
-
-        robotRelicRecoveryRobot.jewelArm.fullyExtend();
+        roverRuckusRobot = new RoverRuckusRobot(this.hardwareMap);
+        teleopDriver = new TeleopDriver(roverRuckusRobot);
+        roverRuckusRobot.initialize();
+        roverRuckusRobot.jewelArm.fullyExtend();
     }
 
     @Override
     public void loop() {
-        robotRelicRecoveryRobot.jewelArm.fullyExtend();
+        roverRuckusRobot.jewelArm.fullyExtend();
         joy1.update(gamepad1);
 
         //Toggle Half Speed on the drivetrain
         if (joy1.toggle.right_stick_button) {
             //Swap front and back of the robot, and control the drive train at half speed
-            teleopDriver.setMaxSpeed(0.5f);
+            teleopDriver.setMaxSpeed(0.7f);
             if (joy1.toggle.left_stick_button) {
                 teleopDriver.tankDrive(gamepad1, TeleopDriver.Direction.BACKWARD);
             } else {
@@ -43,12 +43,29 @@ public class RoverTeleop extends OpMode {
             }
         } else {
             //Swap front and back of the robot, and control the drive train
-            teleopDriver.setMaxSpeed(1f);
+            teleopDriver.setMaxSpeed(0.9f);
             if (joy1.toggle.left_stick_button) {
                 teleopDriver.tankDrive(gamepad1, TeleopDriver.Direction.BACKWARD);
             } else {
                 teleopDriver.tankDrive(gamepad1, TeleopDriver.Direction.FORWARD);
             }
         }
+        if (joy1.toggle.a && roverRuckusRobot.jewelColorSensor.red()>25) {
+            roverRuckusRobot.will.run();
+        } else {
+            roverRuckusRobot.will.stop();
+        }
+        // TODO: jewelColor should be private. Telemetry should be exposed through toString methods
+
+        //telemetry.addData("Is Not Pressed", roverRuckusRobot.touch1();
+
+        telemetry.addData("Green Value", roverRuckusRobot.jewelColorSensor.green());
+        telemetry.addData("Blue Value", roverRuckusRobot.jewelColorSensor.blue());
+        telemetry.addData("Red Value", roverRuckusRobot.jewelColorSensor.red());
+        telemetry.addData("Alpha Value", roverRuckusRobot.jewelColorSensor.alpha());
+        telemetry.addData("ARGB Value", roverRuckusRobot.jewelColorSensor.argb());
+        telemetry.addData("JewelServo", roverRuckusRobot.jewelArm);
+        telemetry.update();
+
     }
 }

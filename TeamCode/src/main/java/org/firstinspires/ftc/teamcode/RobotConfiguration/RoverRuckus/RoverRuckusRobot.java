@@ -1,13 +1,12 @@
-package org.firstinspires.ftc.teamcode.RobotConfiguration.RelicRecovery;
+package org.firstinspires.ftc.teamcode.RobotConfiguration.RoverRuckus;
 
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.SensorDigitalTouch;
-import org.firstinspires.ftc.teamcode.RobotCoreExtensions.Drivetrain;
 import org.firstinspires.ftc.teamcode.RobotCoreExtensions.Drivable;
+import org.firstinspires.ftc.teamcode.RobotCoreExtensions.Drivetrain;
 import org.firstinspires.ftc.teamcode.RobotCoreExtensions.Initializable;
 import org.firstinspires.ftc.teamcode.RobotCoreExtensions.RangeAutoDriver;
 import org.firstinspires.ftc.teamcode.RobotCoreExtensions.RangeSensor;
@@ -15,7 +14,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.Arm;
 import org.firstinspires.ftc.teamcode.Subsystems.OpenCloseServo;
 import org.firstinspires.ftc.teamcode.Subsystems.ReversableMotor;
 
-public class RelicRecoveryRobot implements Initializable, Drivable, RangeAutoDriver.Drivable {
+public class RoverRuckusRobot implements Initializable, Drivable, RangeAutoDriver.Drivable {
     // Components
     private final Drivetrain drivetrain;
     public Arm jewelArm;
@@ -29,7 +28,7 @@ public class RelicRecoveryRobot implements Initializable, Drivable, RangeAutoDri
     public ColorSensor jewelColorSensor;
     public SensorDigitalTouch touch1;
 
-    public RelicRecoveryRobot(HardwareMap hardwareMap) {
+    public RoverRuckusRobot(HardwareMap hardwareMap) {
         DcMotor left1 = hardwareMap.dcMotor.get("left1");
         DcMotor left2 = hardwareMap.dcMotor.get("left2");
         DcMotor right1 = hardwareMap.dcMotor.get("right1");

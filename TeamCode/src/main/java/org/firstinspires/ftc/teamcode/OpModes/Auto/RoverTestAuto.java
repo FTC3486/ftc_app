@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.RobotConfiguration.RelicRecovery.RelicRecoveryRobot;
 import org.firstinspires.ftc.teamcode.RobotCoreExtensions.Drivetrain;
 import org.firstinspires.ftc.teamcode.RobotCoreExtensions.EncoderAutoDriver;
+import org.firstinspires.ftc.teamcode.Subsystems.OpenCloseServo;
 
 /*
     Filename: RoverTestAuto.java
@@ -40,13 +41,21 @@ public class RoverTestAuto extends LinearOpMode {
         relicRecoveryRobot.initialize();
 
         waitForStart();
-        encoderAutoDriver.setPower(.7);
-       encoderAutoDriver.driveToDistance(86);
+        //encoderAutoDriver.setPower(.33);
+       //encoderAutoDriver.driveToDistance(72);
+       // encoderAutoDriver.driveToDistance(-72);
+
+        relicRecoveryRobot.jewelArm.extend();
+        sleep(5000);
+        relicRecoveryRobot.jewelArm.fullyRetract();
+        sleep(5000);
+        relicRecoveryRobot.jewelArm.fullyExtend();
+        sleep(5000);
         //encoderAutoDriver.spinRight(11,-11);
         //encoderAutoDriver.driveToDistance(132);
         //encoderAutoDriver.spinRight(10,-10);
        // encoderAutoDriver.driveToDistance(64);
-        //encoderAutoDriver.spinRight(10,-10);
+        //encoderAutoDriver.spinRight(72,-72);
         //encoderAutoDriver.driveToDistance(132);
         //encoderAutoDriver.setPower(.7);
         //encoderAutoDriver.driveToDistanceBackwards(-20); // Works needs negitive number - why!!!
@@ -55,9 +64,9 @@ public class RoverTestAuto extends LinearOpMode {
         //encoderAutoDriver.spinRight(22,-22);// 22 180 degree turn
       //  encoderAutoDriver.spinRight(40,-40);
         //encoderAutoDriver.spinLeft(-12,12); // works why
-        //encoderAutoDriver.driveLeftSideToDistance(15);
+        //encoderAutoDriver.driveLeftSideToDistance(72);
         //encoderAutoDriver.driveLeftSideToDistance(-15);
-       //encoderAutoDriver.driveRightSideToDistance(10);
+       //encoderAutoDriver.driveRightSideToDistance(72);
        // encoderAutoDriver.driveRightSideToDistance(-10);
         //encoderAutoDriver.spinLeft(9,9);
         //rangeAutoDriver.
