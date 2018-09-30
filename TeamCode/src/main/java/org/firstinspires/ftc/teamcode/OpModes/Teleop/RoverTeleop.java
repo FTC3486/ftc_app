@@ -23,19 +23,19 @@ public class RoverTeleop extends OpMode {
     public void init() {
         roverRuckusRobot = new RoverRuckusRobot(this.hardwareMap);
         teleopDriver = new TeleopDriver(roverRuckusRobot);
-        roverRuckusRobot.initialize();
-        roverRuckusRobot.jewelArm.fullyExtend();
+        //roverRuckusRobot.initialize();
+        //roverRuckusRobot.jewelArm.fullyExtend();
     }
 
     @Override
     public void loop() {
-        roverRuckusRobot.jewelArm.fullyExtend();
-        joy1.update(gamepad1);
+       // roverRuckusRobot.jewelArm.fullyExtend();
+        //joy1.update(gamepad1);
 
         //Toggle Half Speed on the drivetrain
         if (joy1.toggle.right_stick_button) {
             //Swap front and back of the robot, and control the drive train at half speed
-            teleopDriver.setMaxSpeed(0.7f);
+            teleopDriver.setMaxSpeed(0.5f);
             if (joy1.toggle.left_stick_button) {
                 teleopDriver.tankDrive(gamepad1, TeleopDriver.Direction.BACKWARD);
             } else {
@@ -43,29 +43,29 @@ public class RoverTeleop extends OpMode {
             }
         } else {
             //Swap front and back of the robot, and control the drive train
-            teleopDriver.setMaxSpeed(0.9f);
+            teleopDriver.setMaxSpeed(1.0f);
             if (joy1.toggle.left_stick_button) {
                 teleopDriver.tankDrive(gamepad1, TeleopDriver.Direction.BACKWARD);
             } else {
                 teleopDriver.tankDrive(gamepad1, TeleopDriver.Direction.FORWARD);
             }
         }
-        if (joy1.toggle.a && roverRuckusRobot.jewelColorSensor.red()>25) {
-            roverRuckusRobot.will.run();
-        } else {
-            roverRuckusRobot.will.stop();
-        }
+        //if (joy1.onPress.right_bumper) {
+         //   roverRuckusRobot.latch.up();
+       // } else {
+        //    roverRuckusRobot.latch.stop();
+        //}
         // TODO: jewelColor should be private. Telemetry should be exposed through toString methods
 
         //telemetry.addData("Is Not Pressed", roverRuckusRobot.touch1();
 
-        telemetry.addData("Green Value", roverRuckusRobot.jewelColorSensor.green());
-        telemetry.addData("Blue Value", roverRuckusRobot.jewelColorSensor.blue());
-        telemetry.addData("Red Value", roverRuckusRobot.jewelColorSensor.red());
-        telemetry.addData("Alpha Value", roverRuckusRobot.jewelColorSensor.alpha());
-        telemetry.addData("ARGB Value", roverRuckusRobot.jewelColorSensor.argb());
-        telemetry.addData("JewelServo", roverRuckusRobot.jewelArm);
-        telemetry.update();
+        //telemetry.addData("Green Value", roverRuckusRobot.jewelColorSensor.green());
+        //telemetry.addData("Blue Value", roverRuckusRobot.jewelColorSensor.blue());
+        //telemetry.addData("Red Value", roverRuckusRobot.jewelColorSensor.red());
+        //telemetry.addData("Alpha Value", roverRuckusRobot.jewelColorSensor.alpha());
+        //telemetry.addData("ARGB Value", roverRuckusRobot.jewelColorSensor.argb());
+        //telemetry.addData("JewelServo", roverRuckusRobot.jewelArm);
+        //telemetry.update();
 
     }
 }

@@ -11,22 +11,25 @@ import org.firstinspires.ftc.teamcode.RobotCoreExtensions.Initializable;
 import org.firstinspires.ftc.teamcode.RobotCoreExtensions.RangeAutoDriver;
 import org.firstinspires.ftc.teamcode.RobotCoreExtensions.RangeSensor;
 import org.firstinspires.ftc.teamcode.Subsystems.Arm;
+import org.firstinspires.ftc.teamcode.Subsystems.Latch;
 import org.firstinspires.ftc.teamcode.Subsystems.OpenCloseServo;
 import org.firstinspires.ftc.teamcode.Subsystems.ReversableMotor;
 
-public class RoverRuckusRobot implements Initializable, Drivable, RangeAutoDriver.Drivable {
+public class RoverRuckusRobot implements  Drivable {// Initializable,,RangeAutoDriver.Drivable {
     // Components
     private final Drivetrain drivetrain;
-    public Arm jewelArm;
+    //public Arm jewelArm;
     // public final OpenCloseServo test180;
-    public final OpenCloseServo openClose;
-    public final ReversableMotor will;
+    //public final OpenCloseServo openClose;
+    //public final ReversableMotor will;
+    public Latch latch;
 
     // Sensors
-    private RangeSensor leftRangeSensor;
-    private RangeSensor rightRangeSensor;
-    public ColorSensor jewelColorSensor;
-    public SensorDigitalTouch touch1;
+    //private RangeSensor leftRangeSensor;
+    //private RangeSensor rightRangeSensor;
+    //public ColorSensor jewelColorSensor;
+    public SensorDigitalTouch latchTop;
+    public SensorDigitalTouch latchBottom;
 
     public RoverRuckusRobot(HardwareMap hardwareMap) {
         DcMotor left1 = hardwareMap.dcMotor.get("left1");
@@ -37,6 +40,7 @@ public class RoverRuckusRobot implements Initializable, Drivable, RangeAutoDrive
         left2.setDirection(DcMotor.Direction.FORWARD);
         right1.setDirection(DcMotor.Direction.REVERSE);
         right2.setDirection(DcMotor.Direction.REVERSE);
+        DcMotor latch = hardwareMap.dcMotor.get("latch");
 
         drivetrain = new Drivetrain.Builder()
                 .addLeftMotor(left1)
@@ -45,11 +49,12 @@ public class RoverRuckusRobot implements Initializable, Drivable, RangeAutoDrive
                 .addRightMotorWithEncoder(right2)
                 .build();
 
-        jewelArm = new Arm(hardwareMap.servo.get("JewelArm"), 0.24, 0.43, 0.84);
+        //jewelArm = new Arm(hardwareMap.servo.get("JewelArm"), 0.24, 0.43, 0.84);
         // test180 = new OpenCloseServo(hardwareMap.servo.get("test180"),
          //        0.5, 0.6, 0.7);
-        openClose = new OpenCloseServo(hardwareMap.servo.get("openClose"), 0.1, 0.3, 0.8);
-        will = new ReversableMotor(hardwareMap.dcMotor.get ("will"),0.50);
+        //openClose = new OpenCloseServo(hardwareMap.servo.get("openClose"), 0.1, 0.3, 0.8);
+        //will = new ReversableMotor(hardwareMap.dcMotor.get ("will"),0.50);
+
     }
 
     @Override
@@ -61,19 +66,19 @@ public class RoverRuckusRobot implements Initializable, Drivable, RangeAutoDrive
     //public SensorDigitalTouch getTouch1() { return touch1; }
 
 
-    @Override
-    public RangeSensor getLeftRangeSensor() {
-        return leftRangeSensor;
-    }
+    //@Override
+    //public RangeSensor getLeftRangeSensor() {
+     //   return leftRangeSensor;
+    //}
 
-    @Override
-    public RangeSensor getRightRangeSensor() {
-        return rightRangeSensor;
-    }
+    //@Override
+   // public RangeSensor getRightRangeSensor() {
+    //    return rightRangeSensor;
+   // }
 
-    @Override
-    public void initialize() {
-        jewelArm.initialize();
-    }
+    //@Override
+    //public void initialize() {
+    //    jewelArm.initialize();
+   // }
 }
 
