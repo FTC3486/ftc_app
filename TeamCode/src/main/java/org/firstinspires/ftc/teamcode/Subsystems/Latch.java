@@ -15,8 +15,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  * Methods:
  *      retracting - Raises the robot as long as the FullyRetracted limit switch is off
  *      extending - Lowers the robot as long as the FullyExtended limit switch is off
- *      manualretract - Raises the robot as long as the buttom is pressed and the FullyRetracted limit switch is off
- *      manualextending - Lowers the robot as long as the button is pressed. This bypasses the FullyExtended limit switch
+ *      manualRetracting - Raise the robot as long as the FullyRetracted limit switch is off
+ *      manualExtending - Lowers the robot as long as the button is pressed. This bypasses the FullyExtended limit switch
  *
  * Changelog:
  *      -
@@ -26,8 +26,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Latch {
     private DcMotor latch = null;
-    private DigitalChannel latchTop;
-    private DigitalChannel latchBottom;
+    //private DigitalChannel latchTop;
+    //private DigitalChannel latchBottom;
 
 
 
@@ -38,53 +38,69 @@ public class Latch {
         MANUALEXTENDING,
         STOPPED
     }
-    private latchEnum latchState;
+    private latchEnum latchState = latchEnum.STOPPED;
 
 
 
-    public Latch(String latch, String touchSensor, HardwareMap hardwareMap) {
+    public Latch(String latch,  HardwareMap hardwareMap) {   //String touchSensor,
         this.latch = hardwareMap.dcMotor.get(latch);
-        latchTop = hardwareMap.get(DigitalChannel.class, touchSensor);
-        latchTop.setMode(DigitalChannel.Mode.INPUT);
-        latchBottom = hardwareMap.get(DigitalChannel.class, touchSensor);
-        latchBottom.setMode(DigitalChannel.Mode.INPUT);
+        //latchTop = hardwareMap.get(DigitalChannel.class, touchSensor);
+        //latchTop.setMode(DigitalChannel.Mode.INPUT);
+        //latchBottom = hardwareMap.get(DigitalChannel.class, touchSensor);
+        //latchBottom.setMode(DigitalChannel.Mode.INPUT);
 
-        stop();
+        //stop();
     }
 
-    public boolean isFullyRetracted(){
-        return !latchTop.getState();
-    }
+    //public boolean isFullyRetracted(){
+     //   return !latchBottom.getState();
+    //}
 
-    public boolean isFullyExtended(){
-        return !latchBottom.getState();
-    }
+   // public boolean isFullyExtended(){
+    //    return !latchTop.getState();
+    //}
 
 //Retracting Latch
-    public void retract(){
-        if (isFullyExtended()){
-            stop();
-        }else{
-            latch.setPower(1.0);
-            latchState = latchEnum.RETRACTING;
-        };
-    }
+   // public void retract(){
+       // if (isFullyRetracted()){
+        //    stop();
+       // }
+        //else{
+        //    latch.setPower(1.0);
+        //    latchState = latchEnum.RETRACTING;
+         //   }
+        //}
+
 
 //Runs Glyph Lift down
-    public void unlatch(){
-        latch.setPower(-.1);
-    }
+   // public void unlatch()
+   // {
+   //     latch.setPower(-.1);
+   // }
 
 //Stops Glyph Lift motion and holds current position
-    public void up() {
-        latch.setPower(.1);
+    //public void extend() {
+        //if (isFullyExtended()){
+         //   stop();
+        //}
+        //else{
+          //  latch.setPower(-1.0);
+         //   latchState = latchEnum.EXTENDING;
+       // }
+   // }
+
+
+    public void manualRetract()
+    {
+        latch.setPower(-1.0);
+    }
+    public void manualExtend()
+    {
+        latch.setPower(1.0);
     }
 
-    public void down() {
-        latch.setPower(-.1);
-    }
-
-    public void stop(){
+    public void stopped()
+    {
         latch.setPower(0);
     }
 
@@ -104,7 +120,7 @@ public class Latch {
                 return "Manual Retracting";
 
             case STOPPED:
-                return "Stopped";
+                return "Stop";
 
             default:
                 return "Unknown";

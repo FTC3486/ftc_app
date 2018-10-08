@@ -7,6 +7,7 @@ import org.firstinspires.ftc.teamcode.RobotConfiguration.RelicRecovery.RelicReco
 import org.firstinspires.ftc.teamcode.RobotConfiguration.RoverRuckus.RoverRuckusRobot;
 import org.firstinspires.ftc.teamcode.RobotCoreExtensions.GamepadWrapper;
 import org.firstinspires.ftc.teamcode.RobotCoreExtensions.TeleopDriver;
+import org.firstinspires.ftc.teamcode.Subsystems.ReversableMotor;
 
 /**
  * Created by 3486 on 7/15/2017.
@@ -35,7 +36,7 @@ public class RoverTeleop extends OpMode {
         //Toggle Half Speed on the drivetrain
         if (joy1.toggle.right_stick_button) {
             //Swap front and back of the robot, and control the drive train at half speed
-            teleopDriver.setMaxSpeed(0.5f);
+            teleopDriver.setMaxSpeed(0.3f);
             if (joy1.toggle.left_stick_button) {
                 teleopDriver.tankDrive(gamepad1, TeleopDriver.Direction.BACKWARD);
             } else {
@@ -43,18 +44,40 @@ public class RoverTeleop extends OpMode {
             }
         } else {
             //Swap front and back of the robot, and control the drive train
-            teleopDriver.setMaxSpeed(1.0f);
+            teleopDriver.setMaxSpeed(0.4f);
             if (joy1.toggle.left_stick_button) {
                 teleopDriver.tankDrive(gamepad1, TeleopDriver.Direction.BACKWARD);
             } else {
                 teleopDriver.tankDrive(gamepad1, TeleopDriver.Direction.FORWARD);
             }
         }
-        //if (joy1.onPress.right_bumper) {
-         //   roverRuckusRobot.latch.up();
-       // } else {
-        //    roverRuckusRobot.latch.stop();
+
+        //if (joy1.toggle.a) {
+          //  ReversableMotor.w
         //}
+        //if (joy1.toggle.a) {
+         //   roverRuckusRobot.latch.manualExtend();
+       // } else {
+            //roverRuckusRobot.latch.stop();
+        //}
+       // if (joy1.toggle.b) {
+           //roverRuckusRobot.latch.manualRetract();
+       // } else {
+            //roverRuckusRobot.latch.stop();
+        //}
+
+        if (gamepad1.y) {
+            roverRuckusRobot.latch.manualExtend();
+        } else if (joy1.toggle.x) {
+            roverRuckusRobot.latch.manualRetract();
+        } else {
+            roverRuckusRobot.latch.stopped();
+        }
+
+
+
+
+
         // TODO: jewelColor should be private. Telemetry should be exposed through toString methods
 
         //telemetry.addData("Is Not Pressed", roverRuckusRobot.touch1();

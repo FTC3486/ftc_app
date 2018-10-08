@@ -1,35 +1,27 @@
 package org.firstinspires.ftc.teamcode.RobotConfiguration.RoverRuckus;
 
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.robotcontroller.external.samples.SensorDigitalTouch;
 import org.firstinspires.ftc.teamcode.RobotCoreExtensions.Drivable;
 import org.firstinspires.ftc.teamcode.RobotCoreExtensions.Drivetrain;
-import org.firstinspires.ftc.teamcode.RobotCoreExtensions.Initializable;
-import org.firstinspires.ftc.teamcode.RobotCoreExtensions.RangeAutoDriver;
-import org.firstinspires.ftc.teamcode.RobotCoreExtensions.RangeSensor;
-import org.firstinspires.ftc.teamcode.Subsystems.Arm;
 import org.firstinspires.ftc.teamcode.Subsystems.Latch;
-import org.firstinspires.ftc.teamcode.Subsystems.OpenCloseServo;
-import org.firstinspires.ftc.teamcode.Subsystems.ReversableMotor;
 
-public class RoverRuckusRobot implements  Drivable {// Initializable,,RangeAutoDriver.Drivable {
-    // Components
-    private final Drivetrain drivetrain;
-    //public Arm jewelArm;
-    // public final OpenCloseServo test180;
-    //public final OpenCloseServo openClose;
-    //public final ReversableMotor will;
-    public Latch latch;
+        public class RoverRuckusRobot implements  Drivable {// Initializable,,RangeAutoDriver.Drivable {
+            // Components
+            private final Drivetrain drivetrain;
+            //public Arm jewelArm;
+            // public final OpenCloseServo test180;
+            //public final OpenCloseServo openClose;
+            //public final ReversableMotor will;
+            public Latch latch;
 
     // Sensors
     //private RangeSensor leftRangeSensor;
     //private RangeSensor rightRangeSensor;
     //public ColorSensor jewelColorSensor;
-    public SensorDigitalTouch latchTop;
-    public SensorDigitalTouch latchBottom;
+    //public SensorDigitalTouch latchTop;
+    //public SensorDigitalTouch latchBottom;
 
     public RoverRuckusRobot(HardwareMap hardwareMap) {
         DcMotor left1 = hardwareMap.dcMotor.get("left1");
@@ -41,6 +33,7 @@ public class RoverRuckusRobot implements  Drivable {// Initializable,,RangeAutoD
         right1.setDirection(DcMotor.Direction.REVERSE);
         right2.setDirection(DcMotor.Direction.REVERSE);
         DcMotor latch = hardwareMap.dcMotor.get("latch");
+        //DcMotor will = hardwareMap.dcMotor.get("will");
 
         drivetrain = new Drivetrain.Builder()
                 .addLeftMotor(left1)
@@ -53,7 +46,8 @@ public class RoverRuckusRobot implements  Drivable {// Initializable,,RangeAutoD
         // test180 = new OpenCloseServo(hardwareMap.servo.get("test180"),
          //        0.5, 0.6, 0.7);
         //openClose = new OpenCloseServo(hardwareMap.servo.get("openClose"), 0.1, 0.3, 0.8);
-        //will = new ReversableMotor(hardwareMap.dcMotor.get ("will"),0.50);
+        //will = new ReversableMotor(hardwareMap.dcMotor.get("will"),0.0);
+
 
     }
 

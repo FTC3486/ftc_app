@@ -21,7 +21,7 @@ public class RelicRecoveryRobot implements Initializable, Drivable, RangeAutoDri
     public Arm jewelArm;
     // public final OpenCloseServo test180;
     public final OpenCloseServo openClose;
-    public final ReversableMotor will;
+    //public final ReversableMotor will;
 
     // Sensors
     private RangeSensor leftRangeSensor;
@@ -50,7 +50,7 @@ public class RelicRecoveryRobot implements Initializable, Drivable, RangeAutoDri
         // test180 = new OpenCloseServo(hardwareMap.servo.get("test180"),
          //        0.5, 0.6, 0.7);
         openClose = new OpenCloseServo(hardwareMap.servo.get("openClose"), 0.1, 0.3, 0.8);
-        will = new ReversableMotor(hardwareMap.dcMotor.get ("will"),0.50);
+        //will = new ReversableMotor(hardwareMap.dcMotor.get ("will"),0.50);
     }
 
     @Override
