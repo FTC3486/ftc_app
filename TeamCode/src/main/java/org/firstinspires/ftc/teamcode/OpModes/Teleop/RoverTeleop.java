@@ -3,11 +3,9 @@ package org.firstinspires.ftc.teamcode.OpModes.Teleop;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.RobotConfiguration.RelicRecovery.RelicRecoveryRobot;
 import org.firstinspires.ftc.teamcode.RobotConfiguration.RoverRuckus.RoverRuckusRobot;
 import org.firstinspires.ftc.teamcode.RobotCoreExtensions.GamepadWrapper;
 import org.firstinspires.ftc.teamcode.RobotCoreExtensions.TeleopDriver;
-import org.firstinspires.ftc.teamcode.Subsystems.ReversableMotor;
 
 /**
  * Created by 3486 on 7/15/2017.
@@ -23,6 +21,7 @@ public class RoverTeleop extends OpMode {
     @Override
     public void init() {
         roverRuckusRobot = new RoverRuckusRobot(this.hardwareMap);
+        roverRuckusRobot.initialize();
         teleopDriver = new TeleopDriver(roverRuckusRobot);
         //roverRuckusRobot.initialize();
         //roverRuckusRobot.jewelArm.fullyExtend();
@@ -30,8 +29,7 @@ public class RoverTeleop extends OpMode {
 
     @Override
     public void loop() {
-       // roverRuckusRobot.jewelArm.fullyExtend();
-        //joy1.update(gamepad1);
+        joy1.update(gamepad1);
 
         //Toggle Half Speed on the drivetrain
         if (joy1.toggle.right_stick_button) {
@@ -52,30 +50,13 @@ public class RoverTeleop extends OpMode {
             }
         }
 
-        //if (joy1.toggle.a) {
-          //  ReversableMotor.w
-        //}
-        //if (joy1.toggle.a) {
-         //   roverRuckusRobot.latch.manualExtend();
-       // } else {
-            //roverRuckusRobot.latch.stop();
-        //}
-       // if (joy1.toggle.b) {
-           //roverRuckusRobot.latch.manualRetract();
-       // } else {
-            //roverRuckusRobot.latch.stop();
-        //}
-
-        if (gamepad1.y) {
+        if (gamepad1.right_bumper) {
             roverRuckusRobot.latch.manualExtend();
-        } else if (joy1.toggle.x) {
+        } else if (gamepad1.left_bumper) {
             roverRuckusRobot.latch.manualRetract();
         } else {
-            roverRuckusRobot.latch.stopped();
+            roverRuckusRobot.latch.manualStop();
         }
-
-
-
 
 
         // TODO: jewelColor should be private. Telemetry should be exposed through toString methods

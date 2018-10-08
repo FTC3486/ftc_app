@@ -16,13 +16,13 @@ public class JewelTest extends OpMode {
     //RelicRecoveryRobot robotRecoveryRobot = new RelicRecoveryRobot(hardwareMap);
 
     //Declare parts of the robot that will be used by this Teleop
-    private RelicRecoveryRobot robotRelicRecoveryRobot;
+    private RelicRecoveryRobot robot;
     private GamepadWrapper joy1 = new GamepadWrapper();
 
     @Override
     public void init() {
         joy1 = new GamepadWrapper();
-        robotRelicRecoveryRobot.initialize();
+        robot.initialize();
     }
 
     @Override
@@ -30,18 +30,18 @@ public class JewelTest extends OpMode {
         joy1.update(gamepad1);
 
         if (gamepad1.left_bumper) {
-            robotRelicRecoveryRobot.jewelArm.fullyRetract();
+            robot.jewelArm.fullyRetract();
         } else if (gamepad1.right_bumper) {
-            robotRelicRecoveryRobot.jewelArm.fullyExtend();
+            robot.jewelArm.fullyExtend();
         }
 
         // TODO: jewelColor should be private. Telemetry should be exposed through toString methods
-        telemetry.addData("Green Value", robotRelicRecoveryRobot.jewelColorSensor.green());
-        telemetry.addData("Blue Value", robotRelicRecoveryRobot.jewelColorSensor.blue());
-        telemetry.addData("Red Value",robotRelicRecoveryRobot.jewelColorSensor.red());
-        telemetry.addData("Alpha Value", robotRelicRecoveryRobot.jewelColorSensor.alpha());
-        telemetry.addData("ARGB Value", robotRelicRecoveryRobot.jewelColorSensor.argb());
-        telemetry.addData("JewelServo", robotRelicRecoveryRobot.jewelArm);
+        telemetry.addData("Green Value", robot.jewelColorSensor.green());
+        telemetry.addData("Blue Value", robot.jewelColorSensor.blue());
+        telemetry.addData("Red Value", robot.jewelColorSensor.red());
+        telemetry.addData("Alpha Value", robot.jewelColorSensor.alpha());
+        telemetry.addData("ARGB Value", robot.jewelColorSensor.argb());
+        telemetry.addData("JewelServo", robot.jewelArm);
         telemetry.update();
     }
 }

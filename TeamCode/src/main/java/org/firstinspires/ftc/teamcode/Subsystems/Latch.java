@@ -2,133 +2,132 @@ package org.firstinspires.ftc.teamcode.Subsystems;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
-import com.qualcomm.robotcore.hardware.HardwareMap;
+
+import org.firstinspires.ftc.teamcode.RobotCoreExtensions.Initializable;
 
 
 /**
  * Filename: Latch.java
- *
- *
+ * <p>
+ * <p>
  * Description:
- *      This subsystem controls the lead screw that moves the latching assembly.
- *
+ * This subsystem controls the lead screw that moves the latching assembly.
+ * <p>
  * Methods:
- *      retracting - Raises the robot as long as the FullyRetracted limit switch is off
- *      extending - Lowers the robot as long as the FullyExtended limit switch is off
- *      manualRetracting - Raise the robot as long as the FullyRetracted limit switch is off
- *      manualExtending - Lowers the robot as long as the button is pressed. This bypasses the FullyExtended limit switch
- *
+ * retracting - Raises the robot as long as the FullyRetracted limit switch is off
+ * extending - Lowers the robot as long as the FullyExtended limit switch is off
+ * manualRetracting - Raise the robot as long as the FullyRetracted limit switch is off
+ * manualExtending - Lowers the robot as long as the button is pressed. This bypasses the FullyExtended limit switch
+ * <p>
  * Changelog:
- *      -
- *
+ * -
+ * <p>
  * Created by Saatvik Agrawal on 9/29/2018.
  */
 
-public class Latch {
-    private DcMotor latch = null;
-    //private DigitalChannel latchTop;
-    //private DigitalChannel latchBottom;
+public class Latch implements Initializable {
+    private final DcMotor latchMotor;
+    private final DigitalChannel latchTop;
+    private final DigitalChannel latchBottom;
+    private final double retractPower;
+    private final double extendPower;
 
-
-
-    private enum latchEnum {
+    private enum LatchState {
+        RETRACTED,
         RETRACTING,
+        MANUAL_RETRACTING,
+        EXTENDED,
         EXTENDING,
-        MANUALRETRACTING,
-        MANUALEXTENDING,
-        STOPPED
+        MANUAL_EXTENDING,
+        MANUAL_STOPPED,
     }
-    private latchEnum latchState = latchEnum.STOPPED;
+    private LatchState latchState;
 
+    public Latch(
+            DcMotor latchMotor,
+            DigitalChannel latchTop,
+            DigitalChannel latchBottom,
+            double retractPower,
+            double extendPower
+    ) {
+        this.latchMotor = latchMotor;
+        this.latchTop = latchTop;
+        this.latchBottom = latchBottom;
+        this.retractPower = retractPower;
+        this.extendPower = extendPower;
 
-
-    public Latch(String latch,  HardwareMap hardwareMap) {   //String touchSensor,
-        this.latch = hardwareMap.dcMotor.get(latch);
-        //latchTop = hardwareMap.get(DigitalChannel.class, touchSensor);
-        //latchTop.setMode(DigitalChannel.Mode.INPUT);
-        //latchBottom = hardwareMap.get(DigitalChannel.class, touchSensor);
-        //latchBottom.setMode(DigitalChannel.Mode.INPUT);
-
-        //stop();
-    }
-
-    //public boolean isFullyRetracted(){
-     //   return !latchBottom.getState();
-    //}
-
-   // public boolean isFullyExtended(){
-    //    return !latchTop.getState();
-    //}
-
-//Retracting Latch
-   // public void retract(){
-       // if (isFullyRetracted()){
-        //    stop();
-       // }
-        //else{
-        //    latch.setPower(1.0);
-        //    latchState = latchEnum.RETRACTING;
-         //   }
-        //}
-
-
-//Runs Glyph Lift down
-   // public void unlatch()
-   // {
-   //     latch.setPower(-.1);
-   // }
-
-//Stops Glyph Lift motion and holds current position
-    //public void extend() {
-        //if (isFullyExtended()){
-         //   stop();
-        //}
-        //else{
-          //  latch.setPower(-1.0);
-         //   latchState = latchEnum.EXTENDING;
-       // }
-   // }
-
-
-    public void manualRetract()
-    {
-        latch.setPower(-1.0);
-    }
-    public void manualExtend()
-    {
-        latch.setPower(1.0);
+        this.latchTop.setMode(DigitalChannel.Mode.INPUT);
+        this.latchBottom.setMode(DigitalChannel.Mode.INPUT);
     }
 
-    public void stopped()
-    {
-        latch.setPower(0);
+    @Override
+    public void initialize() {
+        retract();
+    }
+
+    public boolean isFullyRetracted() {
+        return !latchBottom.getState();
+    }
+
+    public boolean isFullyExtended() {
+        return !latchTop.getState();
+    }
+
+    public void retract() {
+        if (isFullyRetracted()) {
+            latchMotor.setPower(0);
+            latchState = LatchState.RETRACTED;
+        } else {
+            latchMotor.setPower(retractPower);
+            latchState = LatchState.RETRACTING;
+        }
+    }
+
+    public void extend() {
+        if (isFullyExtended()) {
+            latchMotor.setPower(0);
+            latchState = LatchState.EXTENDED;
+        } else {
+            latchMotor.setPower(extendPower);
+            latchState = LatchState.EXTENDING;
+        }
+    }
+
+    public void manualRetract() {
+        latchMotor.setPower(retractPower);
+        latchState = LatchState.MANUAL_RETRACTING;
+    }
+
+    public void manualExtend() {
+        latchMotor.setPower(extendPower);
+        latchState = LatchState.MANUAL_EXTENDING;
+    }
+
+    public void manualStop() {
+        latchMotor.setPower(0);
+        latchState = LatchState.MANUAL_STOPPED;
     }
 
     @Override
     public String toString() {
-        switch (latchState){
+        switch (latchState) {
             case EXTENDING:
                 return "Extending";
 
             case RETRACTING:
                 return "Retracting";
 
-            case MANUALEXTENDING:
+            case MANUAL_EXTENDING:
                 return "Manual Extending";
 
-            case MANUALRETRACTING:
+            case MANUAL_RETRACTING:
                 return "Manual Retracting";
 
-            case STOPPED:
+            case MANUAL_STOPPED:
                 return "Stop";
 
             default:
                 return "Unknown";
-
         }
-
-
     }
-
-
 }

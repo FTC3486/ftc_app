@@ -4,9 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.RobotConfiguration.RelicRecovery.RelicRecoveryRobot;
-import org.firstinspires.ftc.teamcode.RobotCoreExtensions.Drivetrain;
 import org.firstinspires.ftc.teamcode.RobotCoreExtensions.EncoderAutoDriver;
-import org.firstinspires.ftc.teamcode.Subsystems.OpenCloseServo;
 
 /*
     Filename: RoverTestAuto.java
