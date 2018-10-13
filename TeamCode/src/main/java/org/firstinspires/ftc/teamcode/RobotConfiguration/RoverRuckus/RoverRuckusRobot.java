@@ -12,10 +12,6 @@ import org.firstinspires.ftc.teamcode.Subsystems.Latch;
 public class RoverRuckusRobot implements Drivable, Initializable {
     // Components
     private final Drivetrain drivetrain;
-    //public Arm jewelArm;
-    // public final OpenCloseServo test180;
-    //public final OpenCloseServo openClose;
-    //public final ReversableMotor will;
     public final Latch latch;
 
     // Sensors
@@ -43,10 +39,11 @@ public class RoverRuckusRobot implements Drivable, Initializable {
                 .build();
 
         // Latch
+
         final DcMotor latchMotor = hardwareMap.dcMotor.get("latch");
         latchTop = hardwareMap.digitalChannel.get("latchTop");
         latchBottom = hardwareMap.digitalChannel.get("latchBottom");
-        this.latch = new Latch(latchMotor, latchTop, latchBottom, 1.00, -1.00);
+        this.latch = new Latch(latchMotor, latchTop, latchBottom, 1.00,-1.00);
     }
 
     @Override
