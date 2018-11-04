@@ -7,8 +7,8 @@ import com.qualcomm.robotcore.hardware.Gamepad;
  */
 public class TeleopDriver {
     private Drivetrain drivetrain;
-    private float maxSpeed = 1.0f;
-    private float minSpeed = 0.1f;
+    private double maxSpeed = 1.0;
+    private double minSpeed = 0.1;
 
     public enum Direction {
         FORWARD,
@@ -19,19 +19,19 @@ public class TeleopDriver {
         this.drivetrain = hw.getDrivetrain();
     }
 
-    public float getMaxSpeed() {
+    public double getMaxSpeed() {
         return maxSpeed;
     }
 
-    public void setMaxSpeed(float maxSpeed) {
+    public void setMaxSpeed(double maxSpeed) {
         this.maxSpeed = maxSpeed;
     }
 
-    public float getMinSpeed() {
+    public double getMinSpeed() {
         return minSpeed;
     }
 
-    public void setMinSpeed(float minSpeed) {
+    public void setMinSpeed(double minSpeed) {
         this.minSpeed = minSpeed;
     }
 

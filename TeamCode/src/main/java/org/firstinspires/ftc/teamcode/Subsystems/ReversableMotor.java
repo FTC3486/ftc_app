@@ -5,8 +5,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.teamcode.RobotCoreExtensions.Initializable;
 
 public class ReversableMotor implements Initializable {
-    private DcMotor motor;
-    private final double power;
+    private final DcMotor motor;
+    private final double defaultPower;
 
     private enum ReversableMotorState {
         RUNNING,
@@ -14,11 +14,11 @@ public class ReversableMotor implements Initializable {
         STOPPED,
     }
 
-    ReversableMotorState reversableMotorState;
+    private ReversableMotorState reversableMotorState;
 
-    public ReversableMotor(DcMotor motor, double power) {
+    public ReversableMotor(DcMotor motor, double defaultPower) {
         this.motor = motor;
-        this.power = power;
+        this.defaultPower = defaultPower;
     }
 
     @Override
@@ -27,6 +27,10 @@ public class ReversableMotor implements Initializable {
     }
 
     public void run() {
+        run(defaultPower);
+    }
+
+    public void run(double power) {
         motor.setPower(power);
         reversableMotorState = ReversableMotorState.RUNNING;
     }
@@ -37,7 +41,11 @@ public class ReversableMotor implements Initializable {
     }
 
     public void reverse() {
-        motor.setPower(-power);
+        reverse(-defaultPower);
+    }
+
+    public void reverse(double power) {
+        motor.setPower(power);
         reversableMotorState = ReversableMotorState.REVERSING;
     }
 

@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.RobotCoreExtensions.Drivable;
 import org.firstinspires.ftc.teamcode.RobotCoreExtensions.Drivetrain;
 import org.firstinspires.ftc.teamcode.RobotCoreExtensions.Initializable;
+import org.firstinspires.ftc.teamcode.RobotCoreExtensions.SpeedServo;
 import org.firstinspires.ftc.teamcode.Subsystems.Latch;
 import org.firstinspires.ftc.teamcode.Subsystems.OpenCloseServo;
 import org.firstinspires.ftc.teamcode.Subsystems.ReversableMotor;
@@ -17,13 +18,12 @@ public class RoverRuckusRobot implements Drivable, Initializable {
     private final Drivetrain drivetrain;
     public final Latch latch;
     //Arm motor for extending/retracting
-    public final ReversableMotor reversableMotor;
-    double armPower = 0;
+    public final ReversableMotor arm;
 
     //Flapper motor for collecting elements
     public final ReversableMotor flapperMotor;
     //Flapper servo for tilting
-    public final OpenCloseServo flapperServo;
+    public final SpeedServo flapperServo;
 
     // Sensors
     //private RangeSensor leftRangeSensor;
@@ -58,19 +58,20 @@ public class RoverRuckusRobot implements Drivable, Initializable {
 
         //Arm
         final DcMotor armMotor = hardwareMap.dcMotor.get("arm");
-        this.reversableMotor = new ReversableMotor(armMotor, 1);
+        this.arm = new ReversableMotor(armMotor, 1);
 
         //Flapper motor
         final DcMotor flapperMotor = hardwareMap.dcMotor.get("flapper");
         this.flapperMotor = new ReversableMotor(flapperMotor, 1);
         //Flapper servo
         final Servo flapperServo = hardwareMap.servo.get("flapperServo");
-        this.flapperServo = new OpenCloseServo(flapperServo, 0, .5, .99);
+        this.flapperServo = new SpeedServo(flapperServo, 0.0, 0.01);
     }
 
     @Override
     public void initialize() {
         latch.initialize();
+        flapperServo.initialize();
     }
 
     @Override

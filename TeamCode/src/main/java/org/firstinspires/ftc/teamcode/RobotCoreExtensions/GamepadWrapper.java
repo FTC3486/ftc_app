@@ -7,6 +7,27 @@ import com.qualcomm.robotcore.hardware.Gamepad;
  */
 public class GamepadWrapper
 {
+    private final double leftStickThreshold;
+    private final double rightStickThreshold;
+
+    public GamepadWrapper() {
+        this.leftStickThreshold = 0.1;
+        this.rightStickThreshold = 0.1;
+    }
+
+    public GamepadWrapper(double leftStickThreshold, double rightStickThreshold) {
+        this.leftStickThreshold = leftStickThreshold;
+        this.rightStickThreshold = rightStickThreshold;
+    }
+
+    public double getLeftStickThreshold() {
+        return leftStickThreshold;
+    }
+
+    public double getRightStickThreshold() {
+        return rightStickThreshold;
+    }
+
     public class ButtonMap
     {
         public boolean dpad_up = false;

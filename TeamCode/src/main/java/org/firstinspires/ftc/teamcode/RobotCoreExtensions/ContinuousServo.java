@@ -9,6 +9,9 @@ import com.qualcomm.robotcore.hardware.Servo;
  * Description:
  *     This class contains the methods to use Continuous Servo.
  *
+ *     NOTE: If you are looking for FIRST's built-in Continuous Servo implementation, it's called
+ *     CRServo
+ *
  *     While most servos go to a specific location based on the signal received, the Continuous
  *     servo rotates at a specific speed based on that signal.  Its speed is fully proportional
  *     meaning that the further the signal deviates from the center (1500usec), the faster the
