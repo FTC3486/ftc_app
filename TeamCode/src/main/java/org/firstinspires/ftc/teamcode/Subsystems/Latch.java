@@ -14,10 +14,11 @@ import org.firstinspires.ftc.teamcode.RobotCoreExtensions.Initializable;
  * This subsystem controls the lead screw that moves the latching assembly.
  * <p>
  * Methods:
- * retracting - Raises the robot as long as the FullyRetracted limit switch is off
- * extending - Lowers the robot as long as the FullyExtended limit switch is off
- * manualRetracting - Raise the robot as long as the FullyRetracted limit switch is off
- * manualExtending - Lowers the robot as long as the button is pressed. This bypasses the FullyExtended limit switch
+ * retract - Raises the robot as long as the FullyRetracted limit switch is off
+ * extend - Lowers the robot as long as the FullyExtended limit switch is off
+ * manualRetract - Raise the robot as long as the FullyRetracted limit switch is off
+ * manualExtend - Lowers the robot as long as the button is pressed. This bypasses the FullyExtended limit switch
+ * manualStop - Stops the latch motor
  * <p>
  * Changelog:
  * -
@@ -61,8 +62,7 @@ public class Latch implements Initializable {
     }
 
     @Override
-    public void initialize() {
-        retract();
+    public void initialize() { retract();
     }
 
     public boolean isFullyRetracted() {

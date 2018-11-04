@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.RobotConfiguration.RoverRuckus.RoverRuckusRobot;
 import org.firstinspires.ftc.teamcode.RobotCoreExtensions.GamepadWrapper;
 import org.firstinspires.ftc.teamcode.RobotCoreExtensions.TeleopDriver;
+import org.firstinspires.ftc.teamcode.Subsystems.ReversableMotor;
 
 /**
  * Created by 3486 on 7/15/2017.
@@ -16,6 +17,7 @@ public class RoverTeleop extends OpMode {
     //Declare parts of the robot that will be used by this Teleop
     private RoverRuckusRobot roverRuckusRobot;
     private GamepadWrapper joy1 = new GamepadWrapper();
+    private GamepadWrapper joy2 = new GamepadWrapper();
     private TeleopDriver teleopDriver;
 
     @Override
@@ -50,6 +52,7 @@ public class RoverTeleop extends OpMode {
             }
         }
 
+        //Buttons for the latch/arm lift
         if (gamepad1.right_bumper) {
             roverRuckusRobot.latch.manualExtend();
         } else if (gamepad1.left_bumper) {
@@ -58,6 +61,34 @@ public class RoverTeleop extends OpMode {
             roverRuckusRobot.latch.manualStop();
         }
 
+        //Buttons for the arm extension/retraction
+
+
+        if(gamepad2.right_bumper) {
+            roverRuckusRobot.reversableMotor.run();
+        } else if (gamepad2.left_bumper) {
+            roverRuckusRobot.reversableMotor.reverse();
+        } else {
+            roverRuckusRobot.reversableMotor.stop();
+        }
+
+        //Buttons for the flapper motor
+        if(gamepad2.a) {
+            roverRuckusRobot.flapperMotor.run();
+        } else if (gamepad2.b) {
+            roverRuckusRobot.flapperMotor.reverse();
+        } else {
+            roverRuckusRobot.flapperMotor.stop();
+        }
+
+        //Buttons for the flapper servo
+        if(gamepad1.x) {
+            roverRuckusRobot.flapperServo.open();
+        }  else if (gamepad1.y) {
+            roverRuckusRobot.flapperServo.close();
+        }  else if (gamepad1.a) {
+            roverRuckusRobot.flapperServo.initialize();
+        }
 
         // TODO: jewelColor should be private. Telemetry should be exposed through toString methods
 
