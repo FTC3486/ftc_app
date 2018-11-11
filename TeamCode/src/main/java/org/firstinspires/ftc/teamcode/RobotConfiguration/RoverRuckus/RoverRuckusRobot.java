@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.ReversableMotor;
 public class RoverRuckusRobot implements Drivable, Initializable {
     // Components
     private final Drivetrain drivetrain;
-    public final Latch latch;
+    public Latch latch;
     //Arm motor for extending/retracting
     public final ReversableMotor arm;
 
@@ -29,8 +29,8 @@ public class RoverRuckusRobot implements Drivable, Initializable {
     //private RangeSensor leftRangeSensor;
     //private RangeSensor rightRangeSensor;
     //public ColorSensor jewelColorSensor;
-    private final DigitalChannel latchTop;
-    private final DigitalChannel latchBottom;
+    //public DigitalChannel latchTop;
+    //public DigitalChannel latchBottom;
 
     public RoverRuckusRobot(HardwareMap hardwareMap) {
         // Drivetrain
@@ -52,9 +52,10 @@ public class RoverRuckusRobot implements Drivable, Initializable {
         // Latch
 
         final DcMotor latchMotor = hardwareMap.dcMotor.get("latch");
-        latchTop = hardwareMap.digitalChannel.get("latchTop");
-        latchBottom = hardwareMap.digitalChannel.get("latchBottom");
-        this.latch = new Latch(latchMotor, latchTop, latchBottom, 1.00, -1.00);
+        final DigitalChannel latchTop = hardwareMap.digitalChannel.get("latchTop");
+        final DigitalChannel latchBottom = hardwareMap.digitalChannel.get("latchBottom");
+        this.latch = new Latch(latchMotor, latchTop, latchBottom,1.00, -1.00);
+
 
         //Arm
         final DcMotor armMotor = hardwareMap.dcMotor.get("arm");
@@ -65,7 +66,7 @@ public class RoverRuckusRobot implements Drivable, Initializable {
         this.flapperMotor = new ReversableMotor(flapperMotor, 1);
         //Flapper servo
         final Servo flapperServo = hardwareMap.servo.get("flapperServo");
-        this.flapperServo = new SpeedServo(flapperServo, 0.0, 0.01);
+        this.flapperServo = new SpeedServo(flapperServo, 1.0, 0.005);
     }
 
     @Override

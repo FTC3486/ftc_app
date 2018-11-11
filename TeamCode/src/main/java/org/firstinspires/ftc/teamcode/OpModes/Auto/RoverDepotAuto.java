@@ -4,10 +4,11 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.RobotConfiguration.RelicRecovery.RelicRecoveryRobot;
+import org.firstinspires.ftc.teamcode.RobotConfiguration.RoverRuckus.RoverRuckusRobot;
 import org.firstinspires.ftc.teamcode.RobotCoreExtensions.EncoderAutoDriver;
 
 /*
-    Filename: RoverTestAuto.java
+    Filename: RoverDepotAuto.java
 
     Description:
         Test Autonomous program using encoders to drive Rover.
@@ -28,27 +29,48 @@ import org.firstinspires.ftc.teamcode.RobotCoreExtensions.EncoderAutoDriver;
 
  */
 
-@Autonomous (group = "Blue")
-public class RoverTestAuto extends LinearOpMode {
+@Autonomous (group = "Blue" )
+public class RoverDepotAuto extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        RelicRecoveryRobot relicRecoveryRobot = new RelicRecoveryRobot(this.hardwareMap);
-        EncoderAutoDriver encoderAutoDriver = new EncoderAutoDriver(relicRecoveryRobot, this);
+        RoverRuckusRobot roverRuckusRobot = new RoverRuckusRobot(this.hardwareMap);
+        EncoderAutoDriver encoderAutoDriver = new EncoderAutoDriver(roverRuckusRobot, this);
         //RangeAutoDriver rangeAutoDriver = new RangeAutoDriver(rover, this);
-        relicRecoveryRobot.initialize();
+        roverRuckusRobot.initialize();
 
         waitForStart();
-        //encoderAutoDriver.setPower(.33);
-       //encoderAutoDriver.driveToDistance(72);
-       // encoderAutoDriver.driveToDistance(-72);
 
-        relicRecoveryRobot.jewelArm.extend();
-        sleep(5000);
-        relicRecoveryRobot.jewelArm.fullyRetract();
-        sleep(5000);
-        relicRecoveryRobot.jewelArm.fullyExtend();
-        sleep(5000);
+        encoderAutoDriver.setPower(.7);
+
+        while(!roverRuckusRobot.latch.isFullyExtended())
+        {
+            roverRuckusRobot.latch.extend();
+            telemetry.addData("Latch state", roverRuckusRobot.latch.toString());
+            telemetry.update();
+        }
+
+        encoderAutoDriver.spinLeft(-10.0,10.0);
+        sleep(200);
+
+        /*while(!roverRuckusRobot.latch.isFullyRetracted())
+        {
+            roverRuckusRobot.latch.retract();
+        }
+        */
+
+        encoderAutoDriver.driveToDistance(48);
+        sleep(200);
+        encoderAutoDriver.spinLeft(-5, 5);
+        sleep(200);
+        encoderAutoDriver.driveToDistance(-96);
+
+        // roverRuckusRobot.jewelArm.extend();
+        //sleep(5000);
+        //relicRecoveryRobot.jewelArm.fullyRetract();
+        //sleep(5000);
+        //relicRecoveryRobot.jewelArm.fullyExtend();
+        //sleep(5000);
         //encoderAutoDriver.spinRight(11,-11);
         //encoderAutoDriver.driveToDistance(132);
         //encoderAutoDriver.spinRight(10,-10);

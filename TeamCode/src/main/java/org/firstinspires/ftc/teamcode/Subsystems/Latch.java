@@ -62,7 +62,7 @@ public class Latch implements Initializable {
     }
 
     @Override
-    public void initialize() { retract();
+    public void initialize(){ retract();
     }
 
     public boolean isFullyRetracted() {
@@ -94,8 +94,13 @@ public class Latch implements Initializable {
     }
 
     public void manualRetract() {
-        latchMotor.setPower(retractPower);
-        latchState = LatchState.MANUAL_RETRACTING;
+        if (isFullyRetracted()) {
+            latchMotor.setPower(0);
+            latchState = LatchState.RETRACTED;
+        } else {
+            latchMotor.setPower(retractPower);
+            latchState = LatchState.MANUAL_RETRACTING;
+        }
     }
 
     public void manualExtend() {

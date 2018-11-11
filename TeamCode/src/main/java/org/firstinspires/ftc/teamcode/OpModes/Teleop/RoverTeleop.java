@@ -12,10 +12,11 @@ import org.firstinspires.ftc.teamcode.RobotCoreExtensions.TeleopDriver;
  * Created by 3486 on 7/15/2017.
  */
 
-@TeleOp(name = "Rover Teleop", group = "Teleop2017")
+@TeleOp(name = "Rover Teleop", group = "Teleop2018")
 public class RoverTeleop extends OpMode {
     //Declare parts of the robot that will be used by this Teleop
     private RoverRuckusRobot roverRuckusRobot;
+    //
     private GamepadWrapper joy1 = new GamepadWrapper();
     private GamepadWrapper joy2 = new GamepadWrapper();
     private TeleopDriver teleopDriver;
@@ -25,12 +26,13 @@ public class RoverTeleop extends OpMode {
         roverRuckusRobot = new RoverRuckusRobot(this.hardwareMap);
         roverRuckusRobot.initialize();
         teleopDriver = new TeleopDriver(roverRuckusRobot);
-        //roverRuckusRobot.initialize();
+        roverRuckusRobot.initialize();
         //roverRuckusRobot.jewelArm.fullyExtend();
     }
 
     @Override
     public void loop() {
+        //Gamepad 1 is the driver controller, gamepad 2 is the gunner controller
         joy1.update(gamepad1);
         joy2.update(gamepad2);
 
@@ -81,8 +83,8 @@ public class RoverTeleop extends OpMode {
         }
 
         //Buttons for the flapper servo
-        if (Math.abs(gamepad2.left_stick_y) > joy2.getLeftStickThreshold()) {
-            roverRuckusRobot.flapperServo.run(gamepad2.left_stick_y);
+        if (Math.abs(gamepad2.right_stick_y) > joy2.getRightStickThreshold()) {
+            roverRuckusRobot.flapperServo.run(gamepad2.right_stick_y);
         }
 
         // TODO: jewelColor should be private. Telemetry should be exposed through toString methods
