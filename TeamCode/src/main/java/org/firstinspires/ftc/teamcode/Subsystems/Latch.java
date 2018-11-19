@@ -28,6 +28,7 @@ import org.firstinspires.ftc.teamcode.RobotCoreExtensions.Initializable;
 
 public class Latch implements Initializable {
     private final DcMotor latchMotor;
+    private final DcMotor latchMotor2;
     private final DigitalChannel latchTop;
     private final DigitalChannel latchBottom;
     private final double retractPower;
@@ -46,12 +47,14 @@ public class Latch implements Initializable {
 
     public Latch(
             DcMotor latchMotor,
+            DcMotor latchMotor2,
             DigitalChannel latchTop,
             DigitalChannel latchBottom,
             double retractPower,
             double extendPower
     ) {
         this.latchMotor = latchMotor;
+        this.latchMotor2 = latchMotor2;
         this.latchTop = latchTop;
         this.latchBottom = latchBottom;
         this.retractPower = retractPower;
@@ -76,9 +79,11 @@ public class Latch implements Initializable {
     public void retract() {
         if (isFullyRetracted()) {
             latchMotor.setPower(0);
+            latchMotor2.setPower(0);
             latchState = LatchState.RETRACTED;
         } else {
             latchMotor.setPower(retractPower);
+            latchMotor2.setPower(retractPower);
             latchState = LatchState.RETRACTING;
         }
     }
@@ -86,9 +91,11 @@ public class Latch implements Initializable {
     public void extend() {
         if (isFullyExtended()) {
             latchMotor.setPower(0);
+            latchMotor2.setPower(0);
             latchState = LatchState.EXTENDED;
         } else {
             latchMotor.setPower(extendPower);
+            latchMotor2.setPower(extendPower);
             latchState = LatchState.EXTENDING;
         }
     }
@@ -96,20 +103,24 @@ public class Latch implements Initializable {
     public void manualRetract() {
         if (isFullyRetracted()) {
             latchMotor.setPower(0);
+            latchMotor2.setPower(0);
             latchState = LatchState.RETRACTED;
         } else {
             latchMotor.setPower(retractPower);
+            latchMotor2.setPower(retractPower);
             latchState = LatchState.MANUAL_RETRACTING;
         }
     }
 
     public void manualExtend() {
         latchMotor.setPower(extendPower);
+        latchMotor2.setPower(extendPower);
         latchState = LatchState.MANUAL_EXTENDING;
     }
 
     public void manualStop() {
         latchMotor.setPower(0);
+        latchMotor2.setPower(0);
         latchState = LatchState.MANUAL_STOPPED;
     }
 

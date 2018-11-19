@@ -52,9 +52,10 @@ public class RoverRuckusRobot implements Drivable, Initializable {
         // Latch
 
         final DcMotor latchMotor = hardwareMap.dcMotor.get("latch");
+        final DcMotor latchMotor2 = hardwareMap.dcMotor.get("latch2");
         final DigitalChannel latchTop = hardwareMap.digitalChannel.get("latchTop");
         final DigitalChannel latchBottom = hardwareMap.digitalChannel.get("latchBottom");
-        this.latch = new Latch(latchMotor, latchTop, latchBottom,1.00, -1.00);
+        this.latch = new Latch(latchMotor,latchMotor2, latchTop, latchBottom,-1.00, 1.00);
 
 
         //Arm
@@ -66,7 +67,7 @@ public class RoverRuckusRobot implements Drivable, Initializable {
         this.flapperMotor = new ReversableMotor(flapperMotor, 1);
         //Flapper servo
         final Servo flapperServo = hardwareMap.servo.get("flapperServo");
-        this.flapperServo = new SpeedServo(flapperServo, 1.0, 0.005);
+        this.flapperServo = new SpeedServo(flapperServo, 1.0, 0.002);
     }
 
     @Override
