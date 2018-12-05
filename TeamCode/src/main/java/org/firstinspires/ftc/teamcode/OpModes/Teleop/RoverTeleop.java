@@ -39,7 +39,7 @@ public class RoverTeleop extends OpMode {
         //Toggle Half Speed on the drivetrain
         if (joy1.toggle.right_stick_button) {
             //Swap front and back of the robot, and control the drive train at half speed
-            teleopDriver.setMaxSpeed(0.3);
+            teleopDriver.setMaxSpeed(1.0);
             if (joy1.toggle.left_stick_button) {
                 teleopDriver.tankDrive(gamepad1, TeleopDriver.Direction.BACKWARD);
             } else {
@@ -47,7 +47,7 @@ public class RoverTeleop extends OpMode {
             }
         } else {
             //Swap front and back of the robot, and control the drive train
-            teleopDriver.setMaxSpeed(0.4);
+            teleopDriver.setMaxSpeed(0.5);
             if (joy1.toggle.left_stick_button) {
                 teleopDriver.tankDrive(gamepad1, TeleopDriver.Direction.BACKWARD);
             } else {
@@ -66,9 +66,9 @@ public class RoverTeleop extends OpMode {
 
         //Buttons for the arm extension/retraction
         if (gamepad2.left_stick_y > joy2.getLeftStickThreshold()) {
-            roverRuckusRobot.arm.run(gamepad2.left_stick_y);
+            roverRuckusRobot.arm.reverse(-gamepad2.left_stick_y);
         } else if (gamepad2.left_stick_y < -joy2.getLeftStickThreshold()) {
-            roverRuckusRobot.arm.reverse(gamepad2.left_stick_y);
+            roverRuckusRobot.arm.run(gamepad2.left_stick_y);
         } else {
             roverRuckusRobot.arm.stop();
         }
@@ -77,7 +77,7 @@ public class RoverTeleop extends OpMode {
         if (gamepad2.a) {
             roverRuckusRobot.flapperMotor.run();
         } else if (gamepad2.b) {
-            roverRuckusRobot.flapperMotor.reverse();
+            roverRuckusRobot.flapperMotor.reverse(-0.5);
         } else {
             roverRuckusRobot.flapperMotor.stop();
         }

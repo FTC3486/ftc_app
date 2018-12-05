@@ -67,12 +67,12 @@ public class RoverRuckusRobot implements Drivable, Initializable {
         this.flapperMotor = new ReversableMotor(flapperMotor, 1);
         //Flapper servo
         final Servo flapperServo = hardwareMap.servo.get("flapperServo");
-        this.flapperServo = new SpeedServo(flapperServo, 1.0, 0.002);
+        this.flapperServo = new SpeedServo(flapperServo, 1.0, 0.007);
     }
 
     @Override
     public void initialize() {
-        latch.initialize();
+        //latch.initialize();
         flapperServo.initialize();
     }
 

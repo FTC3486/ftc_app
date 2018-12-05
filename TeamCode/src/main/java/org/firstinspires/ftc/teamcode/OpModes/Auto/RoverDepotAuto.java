@@ -41,7 +41,7 @@ public class RoverDepotAuto extends LinearOpMode {
 
         waitForStart();
 
-        encoderAutoDriver.setPower(.7);
+        encoderAutoDriver.setPower(1.0);
 
         while(!roverRuckusRobot.latch.isFullyExtended())
         {
@@ -58,7 +58,7 @@ public class RoverDepotAuto extends LinearOpMode {
             roverRuckusRobot.latch.retract();
         }
         */
-
+        encoderAutoDriver.setPower(.7);
         encoderAutoDriver.driveToDistance(48);
         sleep(200);
         encoderAutoDriver.spinLeft(-5, 5);
