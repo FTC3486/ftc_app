@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.OpModes.Auto;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.robotcore.external.function.Supplier;
 import org.firstinspires.ftc.teamcode.RobotConfiguration.RelicRecovery.RelicRecoveryRobot;
 import org.firstinspires.ftc.teamcode.RobotConfiguration.RoverRuckus.RoverRuckusRobot;
 import org.firstinspires.ftc.teamcode.RobotCoreExtensions.EncoderAutoDriver;
@@ -31,21 +32,16 @@ import org.firstinspires.ftc.teamcode.RobotCoreExtensions.EncoderAutoDriver;
 
 @Autonomous (group = "Blue" )
 public class RoverCraterAuto extends LinearOpMode {
-    boolean foundYellowObject(RoverRuckusRobot roverRuckusRobot){
-        return roverRuckusRobot.colorSensor.red() >= roverRuckusRobot.colorSensor.blue() * 1.5;
-    }
-
     @Override
     public void runOpMode() {
-        RoverRuckusRobot roverRuckusRobot = new RoverRuckusRobot(this.hardwareMap);
-        EncoderAutoDriver encoderAutoDriver = new EncoderAutoDriver(roverRuckusRobot, this);
+        final RoverRuckusRobot roverRuckusRobot = new RoverRuckusRobot(this.hardwareMap);
+        final EncoderAutoDriver encoderAutoDriver = new EncoderAutoDriver(roverRuckusRobot, this);
         //RangeAutoDriver rangeAutoDriver = new RangeAutoDriver(rover, this);
         roverRuckusRobot.initialize();
 
         waitForStart();
 
         encoderAutoDriver.setPower(1);
-/*
         while(!roverRuckusRobot.latch.isFullyExtended())
         {
             roverRuckusRobot.latch.extend();
@@ -54,15 +50,18 @@ public class RoverCraterAuto extends LinearOpMode {
         }
 
         //This is copy and pasted from RoverDepotAuto.java, the original code is commented out
-        encoderAutoDriver.driveToDistance(-2);
+        //encoderAutoDriver.driveToDistance(-1);
+        encoderAutoDriver.setPower(0.5);
+        encoderAutoDriver.driveLeftSideToDistance(-25.0);
+        encoderAutoDriver.driveToDistance(-8);
+        encoderAutoDriver.spinRight(10.0,-10.0);
+        encoderAutoDriver.driveToDistance(-8);
+        encoderAutoDriver.spinRight(0.2, -0.2);
 
-        encoderAutoDriver.spinLeft(-10.0,10.0);
-        sleep(200);
-*/
         //Go to the end of the sampling items
         roverRuckusRobot.getDrivetrain().resetMotorEncoders();
-        roverRuckusRobot.getDrivetrain().setPowers(0.1, 0.1);
-        while ((roverRuckusRobot.getDrivetrain().getLeftEncoderCount() <= 3486) && !foundYellowObject(roverRuckusRobot) && opModeIsActive())
+        roverRuckusRobot.getDrivetrain().setPowers(0.3, 0.3);
+        while ((roverRuckusRobot.getDrivetrain().getLeftEncoderCount() <= 2900) && !roverRuckusRobot.foundYellowObject() && opModeIsActive())
         {
             telemetry.addData("Green Value", roverRuckusRobot.colorSensor.green());
             telemetry.addData("Blue Value", roverRuckusRobot.colorSensor.blue());
@@ -72,12 +71,23 @@ public class RoverCraterAuto extends LinearOpMode {
         }
         roverRuckusRobot.getDrivetrain().haltDrive();
         encoderAutoDriver.spinLeft(-10,10);
+        encoderAutoDriver.driveToDistance(-6);
+        encoderAutoDriver.driveToDistance(6);
         encoderAutoDriver.spinRight(10, -10);
         roverRuckusRobot.getDrivetrain().setPowers(.2, .2);
-        while(roverRuckusRobot.getDrivetrain().getLeftEncoderCount() <= 3486) {}
-        encoderAutoDriver.spinLeft(-16, 16);
+        while(roverRuckusRobot.getDrivetrain().getLeftEncoderCount() <= 2900 && opModeIsActive()) {}
+        encoderAutoDriver.spinLeft(-5, 5);
+        encoderAutoDriver.driveToDistance(40);
+        encoderAutoDriver.spinLeft(-22, 22);
+        roverRuckusRobot.markerServo.open();
+        encoderAutoDriver.driveToDistance(40);
 
-
+       /* encoderAutoDriver.setPowerUntilTrue(1,1, new Supplier<Boolean>() {
+            @Override
+            public Boolean get() {
+                return roverRuckusRobot.foundYellowObject();
+            }
+        });*/
 
         //roverRuckusRobot.colorSensor.alpha() gives the brightness
         //roverRuckusRobot.colorSensor.argb() gives hue
@@ -118,6 +128,5 @@ public class RoverCraterAuto extends LinearOpMode {
         sleep(200);
         encoderAutoDriver.driveToDistance(-96);
         */
-
     }
 }
