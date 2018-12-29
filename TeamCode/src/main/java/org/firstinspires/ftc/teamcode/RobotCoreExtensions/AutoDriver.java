@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.RobotCoreExtensions;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.robotcore.external.function.Supplier;
+
 /**
  * Filename: AutoDriver.java
  * <p>
@@ -99,5 +101,18 @@ public abstract class AutoDriver implements StallMonitor.EmergencyStoppable {
 
     public void setPower(double power) {
         this.power = power;
+    }
+
+
+    // Drive methods that are sensor-agnostic
+
+    /**
+     * This method will apply the given left and right powers to the drivetrain until the given callback method returns True.
+     * This method is blocking.
+     */
+    public void setPowerUntilTrue(double leftPower, double rightPower, Supplier<Boolean> supplier) {
+        hw.getDrivetrain().setPowers(leftPower, rightPower);
+        while(opMode.opModeIsActive() && supplier.get()) { Thread.yield(); }
+        hw.getDrivetrain().haltDrive();
     }
 }
