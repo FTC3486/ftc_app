@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.RobotConfiguration.RoverRuckus;
 
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -13,6 +14,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.Latch;
 import org.firstinspires.ftc.teamcode.Subsystems.OpenCloseServo;
 import org.firstinspires.ftc.teamcode.Subsystems.ReversableMotor;
 
+
 public class RoverRuckusRobot implements Drivable, Initializable {
     // Components
     private final Drivetrain drivetrain;
@@ -24,13 +26,13 @@ public class RoverRuckusRobot implements Drivable, Initializable {
     public final ReversableMotor flapperMotor;
     //Flapper servo for tilting
     public final SpeedServo flapperServo;
+    //Team marker servo for dumping
+    public final OpenCloseServo markerServo;
 
     // Sensors
     //private RangeSensor leftRangeSensor;
     //private RangeSensor rightRangeSensor;
-    //public ColorSensor jewelColorSensor;
-    //public DigitalChannel latchTop;
-    //public DigitalChannel latchBottom;
+    public final ColorSensor colorSensor;
 
     public RoverRuckusRobot(HardwareMap hardwareMap) {
         // Drivetrain
@@ -60,6 +62,7 @@ public class RoverRuckusRobot implements Drivable, Initializable {
 
         //Arm
         final DcMotor armMotor = hardwareMap.dcMotor.get("arm");
+
         this.arm = new ReversableMotor(armMotor, 1);
 
         //Flapper motor
@@ -67,18 +70,25 @@ public class RoverRuckusRobot implements Drivable, Initializable {
         this.flapperMotor = new ReversableMotor(flapperMotor, 1);
         //Flapper servo
         final Servo flapperServo = hardwareMap.servo.get("flapperServo");
-        this.flapperServo = new SpeedServo(flapperServo, 1.0, 0.007);
+        this.flapperServo = new SpeedServo(flapperServo, 1.0, 0.1);
+        //Team marker servo
+        final Servo markerServo = hardwareMap.servo.get("markerServo");
+        this.markerServo = new OpenCloseServo(markerServo, 1, 0, .5 );
+
+        //Color sensor
+        this.colorSensor = hardwareMap.colorSensor.get("colorSensor");
     }
 
     @Override
     public void initialize() {
         //latch.initialize();
         flapperServo.initialize();
+        //markerServo.initialize();
     }
 
     @Override
     public Drivetrain getDrivetrain() {
-        return drivetrain;
+        return this.drivetrain;
     }
 }
 

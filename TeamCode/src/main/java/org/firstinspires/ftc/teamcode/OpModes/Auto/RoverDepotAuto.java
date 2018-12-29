@@ -50,20 +50,26 @@ public class RoverDepotAuto extends LinearOpMode {
             telemetry.update();
         }
 
+        encoderAutoDriver.driveToDistance(-2);
+
         encoderAutoDriver.spinLeft(-10.0,10.0);
         sleep(200);
 
-        /*while(!roverRuckusRobot.latch.isFullyRetracted())
+        encoderAutoDriver.driveToDistance(-30);
+        /*
+        while(!roverRuckusRobot.latch.isFullyRetracted())
         {
             roverRuckusRobot.latch.retract();
         }
         */
-        encoderAutoDriver.setPower(.7);
-        encoderAutoDriver.driveToDistance(48);
-        sleep(200);
+
+        //encoderAutoDriver.driveToDistance(48);
+        //sleep(200);
+        /*
         encoderAutoDriver.spinLeft(-5, 5);
         sleep(200);
         encoderAutoDriver.driveToDistance(-96);
+        */
 
         // roverRuckusRobot.jewelArm.extend();
         //sleep(5000);

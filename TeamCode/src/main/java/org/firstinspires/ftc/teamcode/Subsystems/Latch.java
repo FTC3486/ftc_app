@@ -113,9 +113,15 @@ public class Latch implements Initializable {
     }
 
     public void manualExtend() {
-        latchMotor.setPower(extendPower);
-        latchMotor2.setPower(extendPower);
-        latchState = LatchState.MANUAL_EXTENDING;
+        if (isFullyExtended()) {
+            latchMotor.setPower(0);
+            latchMotor2.setPower(0);
+            latchState = LatchState.EXTENDED;
+        } else {
+            latchMotor.setPower(extendPower);
+            latchMotor2.setPower(extendPower);
+            latchState = LatchState.MANUAL_EXTENDING;
+        }
     }
 
     public void manualStop() {

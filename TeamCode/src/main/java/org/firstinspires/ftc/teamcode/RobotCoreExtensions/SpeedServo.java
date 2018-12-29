@@ -12,6 +12,8 @@ public class SpeedServo implements Initializable {
     private final double initialPosition;
     private final double scalingFactor;
 
+    private double targetPosition;  // Used for telemetry
+
     public SpeedServo(Servo servo, double initialPosition, double scalingFactor) {
         this.servo = servo;
         this.initialPosition = initialPosition;
@@ -24,8 +26,14 @@ public class SpeedServo implements Initializable {
     }
 
     public void run(float speed) {
-        servo.setPosition(Math.min(1.0, Math.max(0.0,
+        this.targetPosition = Math.min(1.0, Math.max(0.0,
                 servo.getPosition() - (scalingFactor * speed)
-        )));
+        ));
+        servo.setPosition(targetPosition);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("scalingFactor=%s, targetPosition=%s", scalingFactor, targetPosition);
     }
 }

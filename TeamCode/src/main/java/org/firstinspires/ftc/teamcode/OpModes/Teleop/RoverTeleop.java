@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.OpModes.Teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.RobotConfiguration.RoverRuckus.RoverRuckusRobot;
 import org.firstinspires.ftc.teamcode.RobotCoreExtensions.GamepadWrapper;
@@ -65,9 +64,9 @@ public class RoverTeleop extends OpMode {
         }
 
         //Buttons for the arm extension/retraction
-        if (gamepad2.left_stick_y > joy2.getLeftStickThreshold()) {
-            roverRuckusRobot.arm.reverse(-gamepad2.left_stick_y);
-        } else if (gamepad2.left_stick_y < -joy2.getLeftStickThreshold()) {
+        if (gamepad2.left_stick_y < -joy2.getLeftStickThreshold()) {
+            roverRuckusRobot.arm.reverse(gamepad2.left_stick_y);
+        } else if (gamepad2.left_stick_y > joy2.getLeftStickThreshold()) {
             roverRuckusRobot.arm.run(gamepad2.left_stick_y);
         } else {
             roverRuckusRobot.arm.stop();
@@ -91,13 +90,11 @@ public class RoverTeleop extends OpMode {
 
         //telemetry.addData("Is Not Pressed", roverRuckusRobot.touch1();
 
-        //telemetry.addData("Green Value", roverRuckusRobot.jewelColorSensor.green());
-        //telemetry.addData("Blue Value", roverRuckusRobot.jewelColorSensor.blue());
-        //telemetry.addData("Red Value", roverRuckusRobot.jewelColorSensor.red());
-        //telemetry.addData("Alpha Value", roverRuckusRobot.jewelColorSensor.alpha());
-        //telemetry.addData("ARGB Value", roverRuckusRobot.jewelColorSensor.argb());
-        //telemetry.addData("JewelServo", roverRuckusRobot.jewelArm);
-        //telemetry.update();
+        telemetry.addData("Green Value", roverRuckusRobot.colorSensor.green());
+        telemetry.addData("Blue Value", roverRuckusRobot.colorSensor.blue());
+        telemetry.addData("Red Value", roverRuckusRobot.colorSensor.red());
+        //telemetry.addData("Flapper Servo", roverRuckusRobot.flapperServo);
+        telemetry.update();
 
     }
 }
