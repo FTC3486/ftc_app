@@ -61,7 +61,7 @@ public class RoverCraterAuto extends LinearOpMode {
         //Go to the end of the sampling items
         roverRuckusRobot.getDrivetrain().resetMotorEncoders();
         roverRuckusRobot.getDrivetrain().setPowers(0.3, 0.3);
-        while ((roverRuckusRobot.getDrivetrain().getLeftEncoderCount() <= 2900) && !roverRuckusRobot.foundYellowObject() && opModeIsActive())
+        while ((roverRuckusRobot.getDrivetrain().getLeftEncoderCount() <= 3500) && !roverRuckusRobot.foundYellowObject() && opModeIsActive())
         {
             telemetry.addData("Green Value", roverRuckusRobot.colorSensor.green());
             telemetry.addData("Blue Value", roverRuckusRobot.colorSensor.blue());
@@ -69,18 +69,19 @@ public class RoverCraterAuto extends LinearOpMode {
             telemetry.addData("LeftEncoder", roverRuckusRobot.getDrivetrain().getLeftEncoderCount());
             telemetry.update();
         }
+        double counts = roverRuckusRobot.getDrivetrain().getLeftEncoderCount();
         roverRuckusRobot.getDrivetrain().haltDrive();
         encoderAutoDriver.spinLeft(-10,10);
         encoderAutoDriver.driveToDistance(-6);
         encoderAutoDriver.driveToDistance(6);
         encoderAutoDriver.spinRight(10, -10);
-        roverRuckusRobot.getDrivetrain().setPowers(.2, .2);
-        while(roverRuckusRobot.getDrivetrain().getLeftEncoderCount() <= 2900 && opModeIsActive()) {}
-        encoderAutoDriver.spinLeft(-5, 5);
-        encoderAutoDriver.driveToDistance(40);
+        roverRuckusRobot.getDrivetrain().setPowers(0.5, 0.5);
+        while(roverRuckusRobot.getDrivetrain().getLeftEncoderCount() <= 3500 - counts && opModeIsActive()) {telemetry.addData("Encoder", roverRuckusRobot.getDrivetrain().getLeftEncoderCount());}
+        encoderAutoDriver.spinLeft(-7, 7);
+        encoderAutoDriver.driveToDistance(50);
         encoderAutoDriver.spinLeft(-22, 22);
         roverRuckusRobot.markerServo.open();
-        encoderAutoDriver.driveToDistance(40);
+        encoderAutoDriver.driveToDistance(50);
 
        /* encoderAutoDriver.setPowerUntilTrue(1,1, new Supplier<Boolean>() {
             @Override
