@@ -73,7 +73,7 @@ public class RoverRuckusRobot implements Drivable, Initializable {
         this.flapperServo = new SpeedServo(flapperServo, 1.0, 0.1);
         //Team marker servo
         final Servo markerServo = hardwareMap.servo.get("markerServo");
-        this.markerServo = new OpenCloseServo(markerServo, 0, 1, .1 );
+        this.markerServo = new OpenCloseServo(markerServo, 0.1, 1, 0.1 );
 
         //Color sensor
         this.colorSensor = hardwareMap.colorSensor.get("colorSensor");
@@ -83,7 +83,7 @@ public class RoverRuckusRobot implements Drivable, Initializable {
     public void initialize() {
         //latch.initialize();
         flapperServo.initialize();
-        //markerServo.initialize();
+        markerServo.initialize();
     }
 
     @Override
