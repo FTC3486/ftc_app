@@ -64,9 +64,9 @@ public class RoverTeleop extends OpMode {
         }
 
         //Buttons for the arm extension/retraction
-        if (gamepad2.left_stick_y < -joy2.getLeftStickThreshold()) {
+        if (gamepad2.left_stick_y > joy2.getLeftStickThreshold()) {
             roverRuckusRobot.arm.reverse(gamepad2.left_stick_y);
-        } else if (gamepad2.left_stick_y > joy2.getLeftStickThreshold()) {
+        } else if (gamepad2.left_stick_y < -joy2.getLeftStickThreshold()) {
             roverRuckusRobot.arm.run(gamepad2.left_stick_y);
         } else {
             roverRuckusRobot.arm.stop();
