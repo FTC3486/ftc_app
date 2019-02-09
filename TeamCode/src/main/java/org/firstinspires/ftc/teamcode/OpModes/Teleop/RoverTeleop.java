@@ -38,7 +38,7 @@ public class RoverTeleop extends OpMode {
         //Toggle Half Speed on the drivetrain
         if (joy1.toggle.right_stick_button) {
             //Swap front and back of the robot, and control the drive train at half speed
-            teleopDriver.setMaxSpeed(1.0);
+            teleopDriver.setMaxSpeed(0.5);
             if (joy1.toggle.left_stick_button) {
                 teleopDriver.tankDrive(gamepad1, TeleopDriver.Direction.BACKWARD);
             } else {
@@ -46,7 +46,7 @@ public class RoverTeleop extends OpMode {
             }
         } else {
             //Swap front and back of the robot, and control the drive train
-            teleopDriver.setMaxSpeed(0.5);
+            teleopDriver.setMaxSpeed(.9);
             if (joy1.toggle.left_stick_button) {
                 teleopDriver.tankDrive(gamepad1, TeleopDriver.Direction.BACKWARD);
             } else {
@@ -72,10 +72,10 @@ public class RoverTeleop extends OpMode {
             roverRuckusRobot.arm.stop();
         }
 
-        //Buttons for the flapper motor
-        if (gamepad2.a) {
+        //Buttons for the flapper motor-
+        if (gamepad2.right_bumper) {
             roverRuckusRobot.flapperMotor.run();
-        } else if (gamepad2.b) {
+        } else if (gamepad2.left_bumper) {
             roverRuckusRobot.flapperMotor.reverse(-0.5);
         } else {
             roverRuckusRobot.flapperMotor.stop();
@@ -86,15 +86,22 @@ public class RoverTeleop extends OpMode {
             roverRuckusRobot.flapperServo.run(gamepad2.right_stick_y);
         }
 
+        //Buttons for the Marker Servo
+        if (gamepad1.x){
+            roverRuckusRobot.markerServo.open();
+        } else if (gamepad1.y) {
+            roverRuckusRobot.markerServo.close();
+        }
+
         // TODO: jewelColor should be private. Telemetry should be exposed through toString methods
 
         //telemetry.addData("Is Not Pressed", roverRuckusRobot.touch1();
 
-        telemetry.addData("Green Value", roverRuckusRobot.colorSensor.green());
-        telemetry.addData("Blue Value", roverRuckusRobot.colorSensor.blue());
-        telemetry.addData("Red Value", roverRuckusRobot.colorSensor.red());
+        //telemetry.addData("Green Value", roverRuckusRobot.colorSensor.green());
+        //telemetry.addData("Blue Value", roverRuckusRobot.colorSensor.blue());
+        //telemetry.addData("Red Value", roverRuckusRobot.colorSensor.red());
         //telemetry.addData("Flapper Servo", roverRuckusRobot.flapperServo);
-        telemetry.update();
+        //telemetry.update();
 
     }
 }

@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.OpModes.Auto;
 
+import com.qualcomm.hardware.ams.AMSColorSensor;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
@@ -50,51 +51,39 @@ public class RoverDepotAuto extends LinearOpMode {
             telemetry.update();
         }
 
-        encoderAutoDriver.driveToDistance(-2);
+        //This is copy and pasted from RoverDepotAuto.java, the original code is commented out
+        roverRuckusRobot.latch.manualStop();
+        encoderAutoDriver.setPower(0.5);
+        //base number 25
+        encoderAutoDriver.driveLeftSideToDistance(-25);
+        encoderAutoDriver.driveToDistance(-8);
+        //larger numbers turn to blocks - right turn
+        encoderAutoDriver.spinRight(10.5,-10.5);
+        encoderAutoDriver.driveToDistance(-8);
+        encoderAutoDriver.spinRight(0.2, -0.2);
 
-        encoderAutoDriver.spinLeft(-10.0,10.0);
-        sleep(200);
-
-        encoderAutoDriver.driveToDistance(-30);
-        /*
-        while(!roverRuckusRobot.latch.isFullyRetracted())
+        //Go to the end of the sampling items
+        roverRuckusRobot.getDrivetrain().resetMotorEncoders();
+        roverRuckusRobot.getDrivetrain().setPowers(0.3, 0.3);
+        while ((roverRuckusRobot.getDrivetrain().getLeftEncoderCount() <= 2700) && !roverRuckusRobot.foundYellowObject() && opModeIsActive())
         {
-            roverRuckusRobot.latch.retract();
+            telemetry.addData("Green Value", roverRuckusRobot.colorSensor.green());
+            telemetry.addData("Blue Value", roverRuckusRobot.colorSensor.blue());
+            telemetry.addData("Red Value", roverRuckusRobot.colorSensor.red());
+            telemetry.addData("LeftEncoder", roverRuckusRobot.getDrivetrain().getLeftEncoderCount());
+            telemetry.update();
         }
-        */
-
-        //encoderAutoDriver.driveToDistance(48);
-        //sleep(200);
-        /*
-        encoderAutoDriver.spinLeft(-5, 5);
-        sleep(200);
-        encoderAutoDriver.driveToDistance(-96);
-        */
-
-        // roverRuckusRobot.jewelArm.extend();
-        //sleep(5000);
-        //relicRecoveryRobot.jewelArm.fullyRetract();
-        //sleep(5000);
-        //relicRecoveryRobot.jewelArm.fullyExtend();
-        //sleep(5000);
-        //encoderAutoDriver.spinRight(11,-11);
-        //encoderAutoDriver.driveToDistance(132);
-        //encoderAutoDriver.spinRight(10,-10);
-       // encoderAutoDriver.driveToDistance(64);
-        //encoderAutoDriver.spinRight(72,-72);
-        //encoderAutoDriver.driveToDistance(132);
-        //encoderAutoDriver.setPower(.7);
-        //encoderAutoDriver.driveToDistanceBackwards(-20); // Works needs negitive number - why!!!
-        //encoderAutoDriver.setPower(.5);
-      //  encoderAutoDriver.spinRight(10,-10); //  10  90 degree turn
-        //encoderAutoDriver.spinRight(22,-22);// 22 180 degree turn
-      //  encoderAutoDriver.spinRight(40,-40);
-        //encoderAutoDriver.spinLeft(-12,12); // works why
-        //encoderAutoDriver.driveLeftSideToDistance(72);
-        //encoderAutoDriver.driveLeftSideToDistance(-15);
-       //encoderAutoDriver.driveRightSideToDistance(72);
-       // encoderAutoDriver.driveRightSideToDistance(-10);
-        //encoderAutoDriver.spinLeft(9,9);
-        //rangeAutoDriver.
+        double counts = roverRuckusRobot.getDrivetrain().getLeftEncoderCount();
+        roverRuckusRobot.getDrivetrain().haltDrive();
+        encoderAutoDriver.spinLeft(-10,10);
+        encoderAutoDriver.driveToDistance(-8);
+        encoderAutoDriver.driveToDistance(8);
+        encoderAutoDriver.spinRight(10, -10);
+        roverRuckusRobot.getDrivetrain().setPowers(0.7, 0.7);
+        while(roverRuckusRobot.getDrivetrain().getLeftEncoderCount() <= 4825 - counts && opModeIsActive()) {telemetry.addData("Encoder", roverRuckusRobot.getDrivetrain().getLeftEncoderCount());}
+        encoderAutoDriver.spinLeft(-7.7, 7.7);
+        encoderAutoDriver.driveToDistance(-50);
+        roverRuckusRobot.markerServo.open();
+        encoderAutoDriver.driveToDistance(1.0);
     }
 }

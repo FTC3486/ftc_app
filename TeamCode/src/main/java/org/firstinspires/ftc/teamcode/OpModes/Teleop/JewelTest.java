@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.OpModes.Teleop;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.RobotConfiguration.RelicRecovery.RelicRecoveryRobot;
@@ -9,8 +11,8 @@ import org.firstinspires.ftc.teamcode.RobotCoreExtensions.GamepadWrapper;
 /**
  * Created by 3486 on 7/15/2017.
  */
-
-@TeleOp(name = "JewelTest Teleop", group = "Teleop2017")
+@Disabled
+@TeleOp (name = "JewelTest Teleop", group = "Teleop2017")
 public class JewelTest extends OpMode {
     //GamepadWrapper joy1;
     //RelicRecoveryRobot robotRecoveryRobot = new RelicRecoveryRobot(hardwareMap);

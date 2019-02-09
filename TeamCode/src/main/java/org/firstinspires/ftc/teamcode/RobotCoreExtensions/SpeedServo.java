@@ -26,7 +26,7 @@ public class SpeedServo implements Initializable {
     }
 
     public void run(float speed) {
-        this.targetPosition = Math.min(1.0, Math.max(0.0,
+        this.targetPosition = Math.min(1.0, Math.max(0.20,
                 servo.getPosition() - (scalingFactor * speed)
         ));
         servo.setPosition(targetPosition);

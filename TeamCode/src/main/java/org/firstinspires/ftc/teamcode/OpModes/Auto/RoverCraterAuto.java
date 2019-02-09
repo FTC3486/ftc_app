@@ -51,6 +51,7 @@ public class RoverCraterAuto extends LinearOpMode {
 
         //This is copy and pasted from RoverDepotAuto.java, the original code is commented out
         //encoderAutoDriver.driveToDistance(-1);
+        roverRuckusRobot.latch.manualStop();
         encoderAutoDriver.setPower(0.5);
         encoderAutoDriver.driveLeftSideToDistance(-25.0);
         encoderAutoDriver.driveToDistance(-8);
@@ -76,58 +77,14 @@ public class RoverCraterAuto extends LinearOpMode {
         encoderAutoDriver.driveToDistance(6);
         encoderAutoDriver.spinRight(10, -10);
         roverRuckusRobot.getDrivetrain().setPowers(0.5, 0.5);
-        while(roverRuckusRobot.getDrivetrain().getLeftEncoderCount() <= 3500 - counts && opModeIsActive()) {telemetry.addData("Encoder", roverRuckusRobot.getDrivetrain().getLeftEncoderCount());}
-        encoderAutoDriver.spinLeft(-7, 7);
+        while(roverRuckusRobot.getDrivetrain().getLeftEncoderCount() <= 5000 - counts && opModeIsActive()) {telemetry.addData("Encoder", roverRuckusRobot.getDrivetrain().getLeftEncoderCount());}
+
+/*        encoderAutoDriver.spinLeft(-7.5, 7.5);
         encoderAutoDriver.driveToDistance(50);
         encoderAutoDriver.spinLeft(-22, 22);
         roverRuckusRobot.markerServo.open();
-        encoderAutoDriver.driveToDistance(50);
+        encoderAutoDriver.driveToDistance(10);
+*/
 
-       /* encoderAutoDriver.setPowerUntilTrue(1,1, new Supplier<Boolean>() {
-            @Override
-            public Boolean get() {
-                return roverRuckusRobot.foundYellowObject();
-            }
-        });*/
-
-        //roverRuckusRobot.colorSensor.alpha() gives the brightness
-        //roverRuckusRobot.colorSensor.argb() gives hue
-        //The other functions for color give an integer value for how much of the color it is
-        /*if(foundYellowObject()) {0
-
-            //Drive forward
-            //drive to depot
-        }
-        else
-        {
-            //drive to next
-            if(foundYellowObject())
-            {
-                //Drive forward
-                //drive to depot
-            }
-            else
-            {
-                //drive to next
-                //Drive forward
-                //drive to depot
-            }
-        }*/
-
-        // at next objective
-
-        //encoderAutoDriver.driveToDistance(40);
-        //sleep(200);
-        /*
-        encoderAutoDriver.spinLeft(-10, 10);
-        sleep(200);
-        encoderAutoDriver.driveToDistance(36);
-        sleep(200);
-        encoderAutoDriver.spinLeft(-6,6);
-        sleep(200);
-        encoderAutoDriver.driveToDistance(60);
-        sleep(200);
-        encoderAutoDriver.driveToDistance(-96);
-        */
     }
 }
