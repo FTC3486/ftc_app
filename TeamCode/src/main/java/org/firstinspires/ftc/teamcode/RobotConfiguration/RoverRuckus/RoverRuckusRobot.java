@@ -93,7 +93,7 @@ public class RoverRuckusRobot implements Drivable, Initializable {
 
     public boolean foundYellowObject(){
         //Base number 5
-        return colorSensor.red() >= colorSensor.blue() + 5;
+        return ((colorSensor.red() >= colorSensor.blue() + 10) && (colorSensor.green() >= colorSensor.blue() && colorSensor.green() <= colorSensor.red()));
     }
 }
 

@@ -53,33 +53,33 @@ public class RoverDepotAuto extends LinearOpMode {
 
         //This is copy and pasted from RoverDepotAuto.java, the original code is commented out
         roverRuckusRobot.latch.manualStop();
-        encoderAutoDriver.setPower(0.5);
+        encoderAutoDriver.setPower(0.75);
         //base number 25
         encoderAutoDriver.driveLeftSideToDistance(-25);
-        encoderAutoDriver.driveToDistance(-8);
+        encoderAutoDriver.driveToDistance(-7);
         //larger numbers turn to blocks - right turn
-        encoderAutoDriver.spinRight(10.5,-10.5);
+        encoderAutoDriver.spinRight(10,-10);
         encoderAutoDriver.driveToDistance(-8);
-        encoderAutoDriver.spinRight(0.2, -0.2);
+        encoderAutoDriver.spinRight(0.4, -0.4);
 
         //Go to the end of the sampling items
         roverRuckusRobot.getDrivetrain().resetMotorEncoders();
         roverRuckusRobot.getDrivetrain().setPowers(0.3, 0.3);
         while ((roverRuckusRobot.getDrivetrain().getLeftEncoderCount() <= 2700) && !roverRuckusRobot.foundYellowObject() && opModeIsActive())
         {
-            telemetry.addData("Green Value", roverRuckusRobot.colorSensor.green());
-            telemetry.addData("Blue Value", roverRuckusRobot.colorSensor.blue());
-            telemetry.addData("Red Value", roverRuckusRobot.colorSensor.red());
-            telemetry.addData("LeftEncoder", roverRuckusRobot.getDrivetrain().getLeftEncoderCount());
-            telemetry.update();
+            //telemetry.addData("Green Value", roverRuckusRobot.colorSensor.green());
+            //telemetry.addData("Blue Value", roverRuckusRobot.colorSensor.blue());
+            //telemetry.addData("Red Value", roverRuckusRobot.colorSensor.red());
+            //telemetry.addData("LeftEncoder", roverRuckusRobot.getDrivetrain().getLeftEncoderCount());
+            //telemetry.update();
         }
         double counts = roverRuckusRobot.getDrivetrain().getLeftEncoderCount();
         roverRuckusRobot.getDrivetrain().haltDrive();
         encoderAutoDriver.spinLeft(-10,10);
-        encoderAutoDriver.driveToDistance(-8);
-        encoderAutoDriver.driveToDistance(8);
+        encoderAutoDriver.driveToDistance(-6);
+        encoderAutoDriver.driveToDistance(6);
         encoderAutoDriver.spinRight(10, -10);
-        roverRuckusRobot.getDrivetrain().setPowers(0.7, 0.7);
+        roverRuckusRobot.getDrivetrain().setPowers(0.5, 0.5);
         while(roverRuckusRobot.getDrivetrain().getLeftEncoderCount() <= 4825 - counts && opModeIsActive()) {telemetry.addData("Encoder", roverRuckusRobot.getDrivetrain().getLeftEncoderCount());}
         encoderAutoDriver.spinLeft(-7.7, 7.7);
         encoderAutoDriver.driveToDistance(-50);
