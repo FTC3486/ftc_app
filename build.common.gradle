@@ -17,12 +17,11 @@
 
 import java.util.regex.Pattern
 
-apply plugin: 'idea'
 apply plugin: 'com.android.application'
 
 android {
 
-    compileSdkVersion 23
+    compileSdkVersion 28
 
     signingConfigs {
         debug {
@@ -40,7 +39,7 @@ android {
     defaultConfig {
         applicationId 'com.qualcomm.ftcrobotcontroller'
         minSdkVersion 19
-        targetSdkVersion 23
+        targetSdkVersion 26
 
         /**
          * We keep the versionCode and versionName of robot controller applications in sync with
@@ -99,10 +98,6 @@ android {
     sourceSets.main {
         jni.srcDirs = []
         jniLibs.srcDir rootProject.file('libs')
-    }
-
-    lintOptions {
-        abortOnError false
     }
 }
 
